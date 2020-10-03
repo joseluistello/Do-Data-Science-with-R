@@ -1,0 +1,6 @@
+`r if (knitr:::is_html_output()) '
+# Data Analysis 
+'`
+https://www.rpubs.com/rezapci/Data_Science_Machine_Learning_HarvardX
+
+models and valiadition

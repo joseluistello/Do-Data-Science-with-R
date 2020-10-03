@@ -1,0 +1,74 @@
+\usepackage[
+  paperwidth=140mm,
+  paperheight=210mm,
+  top=25mm,
+  bottom=20mm,
+  left=20mm,
+  right=20mm,
+  heightrounded,
+]{geometry}
+
+\setmainfont[BoldItalicFont={Times New Roman Bold Italic}]{DejaVu Sans}
+\newfontfamily{\chapterintro}{Book Antiqua}
+\newfontfamily{\chaptermain}{Cambria}
+
+\makeatletter
+\@ifundefined{Shaded}{
+}{\renewenvironment{Shaded}{\begin{kframe}}{\end{kframe}}}
+\makeatother
+
+\newenvironment{rmdblock}[1]
+  {
+  \begin{itemize}
+  \renewcommand{\labelitemi}{
+    \raisebox{-.7\height}[0pt][0pt]{
+      {\setkeys{Gin}{width=3em,keepaspectratio}\includegraphics{images/#1}}
+    }
+  }
+  \setlength{\fboxsep}{1em}
+  \begin{kframe}
+  \item
+  }
+  {
+  \end{kframe}
+  \end{itemize}
+  }
+\newenvironment{rmdaction}
+  {\begin{rmdblock}{action}}
+  {\end{rmdblock}}
+\newenvironment{rmdinstruction}
+  {\begin{rmdblock}{instruction}}
+  {\end{rmdblock}}
+\newenvironment{rmdinfo}
+  {\begin{rmdblock}{info}}
+  {\end{rmdblock}}
+\newenvironment{rmdnote}
+  {\begin{rmdblock}{note}}
+  {\end{rmdblock}}
+\newenvironment{rmdcaution}
+  {\begin{rmdblock}{caution}}
+  {\end{rmdblock}}
+\newenvironment{rmdimportant}
+  {\begin{rmdblock}{important}}
+  {\end{rmdblock}}
+\newenvironment{rmdtip}
+  {\begin{rmdblock}{tip}}
+  {\end{rmdblock}}
+\newenvironment{rmdwarning}
+  {\begin{rmdblock}{warning}}
+  {\end{rmdblock}}
+
+\usepackage{makeidx}
+\makeindex
+
+\urlstyle{tt}
+
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+\frontmatter

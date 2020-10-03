@@ -1,0 +1,37 @@
+# Data PreProcess
+
+The purposes of data preprocess is to make data suitable for analyzing. 
+
+I this particular project, the purpose is to predict passengers survival. whatever a prediction model we may come up with, it should reflect the relations between other data attributes with the special one, which is "survived". So the data preprocess, whatever actions we are take, should focused on the attributes that has relations with the survive, or our preprocess should help to enhance the attribute's prediction power. An example is, "PassengerId", it has no relation with the survive, apart from to identify a passenger, its prediction power is 0. so there should be any efforts on this attributes apart from make sure its unique. 
+
+Therefor it make sense to explore all attributes with surviels.
+
+## explore realtions for survivle
+
+1. Survived
+The first attribute reported if a traveler lived or died. A comparison revealed that more than 61% of the passengers had died.
+
+code
+
+```
+table(as.factor(train$Survived))
+prop.table(table(as.factor(train$Survived)))
+
+```
+
+2. Pclass
+This attribute renders the passenger division. The passengers could opt from three distinct sections, namely class-1, class-2, class-3. The third class had the highest number of commuters, followed by class-2 and class-1. The number of passengers in the third class was more than the number of passengers in the first and second class combined. The survival chances of a class-1 traveler were higher than a class-2 and class-3 traveler.
+ 完成数据的基本探索后，在建立模型之前，我们还需要对数据进行清洗，并且对数据集中缺失的数据进行补全。
+
+首先了解数据的缺失情况：
+
+train.info()
+print('-'*30)
+test.info()
+
+训练集中有891条数据，而测试集中有418条数据。
+
+训练集缺失值：Age，Cabin，Embarked，其中Cabin字段缺失数量较多； 测试集缺失值：Age，Cabin，Fare，其中Cabin字段缺失数量较多。
+
+差早错误
+Analyze by pivoting attributes

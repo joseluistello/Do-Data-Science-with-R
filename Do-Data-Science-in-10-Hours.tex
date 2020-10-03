@@ -1,0 +1,1650 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Do Data Science in 10 Hours},
+  pdfauthor={Gangmin Li},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[bf,singlelinecheck=off]{caption}
+
+
+\usepackage{framed,color}
+\definecolor{shadecolor}{RGB}{248,248,248}
+
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+
+\renewenvironment{quote}{\begin{VF}}{\end{VF}}
+\let\oldhref\href
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+
+\ifxetex
+  \usepackage{letltxmacro}
+  \setlength{\XeTeXLinkMargin}{1pt}
+  \LetLtxMacro\SavedIncludeGraphics\includegraphics
+  \def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
+    \IncludeGraphicsAux{#1}%
+  }%
+  \newcommand*{\IncludeGraphicsAux}[2]{%
+    \XeTeXLinkBox{%
+      \SavedIncludeGraphics#1{#2}%
+    }%
+  }%
+\fi
+
+\makeatletter
+\newenvironment{kframe}{%
+\medskip{}
+\setlength{\fboxsep}{.8em}
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\makeatletter
+\@ifundefined{Shaded}{
+}{\renewenvironment{Shaded}{\begin{kframe}}{\end{kframe}}}
+\makeatother
+
+\newenvironment{rmdblock}[1]
+  {
+  \begin{itemize}
+  \renewcommand{\labelitemi}{
+    \raisebox{-.7\height}[0pt][0pt]{
+      {\setkeys{Gin}{width=3em,keepaspectratio}\includegraphics{images/#1}}
+    }
+  }
+  \setlength{\fboxsep}{1em}
+  \begin{kframe}
+  \item
+  }
+  {
+  \end{kframe}
+  \end{itemize}
+  }
+\newenvironment{rmdaction}
+  {\begin{rmdblock}{action}}
+  {\end{rmdblock}}
+\newenvironment{rmdinstruction}
+  {\begin{rmdblock}{instruction}}
+  {\end{rmdblock}}
+\newenvironment{rmdinfo}
+  {\begin{rmdblock}{info}}
+  {\end{rmdblock}}
+\newenvironment{rmdnote}
+  {\begin{rmdblock}{note}}
+  {\end{rmdblock}}
+\newenvironment{rmdcaution}
+  {\begin{rmdblock}{caution}}
+  {\end{rmdblock}}
+\newenvironment{rmdimportant}
+  {\begin{rmdblock}{important}}
+  {\end{rmdblock}}
+\newenvironment{rmdtip}
+  {\begin{rmdblock}{tip}}
+  {\end{rmdblock}}
+\newenvironment{rmdwarning}
+  {\begin{rmdblock}{warning}}
+  {\end{rmdblock}}
+
+\usepackage{makeidx}
+\makeindex
+
+\urlstyle{tt}
+
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+\frontmatter
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{Do Data Science in 10 Hours}
+\author{Gangmin Li}
+\date{2020-09-30}
+
+\begin{document}
+\maketitle
+
+%\cleardoublepage\newpage\thispagestyle{empty}\null
+%\cleardoublepage\newpage\thispagestyle{empty}\null
+%\cleardoublepage\newpage
+\thispagestyle{empty}
+\begin{center}
+\includegraphics{images/dedication.pdf}
+\end{center}
+
+\setlength{\abovedisplayskip}{-5pt}
+\setlength{\abovedisplayshortskip}{-5pt}
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{section}{%
+\chapter*{}\label{section}}
+\addcontentsline{toc}{chapter}{}
+
+\begin{center}\includegraphics[width=0.6\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/hotstove} \end{center}
+
+\begin{verbatim}
+
+"Dont't touch it, It's hot!",
+
+...
+
+
+You now know it is hot. don't you?
+
+How?
+
+Because, you'v touched it!
+\end{verbatim}
+
+\hypertarget{preface}{%
+\chapter*{Preface}\label{preface}}
+
+
+\hypertarget{why-read-this-book}{%
+\section{Why Read this book}\label{why-read-this-book}}
+
+In this book, we will introduce an interesting method.
+
+\hypertarget{structure-of-the-book}{%
+\section{Structure of the Book}\label{structure-of-the-book}}
+
+\hypertarget{what-can-this-course-offer-you}{%
+\section{What Can This Course Offer You?}\label{what-can-this-course-offer-you}}
+
+This short course is specifically designed for students who has no background of much Algorithms, programming and even computing. The basic requirements are desire to learn, attitude of humble and diligence of working. All that mean you need to get your hand dirty, spent time and do more practices. At the end, it cannot guaranty you become a data scientist but it will help you find the way to wards doing data science and be confident to start doing data science projects. It is cetainty that if you persist on this road, you will no doubt becomes a future data scientist.
+
+This course will bring you:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Understand the data analysis procedure
+\item
+  Familiar with R language
+\item
+  Using RStudio to do your prototype of data project
+\item
+  Data preprocess - manipulate data for further analysis
+\item
+  Manage basic methods like Descriptive, Exploratory and Predictive data analysis
+\item
+  Have basic skills of visualize data results
+\item
+  Basic interpretation of you analyzing results and communicate with others
+\item
+  Report your results
+\item
+  Enter the data science community
+\end{enumerate}
+
+\hypertarget{schedule}{%
+\section{Schedule}\label{schedule}}
+
+Setup Download files required for the lesson
+00:00 1. Analyzing Patient Data How do I read data into R?
+How do I assign variables?
+What is a data frame?
+How do I access subsets of a data frame?
+How do I calculate simple statistics like mean and median?
+Where can I get help?
+How can I plot my data?
+00:45 2. Creating Functions How do I make a function?
+How can I test my functions?
+How should I document my code?
+01:15 3. Analyzing Multiple Data Sets How can I do the same thing to multiple data sets?
+How do I write a for loop?
+01:45 4. Making Choices How do I make choices using if and else statements?
+How do I compare values?
+How do I save my plots to a PDF file?
+02:15 5. Command-Line Programs How do I write a command-line script?
+How do I read in arguments from the command-line?
+02:45 6. Best Practices for Writing R Code How can I write R code that other people can understand and use?
+02:55 7. Dynamic Reports with knitr How can I put my text, code, and results all in one document?
+How do I use knitr?
+How do I write in Markdown?
+03:15 8. Making Packages in R How do I collect my code together so I can reuse it and share it?
+How do I make my own packages?
+03:45 9. Introduction to RStudio How do I use the RStudio graphical user interface?
+04:00 10. Addressing Data What are the different methods for accessing parts of a data frame?
+04:20 11. Reading and Writing CSV Files How do I read data from a CSV file into R?
+How do I write data to a CSV file?
+04:50 12. Understanding Factors How is categorical data represented in R?
+How do I work with factors?
+05:10 13. Data Types and Structures What are the different data types in R?
+What are the different data structures in R?
+How do I access data within the various data structures?
+05:55 14. The Call Stack What is the call stack, and how does R know what order to do things in?
+How does scope work in R?
+06:10 15. Loops in R How can I do the same thing multiple times more efficiently in R?
+What is vectorization?
+Should I use a loop or an apply statement?
+06:40 Finish
+
+\hypertarget{notes}{%
+\section{Notes}\label{notes}}
+
+Our goal is not to teach you R, but to teach you the basic process of doing a data science project that many other programming language like Java and Python can do. We use R in our lessons because:
+
+\begin{itemize}
+\tightlist
+\item
+  we have to use something for examples;
+\item
+  it's free, well-documented, and runs almost everywhere;
+\item
+  it has a large (and growing) user base among scientists; and
+\item
+  it has a large library of external packages available for performing diverse tasks.
+\end{itemize}
+
+But the two most important things are to use whatever language your colleagues are using, so you can share your work with them easily, and to use that language well. apparently. R is the most used language in Data Science
+
+\hypertarget{convention}{%
+\section{Convention}\label{convention}}
+
+info
+
+\begin{rmdinfo}
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under the terms of the
+GNU General Public License versions 2 or 3.
+For more information about these matters see
+\url{http://www.gnu.org/licenses/}.
+\end{rmdinfo}
+Instruction
+
+\begin{rmdinstruction}
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under the terms of the
+GNU General Public License versions 2 or 3.
+For more information about these matters see
+\url{http://www.gnu.org/licenses/}.
+\end{rmdinstruction}
+
+Todo
+
+\begin{rmdaction}
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under the terms of the
+GNU General Public License versions 2 or 3.
+For more information about these matters see
+\url{http://www.gnu.org/licenses/}.
+\end{rmdaction}
+
+hints
+
+\begin{rmdnote}
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under the terms of the
+GNU General Public License versions 2 or 3.
+For more information about these matters see
+\url{http://www.gnu.org/licenses/}.
+\end{rmdnote}
+
+\hypertarget{acknowledgements}{%
+\section*{Acknowledgements}\label{acknowledgements}}
+
+
+This is a \emph{sample} book written in \textbf{Markdown}. You can use anything that Pandoc's Markdown supports, e.g., a math equation \(a^2 + b^2 = c^2\).
+
+The \textbf{bookdown} package can be installed from CRAN or Github:
+
+Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading \texttt{\#}.
+
+To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): \url{https://yihui.name/tinytex/}.
+
+\begin{rmdcaution}
+Some text for this block.
+\end{rmdcaution}
+
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
+
+\begin{center}\includegraphics[width=0.5\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/dataScientist} \end{center}
+
+\begin{rmdnote}
+``What profession did Harvard call the Sexiest Job of the 21st Century?''
+
+\ldots{}
+
+That's right\ldots{}
+
+The data scientist.
+\end{rmdnote}
+
+Ah yes, the ever mysterious data scientist. So what exactly is the data scientist's secret sauce, and what does this ``sexy'' person actually do at work every day? How so they do it?
+
+\hypertarget{what-is-data-science}{%
+\section{What is Data Science?}\label{what-is-data-science}}
+
+Data science is a multidisciplinary filed. It blends of data mining, data analysis, statistics, algorithm development, machine learning and advanced computing and software technology together in order to solve analytically complex problems. Its ultimate goal is to reveal insight of data and get the data value for business.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{img/whatisdatascience} 
+
+}
+
+\caption{Concept of Data Science}\label{fig:unnamed-chunk-6}
+\end{figure}
+
+\hypertarget{data-science-as-discovery-of-data-insight}{%
+\subsection{Data science as Discovery of Data Insight}\label{data-science-as-discovery-of-data-insight}}
+
+This aspect of data science is all about uncovering hidden patterns from data. Diving in at a granular level to mine and understand complex patterns, trends, and relations. It's about surfacing hidden insight that can help and enable companies to make smarter business decisions and take appropriate actions to gain competitive advantages in the market. For example:
+
+\begin{itemize}
+\tightlist
+\item
+  Amazon build recommendation system to provide users suggestion on purchase based on the user's shopping history.
+\item
+  Netflix data mines movie viewing patterns to understand what drives user interest, and uses that to make decisions on which Netflix original series to produce.
+\item
+  Target identifies what are major customer segments within it's base and the unique shopping behaviors within those segments, which helps to guide messaging to different market audiences.
+\item
+  Proctor \& Gamble utilizes time series models to more clearly understand future demand, which help plan for production levels more optimally.
+  How do data scientists mine out insights? It starts with data exploration. When given a challenging question, data scientists become detectives. They investigate leads and try to understand pattern or characteristics within the data. This requires a big dose of analytical creativity.
+\end{itemize}
+
+How do data scientists mine data insights? there is a procedure to follow. It generally starts with data description it is called Described data analysis (DDA) to get first sight on the data sets available. DDS will help data scientist to grasp the quantity and quality of the data. so they can decide how to deal with the data. it then generally followed by data cleaning, manipulation, transform and attributes engineering etc, together called preprocess. Data preprocess is also generally combined with exploratory data analysis (EDA). When given a challenging question, data scientists normally become detectives. They investigate all the information available and follow any possible leads and try to understand pattern or characteristics within the data. This not only requires huge amount tools and techniques but also demand analytical creativity .
+
+Then as needed, data scientists may apply quantitative technique in order to get a level deeper -- e.g.~statistical methods, projections, inferential models, segmentation analysis, time series forecasting, synthetic control experiments, etc. The intent is to scientifically piece together a forensic view of what the data is really saying.
+
+This data-driven insight is central to providing strategic guidance. In this sense, data scientists act as consultants, information provider help business stakeholders on how to act on findings.
+
+\hypertarget{data-science-as-development-of-data-product}{%
+\subsection{Data science as Development of Data Product}\label{data-science-as-development-of-data-product}}
+
+A ``data product'' is a technical asset that:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  utilizes data as input, and
+\item
+  processes that data to return algorithmically-generated results.
+\end{enumerate}
+
+A typical example is users' scoring system. It takes users profile or/and behavior data as input and with a complex scoring engine, it produces a credit score of the users for business decision making.
+Another example of a data product is a recommendation engine, which ingests user data, and makes personalized recommendations based on that data.
+Here are some examples of data products:
+
+\begin{itemize}
+\tightlist
+\item
+  Amazon's recommendation engines suggest items for you to buy, determined by their algorithms.
+\item
+  Netflix recommends movies to you. Spotify recommends music to you.
+\item
+  Gmail's spam filter is data product -- an algorithm behind the scenes processes incoming mail and determines if a message is junk or not.
+\item
+  Computer vision used for self-driving cars is also data product -- machine learning algorithms are able to recognize traffic lights, other cars on the road, pedestrians, etc.
+\end{itemize}
+
+This is different from the ``data insights'' section above, where the outcome to that is to perhaps provide advice to an executive to make a smarter business decision. In contrast, a data product is technical functionality that encapsulates an algorithm, and is designed to integrate directly into core applications. Respective examples of applications that incorporate data product behind the scenes: Amazon's homepage, Gmail's inbox, and autonomous driving software.
+
+Data scientists play a central role in developing data product. This involves building out algorithms, as well as testing, refinement, and technical deployment into production systems. In this sense, data scientists serve as technical developers, building assets that can be leveraged at wide scale.
+
+\hypertarget{what-is-data-scientist}{%
+\section{What is Data Scientist?}\label{what-is-data-scientist}}
+
+Data scientists are a new breed of analytical data expert who have the technical skills to solve complex problems -- and the curiosity to explore what problems need to be solved. They are part mathematician, part computer scientist and part business trend-spotter. They straddle in both the business and IT worlds with mathematical and programming weaponry.
+
+\hypertarget{the-requisite-skill-set}{%
+\subsection{The Requisite Skill Set}\label{the-requisite-skill-set}}
+
+Data scientist needs a blend of skills in three major areas:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Mathematics
+\item
+  Computing and Software Engineering
+\item
+  Business
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{img/datascientist} 
+
+}
+
+\caption{Quality of Data Scientists}\label{fig:unnamed-chunk-7}
+\end{figure}
+
+\hypertarget{mathematics-narrator}{%
+\subsubsection{Mathematics Narrator}\label{mathematics-narrator}}
+
+At the heart of mining data insight and building data product is the ability to view the data through a quantitative lens. There are textures, dimensions, and correlations in data that can be expressed mathematically. Finding solutions utilizing data becomes a brain teaser of heuristics and quantitative technique. Solutions to many business problems involve building analytic models grounded in the hard math, where being able to understand the underlying mechanics of those models is key to success in building them.
+
+Also, a misconception is that data science all about \textbf{statistics}. While statistics is important, it is not the only type of math utilized. First, there are two branches of statistics -- classical statistics and Bayesian statistics. When most people refer to stats they are generally referring to classical statistics, but knowledge of both types is helpful. Furthermore, many inferential techniques and machine learning algorithms lean on knowledge of \textbf{linear algebra}. For example, a popular method to discover hidden characteristics in a data set is SVD, which is grounded in matrix math and has much less to do with classical stats. Overall, it is helpful for data scientists to have breadth and depth in their knowledge of mathematics.
+
+\hypertarget{computing-and-software-engineer-skills}{%
+\subsubsection{Computing and Software Engineer Skills}\label{computing-and-software-engineer-skills}}
+
+Data is now collected, stored and processed with computer. With the increasing of data quantity, as termed as, we are enter the big data era. The conventional way of processing data facing unprecedented challenge. The personal computer may be not adequate to handle big data. Distributed storage, clouds computing and computer clusters become commonly-used platforms for data access and controls. Basic computing environment configuration and settings are common skills need to handle data.
+
+The data processing tools and languages like R or Python, and a database querying language like SQL are the common used languages in data process and data analyzing. It is also important to have a strong software engineering knowledge so it can be comfortable to handle a large amount of data logging, and to develop data-driven products.
+
+Data scientists need utilizing new technology in order to wrangle enormous data sets and work with complex algorithms, and to code or prototype quick solutions, as well as interact and integrate with complex data systems. Core languages associated with data science include SQL, Python, R, and SAS. On the periphery are Java, Scala, Julia, and others. But it is not just knowing language fundamentals. A data scientist is a technical ninja, able to creatively navigate their way through technical challenges in order to make their code work.
+
+Along these lines, a data science is a solid algorithmic thinker, having the ability to break down messy problems and recompose them in ways that are solvable. This is critical because data scientists operate within a lot of algorithmic complexity. They need to have a strong mental comprehension of high-dimensional data and tricky data control flows. Full clarity on how all the pieces come together to form a cohesive solution.
+
+\hypertarget{strong-business-acumen}{%
+\subsubsection{Strong Business Acumen}\label{strong-business-acumen}}
+
+It is important for a data scientist to be a tactical business consultant, an operation narrator and story teller. Working so closely with data, data scientists are positioned to learn from data in ways no one else can. They can understand the language the data speak and listen the story the data tells. That creates the responsibility to translate observations, discovery to shared knowledge, and contribute to strategy on how to solve core business problems. This means a core competency of data science is using data to cogently tell a story. No data present a cohesive narrative of problem and solution, using data insights as supporting pillars, that lead to guidance.
+
+Having this business acumen is just as important as having acumen for technology and math and algorithms. There needs to be clear alignment between data science projects and business goals. Ultimately, the value doesn't come from data, math, and tech itself. It comes from leveraging all of the above to build valuable capabilities and have strong business influence.
+
+\hypertarget{how-to-become-a-data-scientist}{%
+\subsection{How to Become a Data Scientist?}\label{how-to-become-a-data-scientist}}
+
+Many people start to Position themselves for a career in data science. Not only for good job opportunities, but also for excitement of work in the technology field with freedom for experimentation and creativity. To get to this position you need solid foundations.
+
+A conventional way of becoming a data scientist is Choosing a university that offers a data science degree. Or register yourself for courses that in data science and analytics fields. If you cannot do these, the option left to you is to learn by yourself.
+
+The knowledge and skills you should have are:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Statistics and machine learning}. A good understanding of statistics is vital as a data scientist. You should be familiar with statistical tests, distributions, maximum likelihood estimators, etc. Statistics knowledge will also help you understand when different techniques are (or aren't) a valid approach. Machine learning (ML) is a good weapon when you involve a big data project. Algorithms is the core of machine learning, although many implementations with R or Python libraries do exist and convenient to use, It is still needed a thorough understand how the algorithms works and when when it is appropriate to use different ones.
+\item
+  \textbf{Coding languages such as R or Python}. It is essential, a data scientist is competent with a number of computing and data querying languages like R, Python and SQL.
+\item
+  \textbf{Databases such as MySQL and Postgres}. Data is generally stored in a Database. it is important to have necessary skills for data access and control from a DBMS systems. The most commonly used DBMS systems are MySql (\url{https://www.mysql.com/}) and Postgres (\url{https://www.postgresql.org/}) in addition to ACCESS and EXCEL.
+\item
+  \textbf{Visualization and reporting technologies}. Visualizing and communicating data is incredibly important, especially with companies that are making data-driven decisions, or companies where data scientists are viewed as people who help others make data-driven decisions. When it comes to communicating, this means describing your findings, or the way techniques work to audiences, both technical and non-technical. Visualization can be immensely helpful. Therefore familiar with data visualization tools like matplotlib, ggplot, or d3.js. Tableau and dashboarding have become a popular data visualization tools. It is important to not just be familiar with the tools necessary to visualize data, but also the principles behind visually encoding data and communicating information.
+\item
+  \textbf{Big data platforms like Hadoop}.(\url{https://hadoop.apache.org/}) and \textbf{Spark} (\url{https://spark.apache.org/}). Although a lot of Data Science project can be tried, or at least prototyped on PC or workstations, it is reality that most large data analyzing is done on advanced computing platforms like distributed infrastructure or computer clusters. these advanced platform mostly deploy Hadoop ecosystems.
+\end{itemize}
+
+If you don't want to learn these skills on your own, take an online course or enroll in a bootcamp. Like what you do now. It not only provides you opportunity to gain knowledge quickly but also provides you chance of networking with other people who has the similar situation like you do. Connect with other people can lead you into an online community. They all will help you gain fine gran and insider knowledge of solving problems.
+
+\hypertarget{process}{%
+\section{Process of Doing Data Science}\label{process}}
+
+Understand what data science is about is just a start of becoming a data scientist. Once the goal is set. The next task is to select a correct path and work hard to to reach your destination. The path is important which can be shorter or longer, or direct and smooth, or curvy and bumpy. It is vital to follow a short and smooth path. This path is the data science project process. Figure \ref{fig:process} is the 6 steps process, which is inspired by the CRISP (Cross Industry Standard Process for Data Mining) \citep{Chapman2000}, \citep{Shearer2000} and KDD (knowledge discovery in data bases) process \citep{Li2018}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{img/process} 
+
+}
+
+\caption{Process of doing Data Science}\label{fig:process}
+\end{figure}
+
+\hypertarget{step1}{%
+\subsection*{Step 1: Understand the Problem - Define Objectives}\label{step1}}
+
+
+Any data analysis must begin with business issues. With business issues a number of questions should be asked. These questions have to be the right questions and measurable, clear and concise. Define analysis question is regarded as define a Data Requirements engineering and to get a a data project specification. It starts from a business issue and asking relevant questions, only after you fully understand the problem and the issues you may be able to turn practical problem into analytical questions.
+
+For example, start with a business issue: A contractor is experiencing rising costs and is no longer able to submit competitive contract proposals. One of many questions to solve this business problem might include: Can the company reduce its staff without compromising quality? Or, can company find alternative suppler on the production chain?
+
+Once you have questions, you can start to thinking about data required for analysis. The data required for analysis is based on questions. The data necessary as inputs to the analysis can then be identified (e.g., Staff skills and performance). Specific variables regarding a staff member (e.g., Age and Income) may be specified and obtained. Data type can be defined as numerical or categorical.
+
+After you defined you analytical questions. It is important to Set Clear evaluation of your project to measurement how success of your project.
+
+This generally breaks down into two sub-steps: A) Decide what to measure, and B) Decide how to measure it.
+
+\textbf{A) What To Measure?}
+
+Using the contractor example, consider what kind of data you'd need to answer your key question. In this case, you would need to know the number and cost of current staff and the percentage of time they spend on necessary business functions. This is what is called in business as KPI - Key performance indicators. In answering this question, you likely need to answer many sub-questions (e.g., Are staff currently under-utilized? If so, what process improvements would help?). Finally, in your decision on what to measure, be sure to include any reasonable objections any stakeholders might have (e.g., If staff are reduced, how would the company respond to surges in demand?).
+
+\textbf{B) How To Measure? }
+
+Thinking about how you measure the success fo your data science project, the deep end is to measure some key performance indicators. They are the data you have chosen to use in the previous step. So measure your data is just as important, especially before the data collection phase, because your measuring process either backs up or discredits your project later on. Key questions to ask for this step include:
+
+\begin{itemize}
+\tightlist
+\item
+  What is your time frame? (e.g., annual versus quarterly costs)
+\item
+  What is your unit of measure? (e.g., USD versus Euro)
+\item
+  What factors should be included? (e.g., just annual salary versus annual salary plus cost of staff benefits)
+\end{itemize}
+
+\hypertarget{understanddata}{%
+\subsection{Step 2: Undertand Data - Collect Data and Data Validation}\label{understanddata}}
+
+The second step is understand data. It includes \textbf{Data collection} and \textbf{Data Validation}. With problem understood and analytical questions defined and your validation criteria and measurements set, It is time to collect data.
+
+\hypertarget{data-collection}{%
+\subsubsection*{Data Collection}\label{data-collection}}
+
+
+Before collect data, the data source has to be determined based on the relevance. veriaty of data source may be assessed and accessed to get relevant data. These data source may include an existing databases, or organization's file system, or a third party service or even open web sources. They could provide redundant, or complementary, sometimes conflict data. it has to be cautious to select right data source from the very beginning. sometimes you need gather data via observation or interviews, then develop an interview template ahead of time to ensure consistency. it is a good idea to Keep your collected data organized in a log with collection dates and add any source notes as you go (including any data normalization performed). This practice validates your data and any conclusions down the road.
+
+Data Collection is the actual process of gathering data on targeted variables identified as data requirements. The emphasis is on ensuring correct and accurate data collection, which means correct procedure was taken and appropriate measurements were adopted. the maximum efforts were spent to ensure the data quality. Remember that data Collection provides both a baseline to measure and a target to improve for a successful data science project.
+
+\hypertarget{data-validation}{%
+\subsubsection*{Data Validation}\label{data-validation}}
+
+
+Data validation id the process to Assess data quality. It is to ensure the collected data have reached quality requirements identified in the step 1, that is, they are correct and useful. data validation can include:
+
+\begin{itemize}
+\tightlist
+\item
+  Data type validation
+\item
+  Range and constraint validation
+\item
+  Code and cross-reference validation
+\item
+  Structured validation
+\item
+  Consistency validation
+\end{itemize}
+
+\hypertarget{preprocess}{%
+\subsection*{Step 3: Data Preprocess}\label{preprocess}}
+
+
+Data preprocess is step that takes data processing method and technique to transforms raw data into a formatted and understandable form and ready for analyzing. Real world data is often incomplete, inconsistent, and is likely to contain many errors. Data preprocess is a proven method of resolving such issues. Tasks of data preprocess may include:
+
+\begin{itemize}
+\item
+  \textbf{Data cleaning}. The process of detecting and correcting (or removing) corrupt or inaccurate records from a record set, table, or database. It normally includes identifying incomplete, incorrect, inaccurate or irrelevant data and then replacing, modifying, or deleting the dirty or coarse data. After cleansing, a data set should be consistent with other data sets.
+\item
+  \textbf{Data editing}. The process involves changing and adjusting of collected data. The purpose is to ensure the quality of the collected data. Data editing should be done by fully understand the data collected and the data requirement specification. Editing data without them can be disastrous.
+\item
+  \textbf{Data reduction}. The process and methods used to reduce data quantity to fit for analyzing. Raw data set collected or selected for analysis can be huge, then it could drastically slow down the analysis process. Reducing the size of the data set without jeopardizing the data analysis results is often desired. It includes records' number reduction and data attributes reduction. Methods used for reduce data records size includes \textbf{Sampling} and \textbf{Modelings} (e.g., regression or log-linear models or histograms, clusters, etc). Methods used for attributes reduction include \textbf{Feature selection} and \textbf{Dimension reduction}. Feature selection means removal of irrelevant and redundant features. such operation should not lose information the data set has. Data analysis algorithms work better if the dimensionality, which is the number of attributes in a data object is low. Data compression techniques (e.g., wavelet transforms and principal components analysis), attribute subset selection (e.g., removing irrelevant attributes as discussed in previous paragraph), and attribute construction (e.g., where a small set of more useful attributes is derived from the large numbers of attributes in the original data set) are useful techniques.
+\item
+  \textbf{Data transformation} sometimes referred to as \textbf{data munging} or \textbf{data wrangling}. It is the process of transforming and mapping data from one data form into another format with the intent of making it more appropriate and valuable for downstream analytics. It is often that data analysis method requires data to be analyzed have certain format or possesses certain attributes. For example, classification algorithms require that the data be in the form of categorical (nominal) attributes; algorithms that find association patterns require that the data be in the form of binary attributes. Thus, it is often necessary to transform a continuous attribute into a categorical attribute, which is called \textbf{Discretization}, and both continuous and discrete attributes may need to be transformed into one or more binary attributes, whci iscalled \textbf{Banalization}. Other methods include \textbf{SCaling} and \textbf{normalization}.Scaling changes the bounds of the data, and can be useful, for example, when you are working with data in different units. Normalization scales data sets to a smaller range such as {[}0.0, 1.0{]}.
+\item
+  \textbf{Data re-engineering}
+  Re-engineering data is necessary when raw data come from many different data sources and in different format. Data re-engineering similar with data transformation can be done in both record level and in attributes level. Record level re-engineering is also called data \textbf{Integration}, which integrates variety of data into one file or place and in one format for analysis. for predictive analysis with a model, data re-enginering is also including split a given data set into two subsets called ``Training'' and ``Test'' Set.
+\end{itemize}
+
+\hypertarget{step-4-analyze-data}{%
+\subsection*{Step 4: Analyze Data}\label{step-4-analyze-data}}
+
+
+After your collected data being preprocessed and suitable for analysis. Now you can drill down and attempt to answer your question from \protect\hyperlink{step1}{Step 1} with the actions called Data Analyzing. It is the core activity in data science project process by writing, executing, and refining computer programs that utilize some analytical methods and algorithms to obtain insights from data sets. The methods in data analysis can be categorized into three major groups: \textbf{Descriptive data analysis (DDA)}, \textbf{Exploratory data analysis (EDA)} and \textbf{Predictive data analysis (PDA)}. DDA and EDA uses quantitative and statistical methods on data sets and data attributes measurements and their value distributions while DDA focus on numeric summary but EDA emphasis on graphical (plot) means. PDA on other hand may involve modeling and machine learning. Data analyzing is generally starting from Descriptive analysis, and goes further with Exploratory analysis. The most advanced methods are predictive analysis and machine learning. The later is built based on the results form the former methods. Some times mixed methods work better.
+
+\hypertarget{descriptive-data-analysis}{%
+\subsubsection*{\texorpdfstring{\textbf{Descriptive data analysis}}{Descriptive data analysis}}\label{descriptive-data-analysis}}
+
+
+It is the simplest type of analysis. It describes and summarizes a data set quantitatively. Descriptive analysis\index{Descriptive analysis} generally starts with an univariate analysis, meaning describing a single variable (can also be called attribute, column or field) of the data. The appropriate depends on the level of measurement. For nominal variables, a frequency table and a listing of the modes are sufficient. For ordinal variables the median can be calculated as a measure of central tendency and the range (and variations of it) as a measure of dispersion. For interval level variables, the arithmetic mean (average) and standard deviation are added to the toolbox and, for ratio level variables, we could add the geometric mean and harmonic mean as measures of central tendency and the coefficient of variation as a measure of dispersion. However, there are many other possible statistics which covers areas such as location (``middle'' of the data), dispersion (range or spread of data) and shape of the distribution. Moving up to two variables, descriptive analysis can involve measures of association such as computing a correlation coefficient or covariance. Descriptive analysis' goal is to describe the key features of the sample numerically. It should shed light on the key numbers that summarize distributions within the data, may describe or show the relationships among variables with metrics that describe association, or by tables that cross tabulation counts. Descriptive analysis is typically the first step on the data analysis ladder, which only tries to get a sense of the data.
+
+\hypertarget{explorative-data-analysis}{%
+\subsubsection*{\texorpdfstring{\textbf{Explorative data analysis}}{Explorative data analysis}}\label{explorative-data-analysis}}
+
+
+Descriptive analysis\index{Descriptive analysis} is very important. However, numerical summaries can only get you so far. One problem is that it can only converting a large number of values down to a few summary numbers. Unsurprisingly, different samples with different distributions, shapes, and properties can result in the same summary statistics. This will cause problems. When you are looking a simple single summary statistic, the mean of a single variable, there can be a lot of possible ``solutions'' or samples. The typical example is Anscombe's quartet \citep{Anscombe1973}, it comprises four datasets that have nearly identical simple statistical properties, yet appear very different when graphed. Most kinds of statistical calculations rest on assumptions about the behavior of the data. Those assumptions may be false, and then the calculations may be misleading. We ought always to try and check whether the assumptions are reasonably correct; and if they are wrong we ought to be able to perceive in what ways they are wrong. Graphs are very valuable for these purposes.
+
+EDA allows us to challenge or confirm our assumptions about the data. It is a good tool to be used in \protect\hyperlink{preprocess}{data prerpocess}. We often have pretty good expectations of what unclean data might look like, such as outliers, missing data, and other anomalies, perhaps more so than our expectations of what clean data might look like. With the more we understood data, we could develop our intuition of what factors and possible relations at are play. EDA, with its broad suite of ways to view the data points and relationships, provides us a range of lenses with which to study story that data is telling us. That in turn, helps us to come up with new hypotheses of what might be happening. Further, if we understood which variables we can control, which levers we have to work within a system to drive the metrics such as business revenue or customer conversion in the desired direction. EDA can also highlight gaps in our knowledge and which experiments might make sense to run to fill in those gaps.
+
+The basic tools of EDA are plots, graphs and summary statistics. Generally speaking, it's a method of systematically going through the data, plotting distributions of all variables (using box plots), plotting time series of data, transforming variables, looking at all pairwise relationships between variables using scatterplot matrices, and generating summary statistics for all of them or identifying outliers.
+
+\hypertarget{predictive}{%
+\subsubsection*{\texorpdfstring{\textbf{Predictive data analysis }}{Predictive data analysis }}\label{predictive}}
+
+
+Predictive analysis\index{Predictive analysis} builds upon \textbf{inferential analysis}, which is to learn about relationships among variables from an existing training data set and develop a model that can predict values of attributes for new, incomplete, or future data points. Inferential analysis is a type of analysis that from a dataset sample in hand infer some information, which might be parameters, distributions, or relationships about the broader population from which the sample came. We typically infer metrics about the population from a sample because data collection is too expensive, impractical, or even impossible to obtain all data. The typical process of inferential analysis includes testing hypothesis and deriving estimates.
+There are a whole slew of approaches and tools in predictive analysis. \textbf{Regression} is the broadest family of tools. Within that, however, are a number of variants (lasso, ridge, robust etc.) to deal with different characteristics of the data. Of particular interest and power is \textbf{Logistic Regression} that can be used to predict classes. For instance, spam/not spam used to be mostly predicted with a \textbf{Naïve Bayes predictor} but nowadays logistic regression is more common. Other techniques and what come under the term \textbf{Machine Learning} include neural networks, tree-based approaches such as classification and regression trees, random forests, support vector machines (SVM), and k-nearest neighbours.
+
+\hypertarget{step-5-results-interpretation-and-evaluation}{%
+\subsection*{Step 5: Results Interpretation and Evaluation}\label{step-5-results-interpretation-and-evaluation}}
+
+
+After analyzing your data and get some answers about your original questions, it is possible that you need conduct further research and more analysis. Let us suppose that you are happy with the analysis results you have. It is finally time to interpret your results. As you interpret your analysis, keep in mind that you cannot ever prove a hypothesis true: rather, you can only fail to reject the hypothesis. Meaning that no matter how much data you collect, chance could always interfere with your results. Interpreting the results of analysis, you should thinking of how close the results address the original problems by asking yourself these key questions:
+
+\begin{itemize}
+\tightlist
+\item
+  Does the data answer your original question? How?
+\item
+  Does the data help you defend against any objections? How?
+\item
+  Are there any limitation on your conclusions, any angles you haven't considered?
+\end{itemize}
+
+If your interpretation of the data holds up under all of these questions and considerations, then you likely have come to a productive conclusion. However, there could be a chance that you may find you might need to revise your original question or collect more data and you may need to roll the ball from the starting line. Again. Either way, this initial analysis of trends, correlations, variations and outliers are not completely wasted. They help you focus your data analysis on better answering your question and any objections others might have. That is the next step report and communication.
+
+\hypertarget{step-6-data-report-and-communication}{%
+\subsection*{Step 6: Data Report and Communication)}\label{step-6-data-report-and-communication}}
+
+
+Whereas the analysis phase involves programming and run programs on different computer platforms, the reporting involves narrative the results of analysis, thinking how close the results address the original problems and communicating about the outputs of analyses with interesting parties in many cases in visual formats.
+During this step, data analysis tools and software are helpful but visual tools are intuitive and worth a lot of words. Visio, tableau (\url{https://www.tableau.com/}), Minitab (\url{https://www.minitab.com/}) and Stata are all good software packages for advanced statistical data analysis. There are also plenty of open source data visualization tools available.
+
+It is important to note that the above 6 steps process is not a linear process. Any discovery of useful relationships and valuable patterns are enabled by a set of iterative activities. Iteration can occur in a single step or in a few steps in any point in the process.
+
+\hypertarget{tools-used-in-doing-a-data-science-project}{%
+\section{Tools used in Doing a Data Science Project}\label{tools-used-in-doing-a-data-science-project}}
+
+Data Scientists use traditional statistical methodologies that form the core backbone of Machine Learning algorithms. They also use Deep Learning algorithms to generate robust predictions. Data Scientists use the following tools and programming languages:
+
+\hypertarget{r}{%
+\subsection*{R}\label{r}}
+
+
+R (\url{https://www.r-project.org/}) is a scripting language that is specifically tailored for statistical computing and data. It is widely used for data analysis, statistical modeling, time-series forecasting, clustering etc. R is mostly used for statistical operations. It also possesses the features of an object-oriented programming language. R is an interpreter based language and is widely popular across multiple industries particularly for doing data Science projects.
+
+\hypertarget{python}{%
+\subsection*{Python}\label{python}}
+
+
+Like R, Python (\url{https://www.python.org/}) is an interpreter based high-level programming language. Python is a versatile language. It is mostly used for Data Science and Software Development. Python has gained popularity due to its ease of use and code readability. As a result, Python is widely used for Data Analysis, Natural Language Processing, and Computer Vision. Python comes with various graphical and statistical packages like Matplotlib, Numpy, SciPy and more advanced packages for Deep Learning such as TensorFlow, PyTorch, Keras etc. For the purpose of data mining, wrangling, visualizations and developing predictive models, we utilize Python. This makes Python a very flexible programming language.
+
+\hypertarget{sql}{%
+\subsection*{SQL}\label{sql}}
+
+
+SQL stands for Structured Query Language. Data Scientists use SQL for managing and querying data stored in databases. Being able to extract data from databases is the first step towards analyzing the data. Relational Databases are a collection of data organized in tables. We use SQL for extracting, managing and manipulating the data. For example, A Data Scientist working in the banking industry uses SQL for extracting information of customers. While Relational Databases use SQL, \textbf{NoSQL} is a popular choice for non-relational or distributed databases. Recently NoSQL has been gaining popularity due to its flexible scalability, dynamic design, and open source nature. MongoDB, Redis, and Cassandra are some of the popular NoSQL databases.
+
+\hypertarget{hadoop}{%
+\subsection*{Hadoop}\label{hadoop}}
+
+
+Big data is another trending term that deals with management and storage of huge amount of data. Data is either structured or unstructured. A Data Scientist must have a familiarity with complex data and must know tools that regulate the storage of massive datasets. One such tool is Hadoop (\url{https://hadoop.apache.org/}). While being open-source software, Hadoop utilizes a distributed storage system using a model called \textbf{MapReduce}. There are several other packages in Hadoop together formed a Apache ecosystem, such as Apache Pig, Hive, HBase etc. Due to its ability to process colossal data quickly, its scalable architecture and low-cost deployment, Hadoop has grown to become the most popular software for Big Data.
+
+\hypertarget{tableau}{%
+\subsection*{Tableau}\label{tableau}}
+
+
+Tableau (\url{https://www.tableau.com/}) is a Data Visualization software specializing in graphical analysis of data. It allows its users to create interactive visualizations and dashboards. This makes Tableau an ideal choice for showing various trends and insights of the data in the form of interactable charts such as Treemaps, Histograms, Box plots etc. An important feature of Tableau is its ability to connect with spreadsheets, relational databases, and cloud platforms. This allows Tableau to process data directly, making it easier for the users.
+
+\hypertarget{weka}{%
+\subsection*{Weka}\label{weka}}
+
+
+For Data Scientists looking forward to getting familiar with Machine Learning in action, Weka (\url{https://www.cs.waikato.ac.nz/ml/weka/}) is, can be, an ideal option. Weka is generally used for Data Mining but also consists of various tools required for Machine Learning operations. It is completely open-source software that uses GUI Interface making it easier for users to interact with, without requiring any line of code.
+
+\hypertarget{applications-of-data-science}{%
+\section{Applications of Data Science}\label{applications-of-data-science}}
+
+Data Science has created a strong foothold in several industries such as Government and education, Healthcare and medicine, banking and commerce, manufacturing and transportation etc. It has immense applications and has variety of uses. Some of the applications of Data Science are listed below:
+
+\hypertarget{data-science-in-healthcare}{%
+\subsection*{Data Science in Healthcare}\label{data-science-in-healthcare}}
+
+
+Data Science has been playing a pivotal role in the Healthcare Industry. With the help of classification algorithms, doctors are able to detect cancer and tumors at an early stage using Image Recognition software. Genetic Industries use Data Science for analyzing and classifying patterns of genomic sequences. Various virtual assistants are also helping patients to resolve their physical and mental ailments.
+
+\hypertarget{data-science-in-e-commerce}{%
+\subsection*{Data Science in E-commerce}\label{data-science-in-e-commerce}}
+
+
+Amazon uses a recommendation system that recommends users various products based on their historical purchase. Data Scientists have developed recommendation systems predict user preferences using Machine Learning.
+
+\hypertarget{data-science-in-manufacturing}{%
+\subsection*{Data Science in Manufacturing}\label{data-science-in-manufacturing}}
+
+
+Industrial robots have made taken over mundane and repetitive roles required in the manufacturing unit. These industrial robots are autonomous in nature and use Data Science technologies such as Reinforcement Learning and Image Recognition.
+
+\hypertarget{data-science-as-conversational-agents}{%
+\subsection*{Data Science as Conversational Agents}\label{data-science-as-conversational-agents}}
+
+
+Amazon's Alexa and Siri by Apple use Speech Recognition to understand users. Data Scientists develop this speech recognition system, that converts human speech into textual data. Also, it uses various Machine Learning algorithms to classify user queries and provide an appropriate response.
+
+\hypertarget{data-science-in-transport}{%
+\subsection*{Data Science in Transport}\label{data-science-in-transport}}
+
+
+Self Driving Cars use autonomous agents that utilize Reinforcement Learning and Detection algorithms. Self-Driving Cars are no longer fiction due to advancements in Data Science.
+
+\hypertarget{summary}{%
+\section*{Summary}\label{summary}}
+
+
+While Data Science is a vast subject, being an aggregate of several technologies and disciplines, it is possible to acquire these skills with the right approach. In the end, Data Science is a very robust field that best fits people who have a knack for experimentation and problem-solving. With a large number of applications, Data Science has become the most versatile career.
+
+\hypertarget{exercise}{%
+\section*{Exercise}\label{exercise}}
+
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Explain Data Science in your own term. What is relation between data science and Data mining, Data Science with Data Analytics?
+\item
+  What a Data Scientist do? What skills a data SCientist should have?
+\item
+  How you interpret the saying that ``Data Scientist is a detective. An investigation into datasets may not results in a plausible conclusion''. How do you explain digging value out of data in this situation?
+\end{enumerate}
+
+\hypertarget{tools}{%
+\chapter{Get Your Tools Ready}\label{tools}}
+
+\begin{center}\includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/tools} \end{center}
+
+工欲善其事，必先利其器
+
+An artisan must first sharpen his tools if he is to do his work well.
+
+-- 孔子《论语》
+Confucius . Analects
+
+Since this book is ``Do Data Science''. It means learn data science by doing. First of all we need to get our weaponry or tools ready.
+
+We already knew that there are a list of tools used by data scientists. Apart from the personal preference, the most used tool is R. This book will use R as the tools to do a complete data science project. However this is not a R language book, it will not teach you about R language and how to use it. It will simply demonstrate a data science project completion step by step, which is completed with R language.
+
+By doing, I mean that you can simply mimic what I have done and follow along by typing or copy past my code into your working space, observe the effects and the results of each line of code execution. Thinking of why I have to do this and what results can I expect along the line of data science project's process. monitoring the issue raised and the methods used to resolve the issues. It is a hope that at some points you can have your own thoughts, perhaps your own code, methods and experiments. Once that is achieved. the goals are reached.
+
+\hypertarget{brief-introductiuon-about-r-and-rstudio}{%
+\section{Brief introductiuon about R and RStudio}\label{brief-introductiuon-about-r-and-rstudio}}
+
+R is one of the most widely used programming languages for statistical modeling. It has become the lingua franca of Data Science. Being open-source, R enjoys community support of avid developers who work on releasing new packages, updating R and making it a steady and fast programming package for Data Science.
+
+\hypertarget{features-of-r-programming}{%
+\subsection{Features of R Programming}\label{features-of-r-programming}}
+
+R Programming has the following features:
+
+\begin{itemize}
+\tightlist
+\item
+  R is a comprehensive programming language that provides support for procedural programming involving functions as well as object-oriented programming with generic functions.
+\item
+  R can be extended easily. There are over 10,000 packages in the repository of R programming. With these packages, one can make use of extended functions to facilitate easier programming.
+\item
+  Being an interpreter based language, R produces a machine-independent code that is portable in nature. Furthermore, it facilitates easy debugging of the code.
+\item
+  R supports complex operations with vectors, arrays, data frames as well as other data objects that have varying sizes.
+\item
+  R can be easily integrated with many other technologies and frameworks like Hadoop and Spark. It can also integrate with other programming languages like C, C++, Python, Java, FORTRAN, and JavaScript.
+\item
+  R provides robust facilities for data handling and storage.
+  As discussed in the above section, R has extensive community support that provides technical assistance, seminars and several boot camps to get you started with R.
+\item
+  R is cross-platform compatible. R packages can be installed and used on any OS in any software environment without any changes.
+\end{itemize}
+
+\hypertarget{r-scripts}{%
+\subsection{R Scripts}\label{r-scripts}}
+
+R is the primary statistical programming language for performing modeling and graphical tasks. so it can run in command line as an interpreting languages. However, With its extensive support for performing increasingly complex computations such as manipulations on matrix and dataframes, R is now mostly running in script for a variety of tasks that involve complex datasets with complex operations.
+
+There is plenty of editing tools which perform interactions with the native R console. With any one of them you can edit and run R script. You can also simply import extra packages and use the provided functions to achieve results with minimal number lines of code. There are several editors and IDEs that facilitate GUI features for authoring and executing R scripts. Some of the useful editors that support the R programming language are: RGui (R Graphical User Interface) and RStudio, a integrated R script development environment.
+
+This book will NOT teach you how to code in R. Learning R and to code in R language is not so hard. It just requires a lot of trials and time-spending. You can always going online and searching on Google, Baidu or \href{https://stackoverflow.com/}{stackoverflow}. There are also plenty of examples and code. The chances are if you're trying to figure out how to do something in R, other people have tried as well, so rather than banging your head against the wall, look online. There are also some books available to help you out on this front as well. I suggest looking other people's code and run it to see the results. R manual is always handy and is available in \href{https://cran.r-project.org/manuals.html}{here} .
+
+If you want learn R systematically, there are many sources online providing good tutorials. You can try to learn more R language from R tutorials. Tutorialspoint (\url{http://www.tutorialspoint.com/r/index.htm}), codecademy (\url{https://www.codecademy.com/}). If you prefer an online interactive environment to learn R, this free R tutorial by DataCamp (\url{https://www.datacamp.com/courses/free-introduction-to-r}) is a great way to get started.
+
+\hypertarget{r-graphical-user-interface-rgui}{%
+\subsection{R Graphical User Interface (RGui)}\label{r-graphical-user-interface-rgui}}
+
+RGui is a standard GUI (Graphic User Interface) platform comes with a R release. By default it provides two windows: R Console (on the left) and R Editor (on the right). See: Figure \ref{fig:rgui}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{img/RGui} 
+
+}
+
+\caption{Screen capture of RGui: where Console i son the left and Editor is on teh right}\label{fig:rgui}
+\end{figure}
+
+\textbf{R Console} is an essential part of the RGui. In this window, we input various instructions, commands and scripts for different operations. The results of any operation or instruction execution are displayed at the console window including warning and error messages. Console window utilizes several other useful tools embedded to facilitate and ease of various of operations. The console window appears whenever you access the RGui.
+
+\textbf{R Editor} is an simple build-in text editor. Where you can create new R script, edit, test and debug the script and save it into a file. To lunch R Editor, in the main panel of RGui, go to the ``File'' menu and select the ``New Script'' option. This will lunch R Editor and allow you create a new script in R. R Editor has a function of ``Run line or selection''. It means you can debug your code by line or selection. It is very convenient tool for debugging.
+
+\hypertarget{rstudio}{%
+\subsection{RStudio}\label{rstudio}}
+
+RStudio \index{RStudio}(\url{https://rstudio.com/products/rstudio/}) is an integrated and comprehensive Integrated Development Environment (IDE) for R. It facilitates extensive code editing, debugging and development. It includes a console, syntax-highlighting editor that supports direct code execution, as well as tools for plotting, history, debugging and workspace management. Figure \ref{fig:rstudio} is a screen shot of the RStudio.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{img/RStudio} 
+
+}
+
+\caption{Screen capture of RStudio with integrated R code developemtn environment}\label{fig:rstudio}
+\end{figure}
+
+Here are some distinctive features provided by the RStudio:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{An IDE that was built just for R}. With Syntax highlighting, code completion, and smart indentation. It can execute R code directly from the source editor. it can quickly jump to function definitions
+\item
+  \textbf{Bring your workflow together}. Integrated R help and documentation with easily manage multiple working directories using projects and Workspace browser and data viewer
+\item
+  \textbf{Powerful authoring \& Debugging}. Interactive debugger to diagnose and fix errors quickly and extensive package development tools can authoring with Sweave and R Markdown
+\end{itemize}
+
+RStudio is available in open source and commercial editions and runs on the desktop (Windows, Mac, and Linux) or in a browser connected to RStudio Server or RStudio Server Pro.
+
+We will use RStudio for the whole book. The detailed RStudio IDE is explained in Section \ref{rs}.
+
+\hypertarget{downlaod-and-install-r-and-rstudio}{%
+\section{Downlaod and Install R and RStudio}\label{downlaod-and-install-r-and-rstudio}}
+
+It is simple to download and install both R and RStudio.
+
+\hypertarget{r-download-and-installation}{%
+\subsection{R Download and Installation}\label{r-download-and-installation}}
+
+To download R, please either directly from here (\url{http://cran.us.r-project.org/bin/windows/base}) or your preferred CRAN mirror (\url{https://cran.r-project.org/mirrors.html}). If you have questions about R like how to download and install the software, or what the license terms are, please read the answers to frequently asked questions (\url{http://cran.r-project.org/faqs.html}).
+
+Once you have chosen a site and click the download, you will will see Figure \ref{fig:rd},
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{img/R} 
+
+}
+
+\caption{Screen capture of R dowanload papge from CRAN}\label{fig:rd}
+\end{figure}
+
+Pickup your platform and download the latest version (4.0.2), follow instruction to install it (Assume you choose Windows). In Windows, double click downloaded executable file, you will see \href{fig:rinstall}{this} (as shown in Figure \ref{fig:rinstall}),
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{img/Rinstall} 
+
+}
+
+\caption{Screen capture of R install in Windows}\label{fig:rinstall}
+\end{figure}
+
+Click `Run', and answer the security message with `Yes'. Choose your language (English),
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{img/Rinstlang} 
+
+}
+
+\caption{Screen capture of R install in Windows}\label{fig:rinstlang}
+\end{figure}
+
+Click `Ok'. And follow the instructions on screen by click `Next', until the whole process is complete, click `Finish'. You now have a version (choose 64bit) R installed. The installation program will create the directory ``C:\textbackslash Program Files\textbackslash R\textbackslash\textless your version\textgreater{}'', according to the version of R that you have installed.
+The actual R program will be ``C:\textbackslash Program Files\textbackslash R\textbackslash\textless your version\textgreater{}\bin\textbackslash Rgui.exe''. A windows ``shortcut'' should have been created on the desktop and/or in the start menu. You can launch it any time you want by click on it.
+
+\hypertarget{rstudio-download-and-installation}{%
+\subsection{RStudio Download and Installation}\label{rstudio-download-and-installation}}
+
+To download RStudio, to go Rstudio products Web page (\url{https://rstudio.com/products/rstudio/}). Choose ``RStudio Desktop'' between ``RStudio Serve'' and ``RStudio Desktop''. See, Figure \ref{fig:rstudio1},
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{img/Rstudio1} 
+
+}
+
+\caption{Screen capture of RStudio selection}\label{fig:rstudio1}
+\end{figure}
+
+After choosing the desktop version it will take you to a page (\url{http://www.RStudio.org/download/desktop}). Where several possible downloads are displayed, different one for each operating systems. However, the webpage was designed that it can automatically recommends the download that is most appropriate for your computer. Click on the appropriate link, and the RStudio installer file will start downloading.
+
+Once it is finished downloading, open the installer file and answer all on screen questions or click ``next'' in the usual way to install RStudio.
+
+After it is finished installing, you can launch RStudio from windows start button..
+
+As we explained in the previous section, Rstudio is a comprehensive and integrated development environment. It can be overwhelming for people who contact it in the first time. Next section we will introduce its interface in great details.
+
+\hypertarget{rs}{%
+\subsection{Familiar with RStudio interface}\label{rs}}
+
+Open RStudio and you will see a rather sophisticated interface. Apart from the usual top level manual like ``File Edit \ldots{}'', there are four panes. I labeled 1 to 4 on the following image (Figure \ref{fig:RStudio}), these panels are called \textbf{pane}\index{pane} in RStudio.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/Rstudio} 
+
+}
+
+\caption{RStudio interface}\label{fig:RStudio}
+\end{figure}
+
+RStudio does allow you to move panes around in the options menu, and also select tabs you want. Before you can missing around and lost yourself on the way. Let us stick on this default layout ion the moment. It is waht you see when you first lunch it, so we'll act as though it's standard.
+
+\hypertarget{pane-1-script-pane---view-files-and-data}{%
+\subsubsection*{Pane 1: Script Pane - View Files and Data}\label{pane-1-script-pane---view-files-and-data}}
+
+
+Script pane appears by default in the top left of the RStudio interface. it is where you enter your script and code, you can edit and debug your code or your script.
+
+This pane also display files When you click on a data file in the Workspace pane (top right, number 2 on the above image), or open a file from the Files pane (right bottom, number 3 on the above image), the results will appear in Pane 1. Each file opens in its own tab, and you can navigate between tabs by clicking on them (or using keyboard shortcuts).
+
+\hypertarget{pane-2-workspace-pane---environment-and-history}{%
+\subsubsection*{Pane 2: WorkSpace Pane - Environment and History}\label{pane-2-workspace-pane---environment-and-history}}
+
+
+Workspace pane appears by default in the top right of the RStudio interface. It has four tabs by defult: \textbf{Environment}, \textbf{Histroy}, \textbf{Connection} and \textbf{Tutorial}. among these 4, the Environment is the default and it is selected. It shows a list of all the objects you have loaded into your workspace. For example, all datasets you have loaded will appear here, along with any other objects you have created (special text formats, vectors, etc). see this image (Figure \ref{fig:RStudioEven}):
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/environment} 
+
+}
+
+\caption{RStudio Environemnt Tab in WorkSpace Pane}\label{fig:RStudioEven}
+\end{figure}
+
+If you click on the \textbf{History} tab, you will see the complete history of code you have typed, over all sessions, as in this image (Figure \ref{fig:RStudiohist}):
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/history} 
+
+}
+
+\caption{RStudio Histroy Tab in WorkSpace pane}\label{fig:RStudiohist}
+\end{figure}
+
+The history is searchable, so you can use the search box at the upper right of the pane to search through your code history. If you find a line of code you want to re-run, just select it and click the ``To Console'' button as shown below (\ref{fig:RStoconsole}):
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/toconsole} 
+
+}
+
+\caption{RStudio "To Console" button under History Tab in WorkSpace Pane}\label{fig:RStoconsole}
+\end{figure}
+
+You can also select any number of lines of scripts (by click with holding shift key) and click the ``To Source'' button, they will inset into source, See Figure \ref{fig:tosource},
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/tosource} 
+
+}
+
+\caption{RStudio "To Source" button under History Tab in WorkSpace Pane}\label{fig:tosource}
+\end{figure}
+
+\hypertarget{pane-3-console-pane}{%
+\subsubsection*{Pane 3: Console Pane}\label{pane-3-console-pane}}
+
+
+By default console pane appears at the bottom left. Console pane is the most important pane -- the Console! This is where you enter your commands to be executed or your R code to do everything in the curriculum. The rest of the document will be largely concerned with working in the Console, with occasional references to other panes.
+By default it also has 4 tabs: \textbf{Console}, \textbf{Terminal}, \textbf{R markdown} and \textbf{Jobs}. Apart from console, Other three, as their name suggested, they are the interface between you and other systems. Terminal is the interface between you and operating system, where you can have a direct interaction with OS, in our case it is the Windows. R markdown\footnote{R Markdown is an authoring framework for data science. Using a single R Markdown file, data Scientists can save, execute R code and generate high quality reports that can be shared with other people.} is interface between you and the markdown compiler, if authoring a markdown file, every time you compile (knitr\index{Knitr}\footnote{knitr is an engine for dynamic report generation with R. It is a package in the programming language R that enables integration of R code into LaTeX, LyX, HTML, Markdown, AsciiDoc, and reStructuredText documents.}) the code, system will report status in that window. Jobs is th interface between you and your job execution system. it is generally running on a remote server.
+Basically Console pane is the communication interface between you and systems. The information appears here are generally important if any proble,m occurs.
+
+\hypertarget{pane-4-multifunction-pane}{%
+\subsubsection*{Pane 4: Multifunction Pane}\label{pane-4-multifunction-pane}}
+
+
+The multifunction pane appears by default at the bottom right. It has many tabs. By default it opens the \textbf{Files} tab. My version it has \textbf{File}, \textbf{Plots}, \textbf{Package}, \textbf{Help} and \textbf{Viewer} tabs.
+
+\hypertarget{files-tab}{%
+\paragraph{\texorpdfstring{\textbf{Files tab}}{Files tab}}\label{files-tab}}
+\addcontentsline{toc}{paragraph}{\textbf{Files tab}}
+
+This tab works like your file explorer. It shows you all the files you have in your RStudio account (your document in windows). The buttons underneath the tab allow you to do operations on the files like create a new folder, delete files. rename files and many more functions. which you normally do on file system.
+
+\hypertarget{plots}{%
+\paragraph{\texorpdfstring{\textbf{Plots}}{Plots}}\label{plots}}
+\addcontentsline{toc}{paragraph}{\textbf{Plots}}
+
+When you run code in the Console pane that creates a plot, the plots tab will be automatically selected and the result of the plot generated will be displayed. See Figure \ref{fig:plot})
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/plot} 
+
+}
+
+\caption{RStudio **Plot** Tab under History Tab in Multifunction Pane}\label{fig:plot}
+\end{figure}
+
+Any time you want to view plots, you can select this tab manually, but it will be selected when you run plot code. Notice the arrow buttons at the top left of the pane; these allow you to scroll through all the plots you have created in a session.
+
+\hypertarget{packages}{%
+\paragraph{\texorpdfstring{\textbf{Packages}}{Packages}}\label{packages}}
+\addcontentsline{toc}{paragraph}{\textbf{Packages}}
+
+This tab allows you to see the list of all the packages (add-ons to the R code) you have access to, and which are loaded in already. You can also check packages in your system (installed) and the version of them.
+
+\hypertarget{help}{%
+\paragraph{\texorpdfstring{\textbf{Help}}{Help}}\label{help}}
+\addcontentsline{toc}{paragraph}{\textbf{Help}}
+
+This tab will be automatically selected whenever you run help code in the Console, by type in console \texttt{?\ function}or type in script \texttt{help(function)}. It is very useful for beginner to get quick reference on any function or command you are not sure of. here is an example of asking help with \texttt{plot} function:
+
+\begin{verbatim}
+help(plot)
+\end{verbatim}
+
+You can access it at any time by clicking on the tab ``Help'' to see what the ``Help'' tab can offer. See Figure \ref{fig:help},
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/help} 
+
+}
+
+\caption{RStudio **Help** Tab under in Multifunction Pane}\label{fig:help}
+\end{figure}
+
+If you want to use the ``Help'' without using the help command, you can also use the search bar at the upper right of the tab to search within the R documentation.
+
+\hypertarget{viewer}{%
+\paragraph{\texorpdfstring{\textbf{Viewer}}{Viewer}}\label{viewer}}
+\addcontentsline{toc}{paragraph}{\textbf{Viewer}}
+
+Viewer tab in the multifunction pane is designed for view or display R markdown \index{R Markdown} results. If you are authoring a R notebook\footnote{R Notebooks are an implementation of Literate Programming that allows for direct interaction with R while producing a reproducible document with publication-quality output.} or any Markdown file, your Knit\index{knit} results can be viewed by select ``Preview in Viewer Pane''. once this selection is made, you will see the notebook or your Markdown\index{Markdown} document will be displayed in the Viewer window and you will notice that the Viewer tab is automatically selected and the viewer window is also maximized. See Figure \ref{fig:SSview}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/RSview} 
+
+}
+
+\caption{RStudio **Viewer** Tab under in Multifunction Pane}\label{fig:SSview}
+\end{figure}
+
+RStudio allows a user to close or minimize certain panes or windows and focused on one or two panes. It also allows users to customize tabs in each pane. Check top level menu ``View'' for details. Figure \ref{fig:RSview} illustrate the function.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/RSPaneview} 
+
+}
+
+\caption{RStudio Pane change under the top level memu View}\label{fig:RSview}
+\end{figure}
+
+RStudio provides large numbner of help functions, which can be explored under \textbf{Help} top level menu. One help is the keyBoard Shortcuts help. I find it is very useful. Figure \ref{fig:rssc} shows the shortcuts.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/RSsc} 
+
+}
+
+\caption{RStudio KeyBoard Shortcuts}\label{fig:rssc}
+\end{figure}
+
+RStudio is a complicated, comprehensive IED for R, R Markdown, R Notebook and many other R language developments and other languages like Java Python developments too. Its powerful functions can only be revealed and made useful after you have used it for a while. The more use it, the more likely you will find it is so easy to use. I will leave this for you to explore.
+
+\hypertarget{bootsup-your-rstudio}{%
+\section{Bootsup your RStudio}\label{bootsup-your-rstudio}}
+
+Once you boots up your RStudio, you are ready to kick off your R coding. However, the first thing you may want to do is to set up your working directory. This will change the default location for all file input and output that you will do in the current session.
+
+RStudio makes this easy, simply click ``Session -\textgreater{} Set Working Directory -\textgreater{} Choose Directory\ldots{}''. See figure Figure \ref{fig:setwk} below,
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/setwk} 
+
+}
+
+\caption{Set workling Directory by Session}\label{fig:setwk}
+\end{figure}
+
+Then you need to navigate to where you want your project to be sit. For example, in my case I used ``D:/Teach2020/short course/Data analysis - prediction with Rstudio/IntroToDataScience-master'', it is silly to be so long, you can certainly set up for a shorter one. Anyway, the point is choose your won directory and remember it. If you tried it, you should notice that once you have chosen a directory, A command appeared in the Console pane and this is the command R executes when you set your working directory from the session menu. To achieve the same result you normally would have typed this manually in the console. See Figure \ref{fig:setwkc} below,
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/setwkc} 
+
+}
+
+\caption{Set a working directory with R command in Console}\label{fig:setwkc}
+\end{figure}
+
+Type command or instructions on command line at Console is what the general data scientists do when they try to analysis some data or prove some ideas. You can complete this tutorial at the command line in Console pane. I would suggest you, instead, creating a script to save all your hard work. This way you can easily reproduce the results or make changes without retyping everything.
+
+To do so, you need to create a new file by click the ``File -\textgreater New file'', and select ``R Script''. See Figure \ref{fig:newrfile},
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/RStudionew} 
+
+}
+
+\caption{Creat a new file in RStudio}\label{fig:newrfile}
+\end{figure}
+
+If you do so, you should notice that a new tab appeared on the script pane with a name of ``Untitled1'' and the script editor is now opened for you with the cursor flashes on line number 1. See Figure \ref{fig:newrcfile},
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/RStudionewfile} 
+
+}
+
+\caption{Creat a new file in RStudio and ready to enter code}\label{fig:newrcfile}
+\end{figure}
+
+Now in side the script editor, you can type you code! let us try this first, type
+
+\begin{verbatim}
+# This is my first R code
+\end{verbatim}
+
+and hit ``Return'', see next image (Figure \ref{fig:newrcode}),
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/new} 
+
+}
+
+\caption{New R Script file with one line}\label{fig:newrcode}
+\end{figure}
+
+Notice that the tab ``Untitled1'' has changed to red color and with a "*" as superscript. It means that the current file has been changed and not saved.
+
+Go ahead and copy the \texttt{setwd} command from the console and paste it into your script.
+
+Now save the script to your working directory, give it a name my first R, or any name you prefer.
+
+Now you have your first R code!
+
+\hypertarget{instructions}{%
+\section{Instructions}\label{instructions}}
+
+This book is intend to work in two ways: one way is to be used as a manual, you can follow along to accomplish a complete Data Science project; Another way is to be used as a company to my online video recordings. If you can get the video that is great. But if you cannot, it is also fine, The only drawback is you have read the whole contends line by line.
+
+I will use the following stickers to indicate the text is an explanation or an instruction or actions need you to do. So you know what you have to read word by word and what you can skip.
+
+\hypertarget{code}{%
+\subsection*{Code}\label{code}}
+
+
+Code appears with code sticker. Like this,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Load raw data}
+\NormalTok{train <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"train.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"test.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+They are the one you have to read word by word and type (copy-past) into your script and run them. It is also a good idea to record the results or plot (graph results) into a file. So you can always come back to check them.
+
+\hypertarget{tips}{%
+\subsection*{Tips}\label{tips}}
+
+
+Tips, like this one,
+
+\begin{rmdtip}
+Within the console, you can use the up and down arrows to find recent commands, and hitting tab will auto-complete commands and object names if possible.
+\end{rmdtip}
+
+are general advice. You can skip them if you already know. They can save your time but not affect your learning.
+
+\hypertarget{actions}{%
+\subsection*{Actions}\label{actions}}
+
+
+Any actions, by default, are assumed you will act upon. It appears in action sticker,
+
+\begin{rmdact}
+Change data type
+Go back to look into Kaggle to explain pclass: proxy for social class: richer or poor. It should be factor, it does not make sense to stay in int, we are not add or calculate with them
+
+\texttt{data.combined\$pclass\ \textless{}-\ as.factor(data.combined\$pclass)}
+\end{rmdact}
+
+particularly, they are in a sequential order. If you did not take previous actions you cannot do the current. It is possible you have processed some datasets and it is used later on. So you must carry out actions one by one, and not jump to the later ones without accomplish the earlier ones.
+
+\hypertarget{exercise}{%
+\subsection*{Exercise}\label{exercise}}
+
+
+Exercises at the end of each chapter, are provided for you to periodically explore alternatives of a solution or to enhance some key techniques. It is always good if you can do the exercises.
+
+The default protocol is that I have some codes written and you will down load them and open in your RStudio. Then you need to type (or copy and past line by line into your file. you can run them and understand their functions and the reason to function like that. After you understand them you can change them or write some new code. While you are doing that, you simply comment out my code rather than delete them just in case you need to come back to look at them again. Once you can write your own code, it shows you have learned.
+
+Before you go, let's try it,
+
+\begin{rmdact}
+Open a new project called ``MyDataSciece'',
+Set up working directory as ``\textasciitilde/MyDataScienceWithR'',
+Create a first R program called \texttt{DSPR1},
+\texttt{setwk(\textasciitilde{}/MyDataScienceWithR)}
+\end{rmdact}
+
+Okay. Save your file and move to next Tutorial.
+
+\hypertarget{exercise-1}{%
+\section*{Exercise}\label{exercise-1}}
+
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Learn R basics from R tutorials.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Tutorialspoint (\url{http://www.tutorialspoint.com/r/index.htm}),
+\item
+  codecademy (\url{https://www.codecademy.com/}).
+\item
+  DataCamp (\url{https://www.datacamp.com/courses/free-introduction-to-r})
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Write simple R code with RStudio IDE.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Try create a new R script and save it in a file
+\item
+  Open it from your file system and edit it
+\item
+  Run it line by line
+\item
+  Run it in one go
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Explore RStudio help functions.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Try to type ``?plot'' in Console
+\item
+  Try run help(plot) in editor
+\item
+  Explore plot from RStudio help
+\item
+  Search ``R plot'' from Google or Bing
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Explore project and working directory from RStudio.
+\end{enumerate}
+
+\hypertarget{prob}{%
+\chapter{Understand Problem}\label{prob}}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/Titanic} 
+
+}
+
+\caption{The sink of Titanic. Credits: Canoe1967/wikipeida.org}\label{fig:unnamed-chunk-9}
+\end{figure}
+
+\begin{quote}
+\end{quote}
+
+The sinking of the RMS Titanic occurred on the night of 14 April 1912 in the North Atlantic Ocean, four days into the ship's maiden voyage from Southampton, UK to New York City, USA. The largest passenger liner in service at the time, Titanic had an estimated 2,224 people on board when she struck an iceberg at around 23:40 (ship's time) on Sunday, 14 April 1912. Her sinking two hours and forty minutes later at 02:20 (05:18 GMT) on Monday, 15 April resulted in the deaths of more than 1,500 people, which made it one of the deadliest peacetime maritime disasters in history.
+
+Later, in 1997 American file director James Cameron turned this disastrous and tragic event into an epic romance film. The film star's Leonardo DiCaprio and Kate Winslet outstanding performance in the file makes it a best selling movie in the year.
+
+Perhaps people are touched not only by the love story but also by the humanity norms in the life and death situation that is famous - Lady and children first.
+
+\begin{quote}
+\end{quote}
+
+\hypertarget{kaggle-competion}{%
+\section{Kaggle Competion}\label{kaggle-competion}}
+
+Kaggle (\url{https://www.kaggle.com/}), a subsidiary of Google LLC, is the world's largest data science community with powerful tools and resources to help you achieve your data science goals. Kaggle was founded in 2010 with the idea that data scientists need a place to come together and collaborate on projects, learning new techniques and share each others experience. This has transformed into a network with more than 1,000,000 registered users, and has created a safe place for data science learning, sharing, and competition.
+
+Using the human competitive spirit, Kaggle created a platform for organizations to host competitions which have fueled new methodology and techniques in data science, and given organizations new insights from the data they provided.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/Kagglecomp} 
+
+}
+
+\caption{Kaggle Competition web site}\label{fig:unnamed-chunk-10}
+\end{figure}
+
+Generally, Each competition has a host, and each host has to prepare and provide data. When providing data, the host has the opportunity to give additional information such as a description, evaluation method, timeline, and prize for winning. Although this may not be an ideal real world data problem, which data scientist may face in the business. But it provides a good starting point for learners. In a real world, you may need to start from understand the business and find data sources by your self. Although competition host has provided data. You cannot assume the data provided are clean data and ready for analysis. Cleaning and preprocess data are part of the competition. Therefore, any solution can be tested to see how good a participant is with the whole process of data science project.
+
+\hypertarget{titianic-at-kaggel}{%
+\section{Titianic at Kaggel}\label{titianic-at-kaggel}}
+
+Titanic perhaps is the oldest and most participated competition on the Kaggle competition site. Even Kaggle used it as sample project to show how people can participant in a competition and submit your results.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/Titaniccompetition} 
+
+}
+
+\caption{Kaggle Competition on Titanic}\label{fig:unnamed-chunk-11}
+\end{figure}
+
+We take Titanic as an example through this tutorial because of the following reasons:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The story is well known and east to understand and communicate any actions and the cause of the actions in the analyze process.
+\item
+  The competition has largest participants, so any issues are most likely have been studied already. So explore the discussion and other sources can help to solve any problem you may have.
+\item
+  It is well studied, so there are plenty of alternative training materials available for your reference.
+\item
+  Lastly, the problem itself is interesting one that has a characteristic of only has a better solution and no best solution. So people are still working in it and uses the latest technologies.
+\end{enumerate}
+
+\hypertarget{the-titanic-problem}{%
+\section{The Titanic problem}\label{the-titanic-problem}}
+
+The objective of the Titanic problem defined on the Kaggle website as stated in the following:
+
+"The sinking of the Titanic is one of the most infamous shipwrecks in history.
+
+On April 15, 1912, during her maiden voyage, the widely considered ``unsinkable'' RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren't enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.
+
+While there was some element of luck involved in surviving, it seems some groups of people were more likely to survive than others.
+
+In this challenge, we ask you to build a predictive model that answers the question: ``what sorts of people were more likely to survive?'' using passenger data (i.e.~name, age, gender, socio-economic class, etc/)."
+
+\hypertarget{the-challenge}{%
+\subsection*{The challenge}\label{the-challenge}}
+
+
+The competition is simple: we want you to \textbf{use the Titanic passenger data} (name, age, price of ticket, etc) to try to \textbf{predict who will survive and who will die}.
+
+The requirement is to predict passengers' \textbf{survive}. Like many other real data science problems, \protect\hyperlink{predictive}{Prediction} is to build a model which takes input data and produce an output. A prediction model is a mathematical formula that takes input from historical facts reflecting past event and produce a output that to make predictions about future or otherwise unknown events. A simple way to understand model is to think a model in the following three ways:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The relationship between input and output can be expressed by some kinds of math formula. It is generally called definable model, the math formula can be as simple as a function of Polynomial expression or as complected as a regression model, or other statistics models.
+\item
+  Some models can not be explicitly expressed with a math formula, instead they are expressed in rules. those are rule-based models.
+\item
+  Other models can not be expressed in a math formula nor in rules. The solution is build a neural networks\index {neural networks} to do prediction. An Neural Networks can be regard as a ``black box'', which takes input and produce output, the internal connections are transparent to users. Machine learning is more focused on models rooted in Neural networks.
+\end{enumerate}
+
+Any model fundamentally expresses relationships between inputs and outputs. So as part of understanding the problem, We could interpret that the Kaggle Titanic challenge is to find creditable relationships between input data and out put data (which is survive or not). Once the relationship is found, we can express using either a math formula, a set of rules or a Neural Network model.
+
+\hypertarget{the-data}{%
+\subsection*{The data}\label{the-data}}
+
+
+Kaggle competition usually provides competition data. There is a ``Data'' tab on any competition site. Click on the Data tab at the top of the competition page, you will find the raw data provided and most of time there are brief explanation of the data attributes too.
+
+There are three files in the Titanic Challenge:
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\tightlist
+\item
+  train.csv,
+\item
+  test.csv, and
+\item
+  gender\_submission.csv.
+\end{enumerate}
+
+\hypertarget{submission}{%
+\subsection*{Submission}\label{submission}}
+
+
+Submission at the Titanic competition is equivalent to the final report of any data science project. that is one of the questions you need to understand in the beginning of the project.
+
+Titanic competition requires the results need be submitted in the file. The file structure is demonstrated in the ``gender\_submission.csv''. It is aslo provided as an example that shows how you should structure your results, which means predictions.
+
+The example submission in ``Gender\_submission'' predicts that all female passengers survived, and all male passengers died. It is clearly biased. Your hypotheses regarding survival will probably be different, which will lead to a different submission file. But, just like this file, your submission should have:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  ``PassengerId'' column containing the IDs of each passenger from test.csv.
+\item
+  ``Survived'' column (that you will create!) with a ``1'' for the rows where you think the passenger survived, and a ``0'' where you predict that the passenger died.
+\end{enumerate}
+
+\hypertarget{reflection}{%
+\section{Reflection}\label{reflection}}
+
+The purpose of this tutorial is to understand the process of data science project. The first step, as indicated by the 6-step process in section \ref{process}, is ``understand the problem''. Real world problem is far more complicated than this well defined problem. Mostly business organizations don't know the the exact problem (that is part of reason why they want data analysis or business analysis) or they know the problem (in general) but the problem can not br expressed explicitly or in terms of data.
+
+I have met a situation that a business organization has created a data center and collected all their business operational data. The boss asked to analyze these data and find:
+1. Is there are problems?
+2. If yes, how to overcome these problems?
+3. If not, how to improve the business operations?
+
+You see, here the problem is how to define the problem? how to convert business problem into data science problem.
+
+For the example, the first problem in the above list needs to know what is the normal or expected performance? How to evaluate the performance? In terms of turn over or profit? In what time scale? It could be a short of profit in the moment but it not causes alarm because the recent investment for developing a new market. At a long run it will have a great ROI (Return on Investment). The second problem demands to identify the cause of the problem and the third to identify the KIP (Key performance Indicators). they are both to identify the relationships between predictor and dependent variables. But they can be completely different sets.
+
+Understand problem is actually more complicated in real world. Until you have completely understood it and turned it into a list of analytical problems you can move to next step.
+
+\hypertarget{exercise}{%
+\section*{Exercise}\label{exercise}}
+
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Go to Kaggle Titanic web site, explore the challenge and data provided.
+\item
+  Based on what you know about Titanic story, who you think can survive? can you describe the people you believe can survive in terms of age, sex, cabin.
+\end{enumerate}
+
+\hypertarget{understand-data}{%
+\chapter{Understand Data}\label{understand-data}}
+
+{[}Understand data see \href{understanddata}{section} section@(understanddata) with two major purposes: 1. access data quantity; 2. access data quality. in practice these two can be done together or separately.
+
+input data
+
+\hypertarget{data-preprocess}{%
+\chapter{Data PreProcess}\label{data-preprocess}}
+
+完成数据的基本探索后，在建立模型之前，我们还需要对数据进行清洗，并且对数据集中缺失的数据进行补全。
+
+首先了解数据的缺失情况：
+
+train.info()
+print(`-'*30)
+test.info()
+
+训练集中有891条数据，而测试集中有418条数据。
+
+训练集缺失值：Age，Cabin，Embarked，其中Cabin字段缺失数量较多； 测试集缺失值：Age，Cabin，Fare，其中Cabin字段缺失数量较多。
+
+差早错误
+
+\hypertarget{reference}{%
+\chapter*{Reference}\label{reference}}
+
+
+\hypertarget{r-markdown}{%
+\section{R Markdown}\label{r-markdown}}
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see \url{http://rmarkdown.rstudio.com}.
+
+When you click the \textbf{Knit} button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(cars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+\end{verbatim}
+
+\hypertarget{including-plots}{%
+\section{Including Plots}\label{including-plots}}
+
+You can also embed plots, for example:
+
+\includegraphics{Do-Data-Science-in-10-Hours_files/figure-latex/pressure-1.pdf}
+
+Note that the \texttt{echo\ =\ FALSE} parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+  \bibliography{book.bib,packages.bib}
+
+\printindex
+
+\end{document}

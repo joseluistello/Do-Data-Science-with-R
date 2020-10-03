@@ -1,0 +1,40 @@
+--- 
+title: "Do Data Science in 10 Hours"
+author: "Gangmin Li"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is my first book writtn using the bookdown package to write a book. The output format for this book is bookdown::gitbook."
+---
+
+#  {-}
+
+
+```{r fig.align = 'center', out.width = "60%", echo=FALSE}
+
+knitr::include_graphics(here::here("images", "hotstove.jpg"))
+
+```
+
+
+``` 
+
+"Dont't touch it, It's hot!",
+
+...
+
+
+You now know it is hot. don't you?
+
+How?
+
+Because, you'v touched it!
+
+```
+
+
