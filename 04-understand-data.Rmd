@@ -1,3 +1,11 @@
+---
+title: "Plotting"
+output:
+  pdf_document:
+    fig_caption: yes
+---
+
+
 # Understand Data
 
 
@@ -13,9 +21,9 @@ Understand your building raw materials can help you choose correct tools and mak
 
 1. Access data quantity 
 2. Access data quality 
-3. Set up objects for data preprocess
+3. Set up objects for **data preprocess**
 
-In practice the two initial data assessments can be done together or separately. The purpose of them is to setup objective for data preprocess to accomplish. The methods used to understand data can be both Descriptive analysis and Exploratory analysis.
+In practice the two initial data assessments can be done together or separately. The purpose of them is to setup objective for **data preprocess** to accomplish. The methods used to understand data can be both Descriptive analysis and Exploratory analysis.
 
 ## Load data 
 
@@ -143,17 +151,15 @@ Click varaible name `train` and `test` to explore the contents of datasets.
 Click on the ![](img/arrow.png) sign in front of attribute to explore it sstructure. 
 ```
 
-## Data Attributes Assessment
+## General Data Attributes Assessment
 
-After a brief assessment on the data quantity, we know that the both datasets are not too big in terms of both number records (891 and 418) and number of attributes (12 and 11). We also have an intuitive understand about the attributes, some obvious names like *Name*, *Sex* and *Age*; and some not so obvious names like *SibSp* and *Parch*. 
-
-### General Attributes Description
+After a brief assessment on the data quantity, we know that the both datasets are not too big in terms of both number records (891 and 418) and number of attributes (12 and 11). We also have an intuitive understanding about the attributes, some obvious names like *Name*, *Sex* and *Age*; and some not so obvious names like *SibSp* and *Parch*. 
 
 Before we looking into individual attributes (single variate analysis) in our datasets, let us get some general sense of all attributes and make sure we understand each of them.
 
 We knew that dataset `test` has 11 attributes and `train` has 12 attributes. The one attribute short is the *Survived*. The rest are the same. Let us look into those attributes, the following is from the Kaggel web site:
 
-```{r  out.width='100%', fig.asp=.75, fig.align='center', echo=FALSE }
+```{r  out.width='100%', fig.cap= "Data Dectionary from Kaggle website.", fig.asp=.75, fig.align='center', echo=FALSE }
 
 knitr::include_graphics("img/DatafrKaggle.png")
 
@@ -212,9 +218,9 @@ You can have other thoughts too. To prove or disprove these assumptions and thou
 These questions will be answered in the following two sections. 
 
 
-### Actual Attributes Types Examination
+## Actual Attributes Types Examination
 
-From figure \@ref(fig:Rstr), We can see that all the attributes have only three types, `int`, `Factor`, `num`.
+Since we have our raw data in RStudio, We can exam attributes' types. From figure \@ref(fig:Rstr), we can see that all the attributes have three types, `int`, `Factor`, `num`.
 
 Attributes have `int` types are: *PassengerId*, *Survived*, *SibSp*, *Parch*.
 
@@ -226,7 +232,11 @@ We know that, the type `int` is for attribute that has an integer value; and `nu
 
 Type `Factor` is R language's way to say category type. It is a attribute that can take on one of a limited, and usually fixed, number of possible values, such as blood type.
 
-Attributes types affect the operations we can apply on that attributes. In other words inappropriate types can prevent us to do proper analysis on that attribute. For example, it doe's not make sense to calculate average on sex, so it is better to be with a type of Category, in R is a `Factor`. Similarly, *Survived* will have only two values 0 or 1, to represent death or live. It makes sense to be an `factor` too. Being a `int` type, it will prevent us to apply many methods that only works for a `Factor` type attribute. 
+Attributes types affect the operations we can apply on that attributes. In other words inappropriate types can prevent us to do proper analysis on that attribute. For example, it doe's not make sense to calculate average on sex, so it is better to be with a type of Category, in R is a `Factor`. Similarly, *Survived* will have only two values 0 or 1, to represent death or live. It makes sense to be an `Factor` too. Being a `int` type, it will prevent us to apply many methods that only works for a `Factor` type attribute. 
+
+Another example is *Name*, its original type is *Factor* to reflect on its uniqueness. However, Type "Factor" is not good for string processing. It has been prevented that to apply regular expression^[A regular expression is a sequence of characters that define a search pattern, which is used by string-searching algorithms to find a particular string or validate a input string.] on it. So, it is appropriate to change it into *chr* as a character.
+
+There are other inappropriate or wrong attribute's types too such as *SibSp* and *Parch* are currently typed *int*. May be they should be considered as *Factor*. It is a common practice that data scientists apply different analyses on a attribute and change the attribute type to apply other different algorithms again. The goal is to dig the insight out of data.   
 
 So, looking into data attributes types, compare with the original meaning of each attributes can help us to spot any inappropriate types or wrong types. 
 
@@ -240,7 +250,7 @@ What other attributes do you think are in a wrong type?
   
 ```
 
-### Actual Data Attributes Value Examination
+## Actual Data Attributes Value Examination
 
 To understand given datasets needs to carefully examine the values of each data attributes to:
 
@@ -280,11 +290,12 @@ Thinking:
 
 It is good idea to have bird eye's view on our combined dataset.
 
-```{r}
+```{r sofdata, fig.align = 'center', out.width = "95%", fig.cap = "\\label{fig:sofdata}Summary of entire dataset." }
 # check out data with a summary
-summary.data.frame(data)
+summary(data)
 ```
-This summary tell us a lot of information. Most obvious are:
+
+This summary \ref{fig:sofdata} tell us a lot of information. Most obvious are:
 
 1. *PassengerID* is useless in terms of predicting survived or not. in addition, it is not much help that provide a statistical summary on it. 
 2. *Survived* and *Pclass* numbers are useful and interesting.
@@ -301,7 +312,9 @@ You can see now one function can provide so much information. Quantitative summa
 
 Now, Let us exam each attribute, 
 
- - **PassengerID**. *PassengerId* is an identifier, So only its uniqueness and missing value are considered.
+### PassengerID. 
+
+*PassengerId* is an identifier, So only its uniqueness and missing value are considered.
  
 There are many ways you can use to find out. I simply check its total number and its unique number. If the both equal to the number of records in the dataset, it shows that there is no duplication and no missing values in the attribute. 
 
@@ -316,7 +329,9 @@ length(unique(data$PassengerId))
 ```
 The results shows the both number 1309, which is equal to the total number of records in the dataset. It proves the *PassengerID* has not missing value and duplication. 
 
-- **Survived**. *Survived* is the attribute that its value will be produced by a model for the dataset `test`. It is called **Consequencer** in modeling contrast with other attributes. which are used to produce a prediction, are called **Predictor**.  So, our exam will be conducted only on dataset `train`. Again we can check the numbers whether they can add up or not. As we already mentioned that it makes sense to change the *Servived* from type `chr` into `Factor`. We do,
+### Survived
+
+*Survived* is the attribute that its value will be produced by a model for the dataset `test`. It is called **Consequencer** in modeling contrast with other attributes. which are used to produce a prediction, are called **Predictor**.  So, our exam will be conducted only on dataset `train`. Again we can check the numbers whether they can add up or not. As we already mentioned that it makes sense to change the *Servived* from type `chr` into `Factor`. We do,
 
 ```{r} 
 # Exam Survived
@@ -337,7 +352,9 @@ prop.table(table(as.factor(train$Survived)))
 ```
 So we know the survive rate in the dataset `train` is about 61%. This is interesting because it reflects the overall survival rate.
 
-- **Pclass**. *Pclass* is the feature which splits the passengers into three division namely class-1, class-2, class-3. As we understood it should be in type of `Factor` rather than `int`. We shall change its type first and then to see if there missing value or errors. It is also good to know the survival rate in each class. So. we can compare with the overall survival rate in the dataset `train`.
+### Pclass
+
+*Pclass* is the feature which splits the passengers into three division namely class-1, class-2, class-3. As we understood it should be in type of `Factor` rather than `int`. We shall change its type first and then to see if there missing value or errors. It is also good to know the survival rate in each class. So. we can compare with the overall survival rate in the dataset `train`.
 
 Copy the following code into your script.
 ```{r}
@@ -429,7 +446,7 @@ Numbers are good to provide summary and test some assumptions. Analyzing given d
 
 Perhaps, it is a good time to introduce **Exploratory analysis**, on the contrast with the Descriptive analysis, it uses graphical tools to explore the inside of given datasets.
 
-To do so, we need to import some useful graphical tools provided by R community. We can then use them plot *Survived* as an factor on Pclass numbers.
+To do so, we need to import some useful graphical tools provided by R community. We can then use them to plot *Survived* as an factor on *Pclass* numbers.
 
 ```{r Survivalrate, fig.cap = "Total count and survive rate of passenger on Pcalss."}
 
@@ -449,19 +466,248 @@ Let's briefly interpret this graph. The graph shown \@ref(fig:Survivalrate) tell
 
 To sum up the analysis with Pclass, We have used both **Descriptive analysis** and **Exploratory analysis**. The results suggested that **the *Pclass* has a strong relation with death rate**. That is passengers in Class-3 have a higher chance of death. The correlation with social class (richer or poor) is waiting to be proved if the class-3 ticket is cheaper than others.  
 
- - **Name**. *Name* attribute by definition shows peoples' name. It should not have any impact on passengers' lived or dead, shouldn't it? It may only have more chance of errors and typos since the long characters rather than anything predictive for the survival. 
+### Name
  
-Firstly, you may notice that the type of *Name* is a `Factor`, which we really don't want. Factor shows the uniqueness, it can prevent us to explore the details of its content, which naturally are characters or strings.
- To Explore *Name*, we will do,
+*Name* attribute by definition shows peoples' name. It should not have any impact on passengers' live and death. Never heard of someone was survived because one's name! 
+ However we still need to asess its quality. Fir
+ 
+Firstly, you may notice that the type of *Name* is a `Factor`, which is contradicted with the conventional understanding that name is a string or a list characters. Type `chr` would be more appropriate. Change its type to `chr` will help us to apply character functions to it and get it contents easily. Factor shows the uniqueness. it could help us to assess if there is missing value or duplicated values. 
+
+Notice that attribute *Name* only has 1307 levels (can be observed from the `data` structure on the **WorkSpace pane**). In addition, the `data` summary, see Figure \@ref(fig:summaryofdata), not only confirmed this but also identified the two shorts because of the value "Connolly, Miss. Kate" and "Kelly, Mr. James" have been repeated twice each. 
+
+Let us explore *Name* values in details.
+Firstly, let us convert *Name* type into `chr`. Then we can check duplicated names using `which` function in R to get the duplicate names and store them into a vector `dup.names`. And echo them out. 
+
 ```{r}
 # Convert Name type
 data$Name <- as.character(data$Name)
-# Explore the contents
-head(data$Name)
-# You can check head function ?head
+# Find the two duplicate names
+# First used which function to get the duplicate names and store them as a vector dup.names 
+# check it up ?which.
+dup.names <- data[which(duplicated(data$Name)), "Name"]
+
+# Echo out 
+dup.names
 ```
+Our code confirmed that the two duplicated names are indeed ""Kelly, Mr. James" and "Connolly, Miss. Kate". It comes no surprise that the both names are pretty common in UK and USA.
+
+One discovery though is that the names appeared has a title in it! **Mr.** is used in Kelly James and **Miss.** is used in Connolly Kate. This could be interesting. We can leave this for **Preprocess** to explore more. For the quality assessment it is mission accomplished. 
  
- 
+### Sex
+
+*Sex* attribute value assessment is simple. Its type `Factor` helps a lot. Since it only has two values "male" and "female", we could easily check if there are missing values and any errors.   
+
+
+```{r}
+# Use summary to check numbers and distribution
+summary(data$Sex)
+# If you prefer you can use data.table functions
+```
+It is obvious that there is no error and missing values. The result confirms this: male 843 and female 466, together we have 1309 passengers, which is the total numbers of the passenger.  
+
+It is also simple to explore the relationship between gender and the survival rate. We had an assumption that the male passengers have a high death rate. We have plot tools in our disposal, let's make use of it. Since only dataset `train` has the values on *Survived*, it makes sense that we only plot relation between gender and survival on dataset `train`.
+
+```{r Survivalrateonsex, fig.cap = "Total count and survive rate of passenger on sex."}
+# plot Survived over Sex on dataset train
+ggplot(data[1:891,], aes(x = Sex, fill = Survived)) +
+  geom_bar() +
+  xlab("Sex") +
+  ylab("Total Count") +
+  labs(fill = "Survived")
+
+```
+
+The graph shows that the male death rate is much higher than female passengers. 
+
+```{block2,  type='rmdthinking'}
+Thinking:
+
+We have used `data[1:891,]` in our `ggplot` code. Why we do not use dataset `train` instead? What are the differnce if there is any?
+  
+```
+
+### Age
+
+To examine values of attribute *Age*, we do this,
+
+```{r}
+# Examine Age over data, train and test.
+summary(data$Age)
+summary(train$Age)
+summary(test$Age)
+```
+These summary tell us that the minimum, median, mean, maximum and missing values (as NA). They are useful. but they failed telling us on the value distribution. 
+
+```{r eval=FALSE, include=FALSE}
+#it makes sense to change age type to Factor to see distribution
+summary(as.factor(data$Age))
+```
+
+```{r ats, fig.cap="Age summary as categorical data.", fig.align = 'center', out.width = "80%", echo=FALSE} 
+
+knitr::include_graphics(here::here("img", "ageresult.png"))
+
+```
+
+From Figure \@ref(fig:ats), we can see a few problems:
+
+1. Age values have decimal point which is a sort of surprise and not sure if it is a mistake.
+
+2. There are large number of missing values: 177 missing value in dataset `train` and 86 missing value in dataset `test`, in total of 263, which count as 263/1309 = 20%. large number of missing values sets up a task for **data preprocess** to deal with. In the same time, it make you think whether it is a valid predictor or not.
+
+We can assess its impact on survive rate. So we need to look into dataset `train`.
+
+```{r age, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Age ditribution and its Survive rate of passenger"}
+# plot distribution of age group
+ggplot(data, aes(x = Age)) +
+  geom_histogram(binwidth = 10, fill="steelblue") +
+  xlab("Age") +
+  ylab("Total Count")
+
+# plot Survived on age group using train dataset
+ggplot(data[1:891,], aes(x = Age, fill = Survived)) +
+  geom_histogram(binwidth = 10) +
+  xlab("Age") +
+  ylab("Total Count")
+
+```
+
+The graph shows the relationship between *Age* and survival rate. It becomes apparent that age group between 15 and 25 has the worst survival rate. It is also interesting to know that there are some age has values less than 0! 
+
+With this, we could conclude that.
+
+The attribute *Age* has a serious quality problem: some age values are negative and large number 177 values are missing. If it is to be used as a predictor in our model for prediction, it needs a lot of work in the stage of preprocess. 
+
+### SibSp 
+
+Attribute *SibSp* represents passenger's siblings and sprouts who travels with the passenger. We will a have pretty good idea about its values. This will help us to spot any errors and missing values.
+
+We do this,
+```{r}
+### Exam SibSp, Its original type is int
+summary((data$SibSp))
+
+# How many possible unique values?
+length(unique(data$SibSp))
+
+#is there an y missing values? check the total number
+length(data$SibSp)
+
+# Treat it as a factor, so we know the value distribution
+data$SibSp <- as.factor(data$SibSp)
+summary(data$SibSp)
+```
+The results have provided us with good evidence for access its values. Firstly, we know the minimum value is 0, and there are 891 records have 0 values. It means that there are 891 passenger who travel without siblings and sprouts; secondly, apart from the value 0, the 3 quarters of the passenger who has 1 company; and lastly the maximum number of the company a passenger had is 8. There are 9 of them. There are totally 7 kinds of company in terms of the numbers of company a passenger can have.
+
+It has not error or missing value since the total number are correct. 
+
+We can assess its prediction power by looking into the relationship between *SibSp* and *Suvivied*,
+
+```{r SibSp, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot `SibSp` distribution among the 7 values and its survive rate."}
+# plot entire SibSp distribution among the 7 values
+ggplot(data, aes(x = SibSp)) +
+  geom_bar() +
+  xlab("SibSp") +
+  ylab("Total Count")+
+  coord_cartesian()
+
+# Plot on the survive on SibSp
+ggplot(data[1:891,], aes(x = SibSp, fill = Survived)) +
+  geom_bar() +
+  xlab("SibSp") +
+  ylab("Total Count")  +
+  labs(fill = "Survived")
+```
+We run two plots: the first one is the value distribution on entire dataset to have an impression on its distribution shape; and the second one is checking the survival rate over its distribution groups by dataset `train`. It seems that passenger who have two companies tend to have a better survival rate. This could be an interesting pattern to explore. 
+
+```{block2,  type='rmdaction'}
+Do it yourself:
+  
+Calculate the Survival rate among the 7 possibilities in terms of have siblings or sprouds treval with them. What conclusion you have by compare them?
+```
+
+We can conclude that the value of `SibSp` have a pretty good quality and there is no apparent error and missing values. Its predication power needs further investigation but it is informative.
+
+### Parch 
+
+Attribute `Parch`, similar with `SibSp`, is representing the travel company or groups. `Parch` specifically represents parents or children. I don't know why Kaggle separate them but it seems reasonable to think they together represent one thing that is "travel with family". 
+
+To access its value, we will do the same as we did on `SibSp`.
+
+```{r}
+### Exam Parch, Its original type is int
+summary((data$Parch))
+
+# How many possible unique values?
+length(unique(data$Parch))
+
+#is there an y missing values? check the total number
+length(data$Parch)
+
+# Treat it as a factor, so we know the value distribution
+data$Parch <- as.factor(data$Parch)
+summary(data$Parch)
+```
+The discovery is similar again with `SibSp`, that is:
+1. The minimum value is 0, and there are 1002 records have 0 values. It means that there are 1002 passenger who travel without without parents or children (we still cannot see the passenger travel alone, he or she could travel with a sibling or a sprout, However, this rise an idea to look into passenger who travel alone, which means no sibling, sprout, parents and children.); 
+2. The maximum number is 9. There are 2 of them.
+3. Apart from the value 0, the largest company number is 1. There are 170.
+4. There are totally 8 possibilities in terms of the numbers of company a passenger can have.
+5. It has not error or missing value since the total number are correct. 
+
+We can assess its prediction power too by looking into the relationship between *Parch* and *Survived*,
+
+```{r Parch, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot `Parch` distribution among the 8 values and its survive rate."}
+# plot entire Parch distribution among the 7 values
+ggplot(data, aes(x = Parch)) +
+  geom_bar() +
+  xlab("Parch") +
+  ylab("Total Count")+
+  coord_cartesian()
+
+# Plot on the survive on Parch
+ggplot(data[1:891,], aes(x = Parch, fill = Survived)) +
+  geom_bar() +
+  xlab("Parch") +
+  ylab("Total Count")  +
+  labs(fill = "Survived")
+```
+The plot shows us that it is definitely have impact on survival. But it i snot clear the prediction power in comparison with `SibSp`. I am not sure there are difference between "travel with parents or children" and "travel with siblings and sprout". In addition, value 0 in each attributes does not excludes other attributes. Travel without parents or children does not mean travel without siblings or sprout. If we try to see the impact on survived in terms travel alone or with a company, we need to re-engineer these attributes. It is a good point anyway and give another task for **data preprocess ** to do.
+
+### Ticket
+Intuitively, as mentioned before, ticket number like passenger names, should not be considered as bounded with the survival of a passenger. Unless the ticket number has other hidden information such as class or location on the boat. Bearing this in mind, let us assess its value.
+```{r  tecket, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of Ticket distribution and survival rate."}
+summary(data$Ticket)
+
+# Take a look at the ticket value
+str(data$Ticket)
+
+#plot it value 
+ggplot(data[1:891,], aes(x = Ticket)) +
+  geom_bar() +
+  xlab("Ticket") +
+  ylab("Total Count")
+
+# Plot on the survive on Ticket
+ggplot(data[1:891,], aes(x = Ticket, fill = Survived)) +
+  geom_bar() +
+  xlab("Ticket") +
+  ylab("Total Count")  +
+  labs(fill = "Survived")
+```
+
+
+
+#plot the 3-way relationship of sex, pclass, and survival
+ggplot(data[1:891,], aes(x = Sex, fill = Survived)) +
+  geom_bar() +
+  facet_wrap(~Pclass) + 
+  ggtitle("Pclass") +
+  xlab("Sex") +
+  ylab("Total Count") +
+  labs(fill = "Survived")
+
+
 
 ## Data recods level assessment
 
@@ -469,7 +715,7 @@ apart we ahve already known that the records numbers in the two datasets. It is 
 
 ## Summary {-}
 
-In this section we have demonstrated the access of raw data and a brief assess of data quantity and data quality. Since our raw data is not do big in terms of both number fo records and the number of attributes. So it is relatively easy to assess their quality. In a real world project the raw data can be huge. To perform an effective analysis you may need to reduce the data size, which means you need to do sampling on the give data sets and probably attributes selection too. these topics are covered in the next tutorial on data preprocess.  
+In this section we have demonstrated the access of raw data and a brief assess of data quantity and data quality. Since our raw data is not do big in terms of both number fo records and the number of attributes. So it is relatively easy to assess their quality. In a real world project the raw data can be huge. To perform an effective analysis you may need to reduce the data size, which means you need to do sampling on the give data sets and probably attributes selection too. these topics are covered in the next tutorial on **data preprocess**.  
 
 ## Exercises 4 {-}
 
@@ -481,8 +727,10 @@ In this section we have demonstrated the access of raw data and a brief assess o
 
 4. Calculate survival rate among the three Pclass.
 
-5. Plot distributions of Fare, Embarked of passengers who survived or did not survive
+5. Calculate the percentage of survival among different SibSp` and Parch` groups.
 
-6. Plot survival rate by Sex,Plot survival rate by Pclass, Plot survival rate by SibSp,Plot survival rate by Parch
+6. Plot distributions of Fare, Embarked of passengers who survived or did not survive
+
+7. Plot survival rate by Sex, Plot survival rate by Pclass, Plot survival rate by SibSp,Plot survival rate by Parch
 
 

@@ -1,12 +1,42 @@
 # Data PreProcess
 
+## Dealt with Miss values and Errors (Age, )
+
+## Attributes selection (prediction power) 
+explore relations for survivle
+
+## Attribute reengineering ( title from name,  treval famail _ relatives, alone  from ParCh and SibSb)
+
+## Assemble final datasets for modelling
+need model, train and test.
+ the goal is to get data ready for analysis
+ 
+ what analysis?  
+ 
+ prediction
+ 
+ 
+ 
+1 dealt with error missing value
+2. make attribute suiatble for modeling
+3. features reenginering
+
+name: extract title from name, 
+
+Create family size and category for family size
+https://www.kaggle.com/helgejo/an-interactive-data-science-tutorial
+
+Extract ticket class from ticket number¶
+
+
+
 The purposes of data preprocess is to make data suitable for analyzing. 
 
 I this particular project, the purpose is to predict passengers survival. whatever a prediction model we may come up with, it should reflect the relations between other data attributes with the special one, which is "survived". So the data preprocess, whatever actions we are take, should focused on the attributes that has relations with the survive, or our preprocess should help to enhance the attribute's prediction power. An example is, "PassengerId", it has no relation with the survive, apart from to identify a passenger, its prediction power is 0. so there should be any efforts on this attributes apart from make sure its unique. 
 
 Therefor it make sense to explore all attributes with surviels.
 
-## explore realtions for survivle
+
 
 1. Survived
 The first attribute reported if a traveler lived or died. A comparison revealed that more than 61% of the passengers had died.
@@ -19,19 +49,18 @@ prop.table(table(as.factor(train$Survived)))
 
 ```
 
-2. Pclass
-This attribute renders the passenger division. The passengers could opt from three distinct sections, namely class-1, class-2, class-3. The third class had the highest number of commuters, followed by class-2 and class-1. The number of passengers in the third class was more than the number of passengers in the first and second class combined. The survival chances of a class-1 traveler were higher than a class-2 and class-3 traveler.
+
  完成数据的基本探索后，在建立模型之前，我们还需要对数据进行清洗，并且对数据集中缺失的数据进行补全。
 
 首先了解数据的缺失情况：
 
-train.info()
-print('-'*30)
-test.info()
+To begin this step, we first import our data. Next we use the info() and sample() function, to get a quick and dirty overview of variable datatypes (i.e. qualitative vs quantitative). Click here for the Source Data Dictionary.
 
-训练集中有891条数据，而测试集中有418条数据。
-
-训练集缺失值：Age，Cabin，Embarked，其中Cabin字段缺失数量较多； 测试集缺失值：Age，Cabin，Fare，其中Cabin字段缺失数量较多。
-
-差早错误
-Analyze by pivoting attributes
+The Survived variable is our outcome or dependent variable. It is a binary nominal datatype of 1 for survived and 0 for did not survive. All other variables are potential predictor or independent variables. It's important to note, more predictor variables do not make a better model, but the right variables.
+The PassengerID and Ticket variables are assumed to be random unique identifiers, that have no impact on the outcome variable. Thus, they will be excluded from analysis.
+The Pclass variable is an ordinal datatype for the ticket class, a proxy for socio-economic status (SES), representing 1 = upper class, 2 = middle class, and 3 = lower class.
+The Name variable is a nominal datatype. It could be used in feature engineering to derive the gender from title, family size from surname, and SES from titles like doctor or master. Since these variables already exist, we'll make use of it to see if title, like master, makes a difference.
+The Sex and Embarked variables are a nominal datatype. They will be converted to dummy variables for mathematical calculations.
+The Age and Fare variable are continuous quantitative datatypes.
+The SibSp represents number of related siblings/spouse aboard and Parch represents number of related parents/children aboard. Both are discrete quantitative datatypes. This can be used for feature engineering to create a family size and is alone variable.
+The Cabin variable is a nominal datatype that can be used in feature engineering for approximate position on ship when the incident occurred and SES from deck levels. However, since there are many null values, it does not add value and thus is excluded from analysis.

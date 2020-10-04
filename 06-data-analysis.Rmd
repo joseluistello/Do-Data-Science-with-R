@@ -1,6 +1,17 @@
 `r if (knitr:::is_html_output()) '
 # Data Analysis 
 '`
+
+## models:Prediction
+
+This was a case of classification problem and I tried predicting with two algorithms —
+decision trees
+Random Forest
+Gaussian Naive Bayes
+I was surprised at the results. The Gaussian Naive algorithm performed poorly and the Random Forest on the other hand was consistently predicting with an accuracy of more than 80%.
+
+## Evaluation 
+
 https://www.rpubs.com/rezapci/Data_Science_Machine_Learning_HarvardX
 
 models and valiadition
