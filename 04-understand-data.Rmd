@@ -250,7 +250,7 @@ What other attributes do you think are in a wrong type?
   
 ```
 
-## Actual Data Attributes Value Examination
+## Actual Data Attributes Value Examination {#attvalue}
 
 To understand given datasets needs to carefully examine the values of each data attributes to:
 
@@ -290,7 +290,7 @@ Thinking:
 
 It is good idea to have bird eye's view on our combined dataset.
 
-```{r sofdata, fig.align = 'center', out.width = "95%", fig.cap = "\\label{fig:sofdata}Summary of entire dataset." }
+```{r sofdata, fig.align = 'center', out.width = "95%" }
 # check out data with a summary
 summary(data)
 ```
@@ -304,9 +304,10 @@ This summary \ref{fig:sofdata} tell us a lot of information. Most obvious are:
 5. *Age* is interesting that minimum age 0.17 is alarming and there is 263 missing values.
 6. *SibSp* tells us the largest relatives travel together is 8.
 7. *ParCh* tells us the largest family travel together is 9.
-8. There are large number of *ticket* has the same number. The most repeat number is CA. 2343, which has 11 duplicates. 
+8. There are a number of *ticket* has the same number. The most repeat number is CA. 2343, which has 11 duplicates. 
 9. Ticket *Fare* shows the minimum is 0, which is interesting that someone take a free ride. The maximum is over 512, which is far too expensive when the mean value is only about 33. 
-10. Both *Cabin* and *Embarked* have values which can be identified and need more investigation.
+10. *Cabin* has a large number of missing values (identified by "").
+11. *Embarked* only has three values which is not a good sign for prediction. it also has 2 missing value.
 
 You can see now one function can provide so much information. Quantitative summary is a great tool for a data scientist. 
 
@@ -454,7 +455,7 @@ To do so, we need to import some useful graphical tools provided by R community.
 library(ggplot2)
 
 ggplot(train, aes(x = Pclass, fill = factor(Survived))) +
-  geom_bar(width = 0.5) +
+  geom_bar(width = 0.3) +
   xlab("Pclass") +
   ylab("Total Count") +
   labs(fill = "Survived")
@@ -510,7 +511,7 @@ It is also simple to explore the relationship between gender and the survival ra
 ```{r Survivalrateonsex, fig.cap = "Total count and survive rate of passenger on sex."}
 # plot Survived over Sex on dataset train
 ggplot(data[1:891,], aes(x = Sex, fill = Survived)) +
-  geom_bar() +
+  geom_bar(width = 0.3) +
   xlab("Sex") +
   ylab("Total Count") +
   labs(fill = "Survived")
@@ -543,7 +544,7 @@ These summary tell us that the minimum, median, mean, maximum and missing values
 summary(as.factor(data$Age))
 ```
 
-```{r ats, fig.cap="Age summary as categorical data.", fig.align = 'center', out.width = "80%", echo=FALSE} 
+```{r ats, fig.cap="*Age* summary as categorical data.", fig.align = 'center', out.width = "80%", echo=FALSE} 
 
 knitr::include_graphics(here::here("img", "ageresult.png"))
 
@@ -557,7 +558,7 @@ From Figure \@ref(fig:ats), we can see a few problems:
 
 We can assess its impact on survive rate. So we need to look into dataset `train`.
 
-```{r age, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Age ditribution and its Survive rate of passenger"}
+```{r age, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "*Age* ditribution and its Survive rate of passenger"}
 # plot distribution of age group
 ggplot(data, aes(x = Age)) +
   geom_histogram(binwidth = 10, fill="steelblue") +
@@ -603,17 +604,17 @@ It has not error or missing value since the total number are correct.
 
 We can assess its prediction power by looking into the relationship between *SibSp* and *Suvivied*,
 
-```{r SibSp, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot `SibSp` distribution among the 7 values and its survive rate."}
+```{r SibSp, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot *SibSp* distribution among the 7 values and its survive rate."}
 # plot entire SibSp distribution among the 7 values
 ggplot(data, aes(x = SibSp)) +
-  geom_bar() +
+  geom_bar(width = 0.5) +
   xlab("SibSp") +
   ylab("Total Count")+
   coord_cartesian()
 
 # Plot on the survive on SibSp
 ggplot(data[1:891,], aes(x = SibSp, fill = Survived)) +
-  geom_bar() +
+  geom_bar(width = 0.5) +
   xlab("SibSp") +
   ylab("Total Count")  +
   labs(fill = "Survived")
@@ -630,7 +631,7 @@ We can conclude that the value of `SibSp` have a pretty good quality and there i
 
 ### Parch 
 
-Attribute `Parch`, similar with `SibSp`, is representing the travel company or groups. `Parch` specifically represents parents or children. I don't know why Kaggle separate them but it seems reasonable to think they together represent one thing that is "travel with family". 
+Attribute *Parch*, similar with *SibSp*, is representing the travel company or groups. *Parch* specifically represents parents or children. I don't know why Kaggle separate them but it seems reasonable to think they together represent one thing that is "travel with family". 
 
 To access its value, we will do the same as we did on `SibSp`.
 
@@ -648,7 +649,7 @@ length(data$Parch)
 data$Parch <- as.factor(data$Parch)
 summary(data$Parch)
 ```
-The discovery is similar again with `SibSp`, that is:
+The discovery is similar again with *SibSp*, that is:
 1. The minimum value is 0, and there are 1002 records have 0 values. It means that there are 1002 passenger who travel without without parents or children (we still cannot see the passenger travel alone, he or she could travel with a sibling or a sprout, However, this rise an idea to look into passenger who travel alone, which means no sibling, sprout, parents and children.); 
 2. The maximum number is 9. There are 2 of them.
 3. Apart from the value 0, the largest company number is 1. There are 170.
@@ -657,44 +658,130 @@ The discovery is similar again with `SibSp`, that is:
 
 We can assess its prediction power too by looking into the relationship between *Parch* and *Survived*,
 
-```{r Parch, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot `Parch` distribution among the 8 values and its survive rate."}
+```{r Parch, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot *Parch* distribution among the 8 values and its survive rate."}
 # plot entire Parch distribution among the 7 values
 ggplot(data, aes(x = Parch)) +
-  geom_bar() +
+  geom_bar(width = 0.5) +
   xlab("Parch") +
   ylab("Total Count")+
   coord_cartesian()
 
 # Plot on the survive on Parch
 ggplot(data[1:891,], aes(x = Parch, fill = Survived)) +
-  geom_bar() +
+  geom_bar(width = 0.5) +
   xlab("Parch") +
   ylab("Total Count")  +
   labs(fill = "Survived")
 ```
-The plot shows us that it is definitely have impact on survival. But it i snot clear the prediction power in comparison with `SibSp`. I am not sure there are difference between "travel with parents or children" and "travel with siblings and sprout". In addition, value 0 in each attributes does not excludes other attributes. Travel without parents or children does not mean travel without siblings or sprout. If we try to see the impact on survived in terms travel alone or with a company, we need to re-engineer these attributes. It is a good point anyway and give another task for **data preprocess ** to do.
+The plot shows us that it is definitely have impact on survival. But it i snot clear the prediction power in comparison with *SibSp*. I am not sure there are difference between "travel with parents or children" and "travel with siblings and sprout". In addition, value 0 in each attributes does not excludes other attributes. Travel without parents or children does not mean travel without siblings or sprout. If we try to see the impact on survived in terms travel alone or with a company, we need to re-engineer these attributes. It is a good point anyway and give another task for **data preprocess ** to do.
 
 ### Ticket
 Intuitively, as mentioned before, ticket number like passenger names, should not be considered as bounded with the survival of a passenger. Unless the ticket number has other hidden information such as class or location on the boat. Bearing this in mind, let us assess its value.
-```{r  tecket, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of Ticket distribution and survival rate."}
-summary(data$Ticket)
-
+```{r }
+head(summary(data$Ticket),50)
 # Take a look at the ticket value
 str(data$Ticket)
-
+which(is.na(data$Ticket))
+```
+The value of *Ticket* appears has no missing value and there are 929 different numbers and some with letters and some with special characters like "." and "/". There is no immediately apparent structure in the data.
+ Let us plot them and also see if there is any pattern with survival.
+ 
+```{r  tecket, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of *Ticket* distribution and survival rate."}
 #plot it value 
 ggplot(data[1:891,], aes(x = Ticket)) +
   geom_bar() +
   xlab("Ticket") +
   ylab("Total Count")
-
 # Plot on the survive on Ticket
 ggplot(data[1:891,], aes(x = Ticket, fill = Survived)) +
   geom_bar() +
-  xlab("Ticket") +
+  xlab("Ticket Number") +
   ylab("Total Count")  +
   labs(fill = "Survived")
 ```
+The same tickets number has such a small number. It does not have any statistical meaning. It is possible to reengineer *ticket* number into groups like "number only" vs "with letter" or "with special characters", or simply group them with the length of the ticket or with the initials, etc. There is a lot of thing you can do to see if there is any patterns connected with the survival. 
+
+Over all, *Ticket* has a good quality and has no missing value and errors (we dont count repeated ticket number is an error). However, there is no obvious relations with the survive rate.
+
+### Fare
+The value of *Fare* are expected associated with "passenger's wealth". You would naturally associate its value with cabin condition and perhaps location of he cabin. Let us assess its value quality.
+
+```{r}
+summary(data$Fare)
+length(unique(data$Fare))
+```
+The initial assessment tells us that:
+1. The value of `Fare` has one missing value.
+2. They are 282 different prices among 1308 tickets.
+3. The minimum value is 0 (Free ride?) and the maximum value is 512.329. 
+4. The mean value is 33.295 and the median is only 14.454. 
+5. There are two potential issues in here: 512.329 is extremely higher than others, it could be considered as an outlier or an error; another potential issue is the precision. Any currency cannot have a physical money which carry value three digits after the decimal point. so any value has three digits after decimal point could be an error.  
+
+Let us examine the prediction power of attribute *Fare*.
+```{r  Fare, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of *Fare* distribution and survival rate."}
+ggplot(data, aes(x = Fare)) +
+  geom_histogram(binwidth = 5) +
+  ggtitle("Fare Distribution") +
+  xlab("Fare") +
+  ylab("Total Count") +
+  ylim(0,200)
+# Let's check to see if fare has predictive power
+ggplot(data[1:891,], aes(x = Fare, fill = Survived)) +
+  geom_histogram(binwidth = 5) +
+  xlab("Fare") +
+  ylab("Total Count") +
+  ylim(0,50) + 
+  labs(fill = "Survived")
+```
+It is not clear about *Fare* prediction power. One thing is clear that to be useful for predcition, Fare needs more engineer such as group it in different groups like <5, 5 to 10, 10 to 15, ..., etc.
+
+### Cabin
+
+*Cabin* has a large number of missing values as we noticed from the beginning of this section \@ref(attvalue). So its quality is expected to be bed. let us find out how many missing values is the dataset `train`, so we can assess its predictive power over survive. 
+
+Firstly, by looking into the structure of the dataset, 
+
+```{r}
+# Examine cabin values
+str(data$Cabin)
+# Cabin really isn't a factor, make a string and the display first 100
+data$Cabin <- as.character(data$Cabin)
+data$Cabin[1:100]
+```
+
+we find out that *Cabin* is in a type of `Factor` and has 187 unique values with empty string "" and string start with letter like "A10".
+
+By looking actual 100 values, we have a pretty good understand its contents. Notice that some string looks like multiple numbers, for instance "C23 C25 C27", it is odd in comparison with others. 
+
+let us have a close look at the dataset `train` and assess its prediction power.
+```{r}
+# Find out number of the missing value in the train
+train$Cabin <- as.character(train$Cabin)
+# number of the missing value in the train
+table(train[which(train$Cabin ==""), "Cabin"])
+# percentage of the missing value in the train
+table(train[which(train$Cabin ==""), "Cabin"])/length(train$Cabin)*100
+```
+The above code tells us that in the dataset `train`, there are 687 missing value and it count as 71 percent of total value. This is significant number. Generally it will write off the attribute for any meaning for use. However, like its relation with survive with the consideration of the missing value.
+
+Since the small number of passenger in each cabin, we accumulate passenger with the first latter of the cabin number. That means we bin the passengers based on the first letter of their cabin number. Then we plot the survived number over the total number.
+
+```{r Cabin, fig.align = 'center',  out.width = "90%", fig.cap = "Plot of the passenger number and  the survived number based on the first letter of their cabin number."}
+# Take a look at just the first char as a factor and add to data as a new attribute
+data$cabin.first.char<- as.factor(substr(data$Cabin, 1, 1))
+
+# first cabin letter survival plot
+ggplot(data[1:891,], aes(x = cabin.first.char, fill = Survived)) +
+  geom_bar() +
+  xlab("First Cabin Letter") +
+  ylab("Total Count") +
+  ylim(0,750) +
+  labs(fill = "Survived")
+```
+To sumup, *Cabin* attribute has large number of missing value. The dataset `train` has 687 missing value and it counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. To use it in any possible predictio model, it needs some re-engineering. 
+
+### Embarkded
+
 
 
 
