@@ -1,5 +1,7 @@
 # Data PreProcess
 
+https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8
+
 ## Dealt with Miss values and Errors (Age, )
 
 ## Attributes selection (prediction power) 

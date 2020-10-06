@@ -1,17 +1,3 @@
----
-title: "09-refer"
-author: "Gangmin Li"
-date: "9/26/2020"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-# Apendix {-}
-## TitanicDataAnalysis_UnderstandData.R {#UnderstandDatacode}
-
-```
 ############################################################################
 # Copyright 2020 Gangmin Li
 #
@@ -413,9 +399,7 @@ barplot(Deathandsurvivepercentage[2:4,2]*100, xlab =(""), ylim=c(0,100), ylab="D
 # col-1 (Survived=0, perished) and col-2 (Survived =1, survived)
 DeathandsurviveRateforeachport <- prop.table(SurviveOverEmbarkedTable, 1)
 #plot
-barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death rate in percentage %",  names.arg = M, col="red", main="Death rate comparison among mebarked ports", border="black", beside=TRUE)
+barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death rate in percentage %",  names.arg = M,  col="red", main="Death rate comparison among mebarked ports", border="black", beside=TRUE)
 
 #End ###########################################################
-
-```
 

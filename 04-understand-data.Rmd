@@ -811,40 +811,23 @@ The graph shows that about 70% of the people boarded from Southampton (914/1309 
 ```{r  embark, fig.align = 'center', fig.show="hold", out.width = "30%", fig.cap = "Plots of death distribution, survive distribution and death rate comparision over embarked port."}
 
 # Calculate death distribution over Embarked port with Train data
+# creat Embarked and Survived contingency table
 SurviveOverEmbarkedTable <- table(train$Embarked, train$Survived)
-# Death and survived value distribution among embarked ports
-DeathandsurviveDistribution <- prop.table(SurviveOverEmbarkedTable, 2)
-#Convert to data frame
-Dataframe.deathandsurviveDistribution <- data.frame(DeathandsurviveDistribution) 
-#check their value
-#str(Dataframe.deathandsurviveDistribution)
+# Death-0/survived-1 value distribution (percentage) based on embarked ports
+# prop.table(mytable, 2) give us column (Survived) percentages
+Deathandsurvivepercentage <- prop.table(SurviveOverEmbarkedTable, 2)
+# Plot
+M <- c("c-Cherbourg", "Q-Queenstown", "S-Southampton")
+barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death distribution in percentage %",  names.arg = M, col="steelblue", main="Death distribution", border="black", beside=TRUE)
+barplot(Deathandsurvivepercentage[2:4,2]*100, xlab =(""), ylim=c(0,100), ylab="Death distribution in percentage %",  names.arg = M, col="blue", main="Death distribution", border="black", beside=TRUE)
 
-# Take the Death distribution over embarked
-Deathdistribution.over.Embarked <- Dataframe.deathandsurviveDistribution$Freq[Dataframe.deathandsurviveDistribution$Var2==0]
-# Take the survive distribution over Embarked
-Survivedistribution.over.Embarked <- Dataframe.deathandsurviveDistribution$Freq[Dataframe.deathandsurviveDistribution$Var2==1]
-
-# Print out death distribution numbers among Embarked
-prop.table(Deathdistribution.over.Embarked)
-#Print out Survive distribution numbers among Embarked
-prop.table(Survivedistribution.over.Embarked)
-
-M <- c("c", "Q", "S")
-# plot Death distribution over embarked port ignore the missing data 
-barplot(Deathdistribution.over.Embarked[2:4]*100, xlab =(""),  ylab="Death distribution in percentage %",  names.arg = M, col="steelblue", main="Death distribution", border="black")
-
-# plot Survive Rate over Embarked port ignore the missing data 
-barplot(Survivedistribution.over.Embarked[2:4]*100, xlab =("Embarked"),  ylab="Survive distribution in percentage %",  names.arg = M, col="steelblue", main="Survive distribution", border="black" )
-
-## Calculate Death and survived RATE distribution among embarked ports
-proptable.deathandsurviveRate <- prop.table(SurviveOverEmbarkedTable, 1)
-# Convert deathandsurviveRate over Embarked into data frame
-probtable.dataframe.deathandsurviveRate <- data.frame(proptable.deathandsurviveRate) 
-#str(probtable.dataframe.deathandsurviveRate)
-# Split the Death rate of each embarked port out 
-DeathRate.over.Embarked <- probtable.dataframe.deathandsurviveRate$Freq[probtable.dataframe.deathandsurviveRate$Var2==0]
-# Plot Death Rate over Embarked ignore the missing data 
-barplot(DeathRate.over.Embarked[2:4]*100, xlab =(""),  ylab="Death Rate in percentage %",  names.arg = M, col="steelblue", main="Death Rate Comparision", border="black" )
+## Calculate survived RATE distribution based on embarked ports
+# Death-0/survived-1 value distribution (percentage) based on embarked ports
+# prop.table(mytable, 1) give us row (Port) percentages
+# col-1 (Survived=0, perished) and col-2 (Survived =1, survived)
+DeathandsurviveRateforeachport <- prop.table(SurviveOverEmbarkedTable, 1)
+#plot
+barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death rate in percentage %",  names.arg = M, col="red", main="Death rate comparison among mebarked ports", border="black", beside=TRUE)
 ```
 
 The plot shows that both death and survive number distribution are similar. Southampton takes most death and survive portion because it has the largest number of passenger get on board, then Cherbourg, and last is Queenstown. However, in terms of death rate, which is the death/total from the passenger who get on board, southampton is the is the highest and then Queenstown, teh last is Cherbourg. That is to say, people who boarded from Cherbourg had a higher chance of survival than people who boarded from Southampton or Queenstown.
@@ -869,6 +852,10 @@ All the analyses actions provide demonstrations how to  access the raw data and 
 
 Since our raw data is not too big in terms of both the number of records and the number of attributes. So it is relatively easy to assess their quality. In a real world project the raw data can be huge or can be too little. To perform an effective analysis you may need to reduce the data size or in other cases to increase the size. It means you need to do sampling on the given datasets and probably attributes selection too. Other cases you may need to create new attributes or combine a few attribute together. These are called attributes re-engineering. They are the part of important tasks in data preprocess , which is covered in the next chapter on **data preprocess**.  
 
+```{block2,  type='rmdinfo'}
+The entire R code in this chapter is avalable in the file "TitanicDataAnalysis_UnderstandData.R" and it can be find in the appendix. 
+```
+
 ## Exercises 4 {-}
 
 1. Identify the code in this tutorial which can be conceptually categorized as Descriptive analysis and which one can be Exploratory analysis?
@@ -881,8 +868,11 @@ Since our raw data is not too big in terms of both the number of records and the
 
 5. Calculate the percentage of survival among different SibSp` and Parch` groups.
 
-6. Plot distributions of Fare, Embarked of passengers who survived or did not survive
+6. Plot distributions of Fare, Embarked of passengers who survived or did not survive.
 
-7. Plot survival rate by Sex, Plot survival rate by Pclass, Plot survival rate by SibSp,Plot survival rate by Parch
+7. Plot survival rate by Sex, Plot survival rate by Pclass, Plot survival rate by SibSp,Plot survival rate by Parch.
+
+8. Plot survival rate (percentage of survived over total number) by over Embarked ports.
+
 
 
