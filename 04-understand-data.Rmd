@@ -718,7 +718,9 @@ The initial assessment tells us that:
 5. There are two potential issues in here: 512.329 is extremely higher than others, it could be considered as an outlier or an error; another potential issue is the precision. Any currency cannot have a physical money which carry value three digits after the decimal point. so any value has three digits after decimal point could be an error.  
 
 Let us examine the prediction power of attribute *Fare*.
-```{r  Fare, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of *Fare* distribution and survival rate."}
+
+```{r  Fareplot, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of *Fare* distribution and survival rate."}
+
 ggplot(data, aes(x = Fare)) +
   geom_histogram(binwidth = 5) +
   ggtitle("Fare Distribution") +
@@ -782,27 +784,90 @@ To sumup, *Cabin* attribute has large number of missing value. The dataset `trai
 
 ### Embarkded
 
+Attribute *Embarked* records where a passenger get on board. From the Kaggle data description we know that there are three possible values for Embark — Southampton (S), Cherbourg (C), and Queenstown (Q). Let's check the data quality.
+```{r}
+# Examine Embark values
+summary(data$Embarked)
+length(data$Embarked)
+```
+The results confirms that there two missing values and three ports. Southampton as its initial depart port has largest passengers get on board. Let's see its distribution and the survival rate.
+```{r  Fare, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of *Embarked* distribution and survival rate."}
+# Plot data distribution and the survival rate for analysis
+ggplot(data, aes(x = Embarked)) +
+  geom_bar(width=0.5) +
+  xlab("Passenger embarked port") +
+  ylab("Total Count") 
 
 
-
-#plot the 3-way relationship of sex, pclass, and survival
-ggplot(data[1:891,], aes(x = Sex, fill = Survived)) +
-  geom_bar() +
-  facet_wrap(~Pclass) + 
-  ggtitle("Pclass") +
-  xlab("Sex") +
+ggplot(data[1:891,], aes(x = Embarked, fill = Survived)) +
+  geom_bar(width=0.5) +
+   xlab("Embarked port") +
   ylab("Total Count") +
   labs(fill = "Survived")
+```
 
+The graph shows that about 70% of the people boarded from Southampton (914/1309 = 0.698). Just over 20% boarded from Cherbourg (270/1309 = 0.206) and the rest boarded from Queenstown about 10%.
 
+```{r  embark, fig.align = 'center', fig.show="hold", out.width = "30%", fig.cap = "Plots of death distribution, survive distribution and death rate comparision over embarked port."}
 
-## Data recods level assessment
+# Calculate death distribution over Embarked port with Train data
+SurviveOverEmbarkedTable <- table(train$Embarked, train$Survived)
+# Death and survived value distribution among embarked ports
+DeathandsurviveDistribution <- prop.table(SurviveOverEmbarkedTable, 2)
+#Convert to data frame
+Dataframe.deathandsurviveDistribution <- data.frame(DeathandsurviveDistribution) 
+#check their value
+#str(Dataframe.deathandsurviveDistribution)
 
-apart we ahve already known that the records numbers in the two datasets. It is interesting to know is there any invalid records or not. like dublicated records and records has obvious problems despit the attributes level exam has been doen already.   
+# Take the Death distribution over embarked
+Deathdistribution.over.Embarked <- Dataframe.deathandsurviveDistribution$Freq[Dataframe.deathandsurviveDistribution$Var2==0]
+# Take the survive distribution over Embarked
+Survivedistribution.over.Embarked <- Dataframe.deathandsurviveDistribution$Freq[Dataframe.deathandsurviveDistribution$Var2==1]
+
+# Print out death distribution numbers among Embarked
+prop.table(Deathdistribution.over.Embarked)
+#Print out Survive distribution numbers among Embarked
+prop.table(Survivedistribution.over.Embarked)
+
+M <- c("c", "Q", "S")
+# plot Death distribution over embarked port ignore the missing data 
+barplot(Deathdistribution.over.Embarked[2:4]*100, xlab =(""),  ylab="Death distribution in percentage %",  names.arg = M, col="steelblue", main="Death distribution", border="black")
+
+# plot Survive Rate over Embarked port ignore the missing data 
+barplot(Survivedistribution.over.Embarked[2:4]*100, xlab =("Embarked"),  ylab="Survive distribution in percentage %",  names.arg = M, col="steelblue", main="Survive distribution", border="black" )
+
+## Calculate Death and survived RATE distribution among embarked ports
+proptable.deathandsurviveRate <- prop.table(SurviveOverEmbarkedTable, 1)
+# Convert deathandsurviveRate over Embarked into data frame
+probtable.dataframe.deathandsurviveRate <- data.frame(proptable.deathandsurviveRate) 
+#str(probtable.dataframe.deathandsurviveRate)
+# Split the Death rate of each embarked port out 
+DeathRate.over.Embarked <- probtable.dataframe.deathandsurviveRate$Freq[probtable.dataframe.deathandsurviveRate$Var2==0]
+# Plot Death Rate over Embarked ignore the missing data 
+barplot(DeathRate.over.Embarked[2:4]*100, xlab =(""),  ylab="Death Rate in percentage %",  names.arg = M, col="steelblue", main="Death Rate Comparision", border="black" )
+```
+
+The plot shows that both death and survive number distribution are similar. Southampton takes most death and survive portion because it has the largest number of passenger get on board, then Cherbourg, and last is Queenstown. However, in terms of death rate, which is the death/total from the passenger who get on board, southampton is the is the highest and then Queenstown, teh last is Cherbourg. That is to say, people who boarded from Cherbourg had a higher chance of survival than people who boarded from Southampton or Queenstown.
+
+In summary, we have explored all attributes through descriptive analysis, which is mainly using numbers and through exploratory analysis, which is using plot. We have examined the quality of each attributes by finding missing values and duplication. We have spoted some outliars and odd values. 
+
+We have also assessed relationship between attribute *Survived* and all other attributes. The prediction power of each attributes have been understand to some extend. More prediction power study such as combination of two or three attributes are needed. 
+
+The findings of each attributes provide tasks and goals for data preprocess step to accomplish. 
+
+## Data Recods Level Assessment
+
+Although we have examined the raw datasets records' numbers in attributes level. We have a good knowledge about the record numbers in each given dataset. It is still necessary to check at the record level. It means if there some records have too many missing attributes' value, for example, although some records have ids and may be names but most of the useful attributes' value are missing.  These records are bed or invalid records, should be removed or solve the missing values. 
+
+On other hand some records have most attributes values are identical. These could be considered as duplicates. depends on the problem to be solved, they could be problematic and need to be dealt with. 
+
+In our Titanic problem, record level assessment is not an issue. Since we have almost all the records are different. This does not mean we should completely ignore this step and doing the checking.   
 
 ## Summary {-}
 
-In this section we have demonstrated the access of raw data and a brief assess of data quantity and data quality. Since our raw data is not do big in terms of both number fo records and the number of attributes. So it is relatively easy to assess their quality. In a real world project the raw data can be huge. To perform an effective analysis you may need to reduce the data size, which means you need to do sampling on the give data sets and probably attributes selection too. these topics are covered in the next tutorial on **data preprocess**.  
+All the analyses actions provide demonstrations how to  access the raw data and understand their quantity and data quality. Notice that the understanding data is never a single one-off action. You never fully understood the given data. once the analytical process moving on, you may need to come back to apply some new decomposition on some attributes to explore more. 
+
+Since our raw data is not too big in terms of both the number of records and the number of attributes. So it is relatively easy to assess their quality. In a real world project the raw data can be huge or can be too little. To perform an effective analysis you may need to reduce the data size or in other cases to increase the size. It means you need to do sampling on the given datasets and probably attributes selection too. Other cases you may need to create new attributes or combine a few attribute together. These are called attributes re-engineering. They are the part of important tasks in data preprocess , which is covered in the next chapter on **data preprocess**.  
 
 ## Exercises 4 {-}
 
