@@ -1,8 +1,10 @@
 # Data PreProcess
-
+quick correlations with modelled correlations later in the project.
 https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8
 
 ## Dealt with Miss values and Errors (Age, )
+
+
 
 ## Attributes selection (prediction power) 
 explore relations for survivle

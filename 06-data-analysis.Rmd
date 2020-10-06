@@ -1,13 +1,106 @@
-`r if (knitr:::is_html_output()) '
+
 # Data Analysis 
-'`
+```{r out.width = "80%", fig.align ="center", echo =FALSE}
+knitr::include_graphics(here::here("images", "Prediction.png"))
 
-## models:Prediction
+```
 
-This was a case of classification problem and I tried predicting with two algorithms —
-decision trees
-Random Forest
-Gaussian Naive Bayes
+
+“This will be the year of mobile!” “Digital will pull in more than TV in 20XX.” These positive predictions are spun to make everyone feel optimistic about the future of the industry, to ensure that we’re able to communicate that positivity to our brand and agency clients who — upon seeing the bright future of the space — will feel confident in spending more, more, more!
+
+## A Brief Introduction to Predictive Data Analysis
+
+Predictive data analysis as a method encompasses a variety of statistical techniques from predictive modeling, machine learning, and data mining that analyze current and historical data to make predictions about future or otherwise unknown events. A classic example of predictive model is the customer scoring as shown in Figure \@ref(fig:modelexam). Customer scoring model factors together individual customer’s attributes, weights them and adds them up to produce an overall score.
+
+```{r modelexam, fig.align="center", out.width = "80%", echo=FALSE, fig.cap ="Example of predictive model for customer score" }
+
+knitr::include_graphics(here::here("images", "examplemodel.jpg"))
+```
+
+predictive modeling is generally involves three steps: **Predictor selection**, **model construction** and **model evaluation**.
+
+**predictor selection**. If there are a large number of potential predictor variables, then it’s probably worthwhile examining the relationship between each predictor and the attributes to be predicted using appropriate visualization tools (graphs and/or tables). then ones have most predictive power should be selected. With the given datasets have large attributes (over thousands) other methods like filter and wrapper can be used:
+
+
+-	Filters. These examine each predictor variable in turn. A numerical measure is calculated, representing the strength of the correlation between the predictor variable and the modeling objective. Only predictor variables where the correlation measure^[] exceeds a given threshold are retained.
+
+-	Wrappers. A wrapper takes a group of predictor variables and considers the “value add” of each variable compared to other variables in the group. If two variables tell you more or less the same thing (e.g. age and date of birth) then one will be discarded because it adds no value. Step-wise linear regression^[] and principal component analysis^[] are two popular wrapper methods.
+
+
+**model construction**. Model construction normally involves two phases: induction and deduction. 
+
+-	Induction is also called model learning, which means learn to predict; 
+
+- Deduction is called model apply, which means model applied to predict. 
+
+The advantage of this division is allow a predictive model to be mature while induction using training dataset to construct a model and deduction using testing dataset to test and adjust the model constructed.
+
+Depends applications different prediction model can use different mathematical approach and algorithms. Model constricted for classification problem can use decision trees while scoring prediction model can use regressions 
+
+
+**model validation**. As explained earlier, a major problem when building predictive models is that it’s quite easy to find relationships that are the result of random patterns in the development sample, but which don’t exist in the wider population. The result is that if you measure the performance of the model using the development sample the results will be over-optimistic. The **over-fitting problem** will affect model’s performance when presented with new data when the model is deployed. 
+
+To determine if over-fitting has occurred, the model needs to be tested on an independent sample of data that was not used to construct the model. A small amount of over-fitting is quite common (i.e. slightly worse performance is observed on the validation sample), but this is not necessarily a problem if the model still performs well. However, if the degree of over-fitting is large and the model’s performance is poor, the model will need to build a new model using a different set of parameters.
+
+Model building is an exploratory process. Lots of different models get built and tested using the same validation sample. As a result, after many cycles of model building and testing, a degree of over-fitting to the validation sample is likely to occur. Therefore it can be used to perform the final analysis of model performance. Any improvement figures, results, estimated benefits and so on. 
+
+
+## Prediction Models
+
+For a classification problem the most commonly used algorithms: **Decision trees**, **Random Forest** and **Gaussian Naive Bayes**
+
+### Decision Trees
+
+A decision tree is the most commonly used classification model, which in a flowchart-like tree structure. In a decision tree, each internal node (non-leaf node) denotes a test on an attribute, each branch represents an outcome of the test, and each leaf node (or terminal node) holds a class label. The topmost node in a tree is the root node. 
+
+Decision tree can be built by the tree induction which is the learning of decision trees from class-labelled training sets. Once a decision tree has been constructed, classifying a test record is straightforward. Starting from the root node, we apply the test condition to the record and follow the appropriate branch based on the outcome of the test. This will lead us either to another internal node, for which a new test condition is applied, or to a leaf node. The class label associated with the leaf node is then assigned to the record. 
+
+Let’s take a quick review of the possible variables we could look at. Last time we used aggregate and proportion tables to compare gender, age, class and fare. But we never did investigate SibSp, Parch or Embarked. The remaining variables of passenger name, ticket number and cabin number are all unique identifiers for now; they don’t give any new subsets that would be interesting for a decision tree. So let’s build a tree off everything else.
+
+```{r}
+library(rpart)
+#build our first model. check help on rPart
+
+#model <- rpart(Survived ~ Pclass + Sex + Age +  Fare + Embarked,
+ #              data=train,
+ #              method="class")
+
+#fancyRpartPlot(model)
+
+```
+let us produce a predicted results and save it in "**my_sumission.csv**" file.
+
+```{r}
+#Prediction <- predict(model, test, type = "class")
+#submit <- data.frame(PassengerId = test$PassengerId, Survived = Prediction)
+
+#write.csv(submit, file = "my_tree_Modle_sumission.csv", row.names = FALSE)
+
+```
+
+try again, with everything,
+
+```{r}
+
+#model <- rpart(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked,
+#               data=train,
+#               method="class")
+
+#fancyRpartPlot(model)
+
+#Prediction <- predict(model, test, type = "class")
+#submit <- data.frame(PassengerId = test$PassengerId, Survived = Prediction)
+# write.csv(submit, file = "my_tree_Modle_sumission2.csv", row.names = FALSE)
+
+```
+0.77511
+
+
+### Random Forest
+
+
+### Gaussian Naive Bayes
+
 I was surprised at the results. The Gaussian Naive algorithm performed poorly and the Random Forest on the other hand was consistently predicting with an accuracy of more than 80%.
 
 ## Evaluation 
