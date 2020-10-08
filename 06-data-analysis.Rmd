@@ -160,11 +160,12 @@ Decision tree can be built by the tree **induction** which is the learning of de
 
 Once a decision tree has been constructed, classifying a test record is straightforward. Starting from the root node, we apply the test condition to the record and follow the appropriate branch based on the outcome of the test. This will lead us either to another internal node, for which a new test condition is applied, or to a leaf node. The class label associated with the leaf node is then assigned to the record. 
 
-### Decision tree for Titanic 
 
 In the Titanic problem, build a decision tree classier needs to make two decisions: 1) which attributes to use for test conditions? 2) and in what order. 
 
 Let’s take a quick review of the possible attributes we could use. Previously we understand that apart from PassengerID, Passenger Name (passenger name has been re-engineered into titles), all other attributes can all be used to do prediction since they all have some power of prediction. 
+
+### The Simplest Decision Tree for Titanic 
 
 Let us consider a simple decision tree firstly. The most simple decision tree perhaps is the one only has one internal note and two branches. There are only one attribute meet with the requirements. That is *Sex*, so our decision tree will be build only base on passenger's gender. Here we go, We need a number of liberties to make our code works.
 
@@ -222,18 +223,24 @@ It is clear that our model is too simple: it predict andy male will be perished 
 
 This is only the starting, we can improve on it, a lot.
 
-R has provided many useful library for claasification, we can make use of them and improve our classifier.
-```{r echo=FALSE}
+R has provided many useful library for classification, we can make use of them and improve our classifier.
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
 # load some useful libraries
 library(rattle)
 library(rpart.plot)
 library(RColorBrewer)
+
+```
+```{r }
+#plot our decision tree
 fancyRpartPlot(model)
 ```
 
 This graph is pretty and informative. The first box top number is the voting (either 0 - dead or 1-survived). the two percentages shows the value of the voting (also called **confidence**). The final number on each node shows the percent of population which resides in this node. Also the color of nodes signify the two classes here. For example, the root node, "0" (death) shows the way root node is voting; ".62" and ".38" represents the proportion of those who die and those who survive; 100% implies that the entire population resides in root node.
 
-let us try another extreme, we use all the attributes, which knowing from the **understanding data** step that have some prediction power and not too many levels (possibilities). Among of our attributes, choose *Pclass*, *Sex*, *Age*,,*SibSp*, *Parch*,  *Fare*, *Cabin* and *Embarked*, we only escaped *Name* and *Ticket* because we knew that they are not really have any power of prediction. This is basically the full house of attributes without any *Data preprocess*. 
+### The Most Complecated Decision Tree for Titanic 
+
+Let us try another extreme, we use all the attributes, which knowing from the **understanding data** step that have some prediction power and not too many levels (possibilities). Among of our attributes, choose *Pclass*, *Sex*, *Age*,,*SibSp*, *Parch*,  *Fare*, *Cabin* and *Embarked*, we only escaped *Name* and *Ticket* because we knew that they are not really have any power of prediction. This is basically the full house of attributes without any *Data preprocess*. 
 
 ```{r include=FALSE }
 # The full-house classifier apart from name and ticket 
@@ -265,7 +272,7 @@ Let us examine our classifer again,
 fancyRpartPlot(model)
 ```
 
-The decision tree that have been built goes a lot deeper than what we saw last time. Notice that the tree is a binary tree. For test conditions that more than two possible answers have been changed to a binary by auto add a split with them. For example, age are numbers and have 10s of possibilities, our model simple split it by a test dondition `Age >= 8.6`. Conditions have been set for others as well. This conditions are not ideal, they can be changed if you know how to optimize decision tree. For the moment it  looks very promising that resonates with the famous naval law that "women and kids first" is visible in our model. 
+The decision tree that have been built goes a lot deeper than what we saw last time. Notice that the tree is a binary tree. For test conditions that more than two possible answers have been changed to a binary by auto add a split with them. For example, age are numbers and have 10s of possibilities, our model simple split it by a test dondition `Age >= 6.5`. Conditions have been set for others as well such as `Pclass >= 2.5`, `SibSp>=2.5`, and `Fare >= 18`, etc.. This conditions are not ideal, they can be changed if you know how to optimize decision tree. For the moment it  looks very promising that resonates with the famous naval law that "women and kids first" is visible in our model. 
 
 If you want look into the difference between our two predictions, you can do,
 
@@ -274,14 +281,21 @@ If you want look into the difference between our two predictions, you can do,
 compare <- data.frame(submit[1], predict1 = compare$Survived , predict2 = Prediction)
 # Find differences
 dif <- compare[compare[2] != compare[3], ]
+#show dif
+dif
 ```
 We can see the second classifier have produced 34 different predictions in comparison with the first classifier. That is a great improvement. 
 
+### The Rational Decision tree for Titanic 
 
-### Random Forest
+now let us use our re-engineered train Dataset to train our classifier to see how could we improve our prediction results
+
+## Random Forest
 
 
-### Gaussian Naive Bayes
+## Gaussian Naive Bayes
+
+## Regression
 
 I was surprised at the results. The Gaussian Naive algorithm performed poorly and the Random Forest on the other hand was consistently predicting with an accuracy of more than 80%.
 

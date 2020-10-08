@@ -132,23 +132,6 @@ https://www.kaggle.com/ldfreeman3/a-data-science-framework-to-achieve-99-accurac
 
 Machine Learning for Dummies by John Mueller and Luca Massaron - Easy to understand for a beginner book, but detailed to actually learn the fundamentals of the topic
 
+3.Data camp tutorials 
+https://www.datacamp.com/community/
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
-
-The **bookdown** package can be installed from CRAN or Github:
-
-
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
-
-To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
-
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
-
-```{block, type='rmdcaution'}
-Some text for this block.
-```
