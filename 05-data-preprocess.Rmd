@@ -1,15 +1,168 @@
 # Data PreProcess
+
+
+```{r fig.align = 'center', out.width = "60%", echo=FALSE, fig.cap ="" }
+
+knitr::include_graphics(here::here("images", "preparation.jpg"))
+
+```
+
+>“before anything else, preparation is the key to success” 
+>
+>--- Alexander Graham Bell
+
+Previous chapter we have done **Data understanding** by examining the given data quantity and quality. we had a pretty good understanding of the raw data. That also set up some obnjectives for data preparation that is what we need to do in the chapter.
+
+## General data prepartion tasks
+
+Section \@ref(preprocess) has listed a number of tasks that needs to be performed to make data suitable for analyzing. Depends on the understanding of the problem, the tasks can be different. In our previous analyses at both records and attributes levels. WE have found some problems and they need to be solved in the data preprocess.
+
+1. There are inappropriate data types which needs conversion. For example, a lot of features need to be converted into numeric ones so that the machine learning algorithms can process them. 
+2. There are errors or missing values.
+3. There are attributes' values need normalization. There are some features have widely different value's range, so the value needs to be converted into roughly the same scale. 
+4. There are also attribute values needs to be grouped or transformed into more manageable meaningful groups. 
+
+This chapter we will carry on using Titanic problem to demonstrate the tasks to be performed and the methods to achieve data preprocess object that is make data suitable for analyzing. 
+
+
+
 quick correlations with modelled correlations later in the project.
 https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8
 
 ## Dealt with Miss values and Errors (Age, )
 
+We had a pretty good understanding about the Titanic datasets. We knew there are missing values and some errors. they needs to be resolved first of all. The systematic way to find missing value is write a function to check missing values, like this one,
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+# assume we had imported both train and test dataset and we have combined them into on data
+library(dplyr) # data manipulation
+train <- read.csv("train.csv", header = TRUE)
+test <- read.csv("test.csv", header = TRUE)
+# integrate into one file for checking save to do the dame for both files.
+data <- bind_rows(train, test) # comapare with data <- rbind(train, test)
+
+```
+```{r}
+# Check our combined dataset details
+glimpse(data) # compare with str(data)
+```
 
 
-## Attributes selection (prediction power) 
-explore relations for survivle
+We can observe that the 12 attributes and their types and sample attributed values. For our Titanic problem, there are 10 variables present in the combined dataframe that are potentially useful. 
+
+We can define a function missing_vars, which can get proportion of values are missing in each attribute. 
+
+```{r}
+# Define a function to check missing values
+missing_vars <- function(x) {
+  var <- 0
+  missing <- 0
+  missing_prop <- 0
+  for (i in 1:length(names(x))) {
+    var[i] <- names(x)[i]
+    missing[i] <- sum(is.na(x[, i])|x[, i] =="" )
+    missing_prop[i] <- missing[i] / nrow(x)
+  }
+  
+  (missing_data <- data.frame(var = var, missing = missing, missing_prop = missing_prop) %>% 
+  arrange(desc(missing_prop)))
+}
+```
+apply our function to dataset `data`. 
+
+```{r}
+missing_vars(data)
+```
+*Survived* has 418 missing value that is the `test` dataset number. Our entire `test` dataset needs to be filled with that value. It is not an issue. 
+
+*Cabin* and *Age* have some significant proportion of missing values, whereas Embarked & Fare only has 2 and 1 missing values. 
+
+We will use Cabin and Age as examples to demonstrate the general methods used to deal with missing values.
+
+***Cabin* attribute**. Cabin has large number of missing value. Total of 687 missing value in the `train` dataset counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. Facing a attribute that has a large percentage of missing values, in the most analysis, it will be simply dropped.  However, if you think carefully, the missing value may have some reasons and that reasons could be a factor affect on passengers lived or perished. therefore, the first thought is we may separate cabin into two groups, with cabin number and without cabin number. 
+
+Another alternative is to treat records with missing cabin number as a separate group. In order to make group size in a relative proportion, we can group other records which has a cabin number into a larger sized groups. From our previous analyze, we have find out the cabin numbers are all start with a letter, it could be a deck number or some sort. If we group cabin numbers with its initial letter,  We can then treat missing number as a separate group. 
+
+So, we will do:
+
+1. Group all cabin number into groups according to its first letter. create a new attribute with a name *Deck*. and assign records with no cabin number as *NCN* (no cabin number) for its *Deck* value. 
+
+```{r}
+
+```
+
+2. Create a new attribute called *"*CabinNum*" which takes two values:` 1 - Has` and `0- Has not`.
+
+So we create a deck attributes to replace cabin.
+
+```{r}
+# dataRE <- data.frame(data)
+# data$cabinFirst_letter[which(train$Cabin =="")] <- "NCN"
+# data$cabinFirst_letter <- as.factor(substr(data$Cabin, 1, 1))
+```
+***Age* attribute**. Now we can tackle the issue with the age features missing values. 
+Age is a typical numerical value. there a number of options for fill the missing values:
+1. Take the mean value to replace missing value
+```{r}
+# replace missing value in Age with its average
+ageEverage <- summarise(data, Average = mean(Age, na.rm = TRUE))
+#data$Age[is.na(data$Age)] <- ageEverage$Average
+```
+
+2. Take a random number range between 0 and 88 (maximum age). alternatively, you can replace with a random number that keeps the distribution with the original dataset that is to make sure that mean value and the standard deviation unchanged. 
+```{r}
+# calculate the non-NA mean and std
+mean <- mean(data[["Age"]], na.rm = TRUE) # take train mean
+std <- sd(data[["Age"]], na.rm = TRUE) # take test std
+
+# repalce NA with a list that maintian the mean and std
+temp_rnum <- rnorm(sum(is.na(data$Age)), mean=mean, sd=std)
+data$Age[is.na(data$Age)] <- temp_rnum
+
+# There are possible negtive values too, repalce them with positive values
+# replace(data$Age[(data$Age)<=0], data$Age<=0, sample(data$Age[data$Age>0], length(data$Age[(data$Age)<=0]), replace=F))
+# Check sample, it produce a sample from 1st, with size as 2nd, and no repeat.
+data$Age[(data$Age)<=0] <- sample(data$Age[data$Age>0], length(data$Age[(data$Age)<=0]), replace=F)
+
+# check
+summary(data$Age)
+```
+```{r}
+
+```
+
+3. Using machine generate model to produce new values based on other exiting values.  
+
+
+
+https://www.kaggle.com/lmorgan95/titanic-top-8-with-random-forests-r
 
 ## Attribute reengineering ( title from name,  treval famail _ relatives, alone  from ParCh and SibSb)
+
+***Name* attribute**. Name is initially believed is useless. but find in it there are information about titles even may be marriage relations.
+
+abstract titles.
+This is the title of the passenger, which can be extracted from the Name variable using a regular expression.
+```{r}
+# dataRE$Title <- gsub('(.*, )|(\\..*)', '', data$Name)
+# 
+# titanic_full %>%
+#   group_by(Title) %>%
+#   count() %>%
+#   arrange(desc(n))
+```
+cabin_alloca (y/N)
+Travel_alone (y/N)
+
+
+### Travel in group (ticket number same, Fare is same, Parch SibSp >0)
+
+
+
+
+## Attributes selection (prediction power coorelation) 
+explore relations for survival
+
+
 
 ## Assemble final datasets for modelling
 need model, train and test.
@@ -67,4 +220,5 @@ The Name variable is a nominal datatype. It could be used in feature engineering
 The Sex and Embarked variables are a nominal datatype. They will be converted to dummy variables for mathematical calculations.
 The Age and Fare variable are continuous quantitative datatypes.
 The SibSp represents number of related siblings/spouse aboard and Parch represents number of related parents/children aboard. Both are discrete quantitative datatypes. This can be used for feature engineering to create a family size and is alone variable.
-The Cabin variable is a nominal datatype that can be used in feature engineering for approximate position on ship when the incident occurred and SES from deck levels. However, since there are many null values, it does not add value and thus is excluded from analysis.
+
+

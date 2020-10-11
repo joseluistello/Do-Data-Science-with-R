@@ -223,7 +223,7 @@
 
 \title{Do Data Science in 10 Hours}
 \author{Gangmin Li}
-\date{2020-09-30}
+\date{2020-10-09}
 
 \begin{document}
 \maketitle
@@ -267,10 +267,16 @@ Because, you'v touched it!
 \chapter*{Preface}\label{preface}}
 
 
-\hypertarget{why-read-this-book}{%
-\section{Why Read this book}\label{why-read-this-book}}
+\hypertarget{what-is-this-book-why-to-read-it}{%
+\section{What is this book? Why to read it?}\label{what-is-this-book-why-to-read-it}}
 
-In this book, we will introduce an interesting method.
+This book is originated from my Data Science course. It was in the lab sessions, where students practice different steps in the workflow of Data Science projects. Students enjoyed the detailed practices using different methods and different algorithms to solve analytical problems. To my surprise, we only find out later, that the student failed to grasp the real meaning of doing data science, which is not to provide an absolutely working solution to a problem, rather, an experimental interpretation of data at hand. In other words, you are just telling other propel what the data is telling you. You are not using data to solve problems that data has not provide any solution to you! They appeared also lost the track of doing a data science project. stuck at circles between two steps and failed to move foreword.
+
+I did a short tutorial for my students. the tutorial was emphasizing on the process and workflow of doing a data science project. That short tutorial was extremely successful and welcomed by all students, particularly the students who is not from computer Science, software engineering, Statistics, applied math, rather, from information science and management science.
+
+So, I suppose this book is practical for students who has no background of computing and programming knowledge but interested in doing data science project or move to data science in the future.
+
+It is introduction level book for novelty students who want learn data science in short period time perhaps a few days or at their winter or summer holidays.
 
 \hypertarget{structure-of-the-book}{%
 \section{Structure of the Book}\label{structure-of-the-book}}
@@ -278,7 +284,7 @@ In this book, we will introduce an interesting method.
 \hypertarget{what-can-this-course-offer-you}{%
 \section{What Can This Course Offer You?}\label{what-can-this-course-offer-you}}
 
-This short course is specifically designed for students who has no background of much Algorithms, programming and even computing. The basic requirements are desire to learn, attitude of humble and diligence of working. All that mean you need to get your hand dirty, spent time and do more practices. At the end, it cannot guaranty you become a data scientist but it will help you find the way to wards doing data science and be confident to start doing data science projects. It is cetainty that if you persist on this road, you will no doubt becomes a future data scientist.
+This book offers a short practical course.
 
 This course will bring you:
 
@@ -308,6 +314,7 @@ This course will bring you:
 \hypertarget{schedule}{%
 \section{Schedule}\label{schedule}}
 
+is specifically designed for students who has no background of much Algorithms, programming and even computing. The basic requirements are desire to learn, attitude of humble and diligence of working. All that mean you need to get your hand dirty, spent time and do more practices. At the end, it cannot guaranty you become a data scientist but it will help you find the way to wards doing data science and be confident to start doing data science projects. It is certainty that if you persist on this road, you will no doubt becomes a future data scientist.
 Setup Download files required for the lesson
 00:00 1. Analyzing Patient Data How do I read data into R?
 How do I assign variables?
@@ -413,17 +420,19 @@ For more information about these matters see
 \section*{Acknowledgements}\label{acknowledgements}}
 
 
-This is a \emph{sample} book written in \textbf{Markdown}. You can use anything that Pandoc's Markdown supports, e.g., a math equation \(a^2 + b^2 = c^2\).
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  A beginner's guide to Kaggle's Titanic problem
+  Sumit Mukhija (\url{https://towardsdatascience.com/a-beginners-guide-to-kaggle-s-titanic-problem-3193cb56f6ca})
+\item
+  \url{https://www.kaggle.com/ldfreeman3/a-data-science-framework-to-achieve-99-accuracy}
+\end{enumerate}
 
-The \textbf{bookdown} package can be installed from CRAN or Github:
+Machine Learning for Dummies by John Mueller and Luca Massaron - Easy to understand for a beginner book, but detailed to actually learn the fundamentals of the topic
 
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading \texttt{\#}.
-
-To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): \url{https://yihui.name/tinytex/}.
-
-\begin{rmdcaution}
-Some text for this block.
-\end{rmdcaution}
+3.Data camp tutorials
+\url{https://www.datacamp.com/community/}
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
@@ -431,7 +440,7 @@ Some text for this block.
 \begin{center}\includegraphics[width=0.5\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/dataScientist} \end{center}
 
 \begin{rmdnote}
-``What profession did Harvard call the Sexiest Job of the 21st Century?''
+``What profession did Harvard call the Sexiest Job of the 21st Century?''\footnote{Data Scientist: The Sexiest Job of the 21st Century. (\url{https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century}). A version of this article appeared in the October 2012 issue of Harvard Business Review.(\url{https://hbr.org/archive-toc/BR1210}) }
 
 \ldots{}
 
@@ -453,7 +462,7 @@ Data science is a multidisciplinary filed. It blends of data mining, data analys
 
 }
 
-\caption{Concept of Data Science}\label{fig:unnamed-chunk-6}
+\caption{Concept of Data Science}\label{fig:unnamed-chunk-4}
 \end{figure}
 
 \hypertarget{data-science-as-discovery-of-data-insight}{%
@@ -541,7 +550,7 @@ Data scientist needs a blend of skills in three major areas:
 
 }
 
-\caption{Quality of Data Scientists}\label{fig:unnamed-chunk-7}
+\caption{Quality of Data Scientists}\label{fig:unnamed-chunk-5}
 \end{figure}
 
 \hypertarget{mathematics-narrator}{%
@@ -640,8 +649,9 @@ Thinking about how you measure the success fo your data science project, the dee
   What factors should be included? (e.g., just annual salary versus annual salary plus cost of staff benefits)
 \end{itemize}
 
-\hypertarget{understanddata}{%
-\subsection{Step 2: Undertand Data - Collect Data and Data Validation}\label{understanddata}}
+\hypertarget{step2}{%
+\subsection*{Step 2: Undertand Data}\label{step2}}
+
 
 The second step is understand data. It includes \textbf{Data collection} and \textbf{Data Validation}. With problem understood and analytical questions defined and your validation criteria and measurements set, It is time to collect data.
 
@@ -649,7 +659,7 @@ The second step is understand data. It includes \textbf{Data collection} and \te
 \subsubsection*{Data Collection}\label{data-collection}}
 
 
-Before collect data, the data source has to be determined based on the relevance. veriaty of data source may be assessed and accessed to get relevant data. These data source may include an existing databases, or organization's file system, or a third party service or even open web sources. They could provide redundant, or complementary, sometimes conflict data. it has to be cautious to select right data source from the very beginning. sometimes you need gather data via observation or interviews, then develop an interview template ahead of time to ensure consistency. it is a good idea to Keep your collected data organized in a log with collection dates and add any source notes as you go (including any data normalization performed). This practice validates your data and any conclusions down the road.
+Before collect data, the data source has to be determined based on the relevance. Variety of data source may be assessed and accessed to get relevant data. These data source may include an existing databases, or organization's file system, or a third party service or even open web sources. They could provide redundant, or complementary, sometimes conflict data. it has to be cautious to select right data source from the very beginning. sometimes you need gather data via observation or interviews, then develop an interview template ahead of time to ensure consistency. it is a good idea to Keep your collected data organized in a log with collection dates and add any source notes as you go (including any data normalization performed). This practice validates your data and any conclusions down the road.
 
 Data Collection is the actual process of gathering data on targeted variables identified as data requirements. The emphasis is on ensuring correct and accurate data collection, which means correct procedure was taken and appropriate measurements were adopted. the maximum efforts were spent to ensure the data quality. Remember that data Collection provides both a baseline to measure and a target to improve for a successful data science project.
 
@@ -657,7 +667,7 @@ Data Collection is the actual process of gathering data on targeted variables id
 \subsubsection*{Data Validation}\label{data-validation}}
 
 
-Data validation id the process to Assess data quality. It is to ensure the collected data have reached quality requirements identified in the step 1, that is, they are correct and useful. data validation can include:
+Data validation id the process to Assess data quality. It is to ensure the collected data have reached quality requirements identified in the step 1, that is, they are useful and correct. The usefulness is the most important aspect. Regardless how accurate your data collections can be, if it is not useful, anything follows are just waste. It is hard to define the usefulness. depends on the problem at hand and the requirements for the find al delivery. The usefulness can various from a strong correlation between the raw data and the expected outcomes, to direct prediction power from the raw data to the concequence variables. Gernrally data validation can include:
 
 \begin{itemize}
 \tightlist
@@ -671,6 +681,8 @@ Data validation id the process to Assess data quality. It is to ensure the colle
   Structured validation
 \item
   Consistency validation
+\item
+  Relevancy validation
 \end{itemize}
 
 \hypertarget{preprocess}{%
@@ -693,8 +705,8 @@ Data preprocess is step that takes data processing method and technique to trans
   Re-engineering data is necessary when raw data come from many different data sources and in different format. Data re-engineering similar with data transformation can be done in both record level and in attributes level. Record level re-engineering is also called data \textbf{Integration}, which integrates variety of data into one file or place and in one format for analysis. for predictive analysis with a model, data re-enginering is also including split a given data set into two subsets called ``Training'' and ``Test'' Set.
 \end{itemize}
 
-\hypertarget{step-4-analyze-data}{%
-\subsection*{Step 4: Analyze Data}\label{step-4-analyze-data}}
+\hypertarget{analyse}{%
+\subsection*{Step 4: Analyze Data}\label{analyse}}
 
 
 After your collected data being preprocessed and suitable for analysis. Now you can drill down and attempt to answer your question from \protect\hyperlink{step1}{Step 1} with the actions called Data Analyzing. It is the core activity in data science project process by writing, executing, and refining computer programs that utilize some analytical methods and algorithms to obtain insights from data sets. The methods in data analysis can be categorized into three major groups: \textbf{Descriptive data analysis (DDA)}, \textbf{Exploratory data analysis (EDA)} and \textbf{Predictive data analysis (PDA)}. DDA and EDA uses quantitative and statistical methods on data sets and data attributes measurements and their value distributions while DDA focus on numeric summary but EDA emphasis on graphical (plot) means. PDA on other hand may involve modeling and machine learning. Data analyzing is generally starting from Descriptive analysis, and goes further with Exploratory analysis. The most advanced methods are predictive analysis and machine learning. The later is built based on the results form the former methods. Some times mixed methods work better.
@@ -831,8 +843,8 @@ Self Driving Cars use autonomous agents that utilize Reinforcement Learning and 
 
 While Data Science is a vast subject, being an aggregate of several technologies and disciplines, it is possible to acquire these skills with the right approach. In the end, Data Science is a very robust field that best fits people who have a knack for experimentation and problem-solving. With a large number of applications, Data Science has become the most versatile career.
 
-\hypertarget{exercise}{%
-\section*{Exercise}\label{exercise}}
+\hypertarget{exercise-1}{%
+\section*{Exercise 1}\label{exercise-1}}
 
 
 \begin{enumerate}
@@ -843,8 +855,45 @@ While Data Science is a vast subject, being an aggregate of several technologies
 \item
   What a Data Scientist do? What skills a data SCientist should have?
 \item
-  How you interpret the saying that ``Data Scientist is a detective. An investigation into datasets may not results in a plausible conclusion''. How do you explain digging value out of data in this situation?
+  How do you interpret the saying that ``Data Scientist is a detective. An investigation into datasets may not results in a plausible conclusion''? How do you explain the value of doing a data science a project if you efforts resulted in a unwelcome result?
 \end{enumerate}
+
+\hypertarget{furtehr-readins}{%
+\section{furtehr readins}\label{furtehr-readins}}
+
+There are a slew of terms closely related to data science that we hope to add some clarity around.
+
+\hypertarget{what-is-the-difference-between-an-analyst-and-a-data-scientist}{%
+\subsection{What is the difference between an analyst and a data scientist?}\label{what-is-the-difference-between-an-analyst-and-a-data-scientist}}
+
+Analytics has risen quickly in popular business lingo over the past several years; the term is used loosely, but generally meant to describe critical thinking that is quantitative in nature. Technically, analytics is the ``science of analysis'' --- put another way, the practice of analyzing information to make decisions.
+
+Is ``analytics'' the same thing as data science? Depends on context. Sometimes it is synonymous with the definition of data science that we have described, and sometimes it represents something else. A data scientist using raw data to build a predictive algorithm falls into the scope of analytics. At the same time, a non-technical business user interpreting pre-built dashboard reports (e.g.~GA) is also in the realm of analytics, but does not cross into the skill set needed in data science. Analytics has come to have fairly broad meaning. At the end of the day, as long as you understand beyond the buzzword level, the exact semantics don't matter much.
+
+``Analyst'' is somewhat of an ambiguous job title that can represent many different types of roles (data analyst, marketing analyst, operations analyst, financial analyst, etc). What does this mean in comparison to data scientist?
+
+Data Scientist: Specialty role with abilities in math, technology, and business acumen. Data scientists work at the raw database level to derive insights and build data product.
+Analyst: This can mean a lot of things. Common thread is that analysts look at data to try to gain insights. Analysts may interact with data at both the database level or the summarized report level.
+
+Thus, ``analyst'' and ``data scientist'' is not exactly synonymous, but also not mutually exclusive. Here is our interpretation of how these job titles map to skills and scope of responsibilities:
+
+\hypertarget{what-is-the-difference-between-machine-learning-and-data-science}{%
+\subsection{What is the difference between Machine Learning and data science?}\label{what-is-the-difference-between-machine-learning-and-data-science}}
+
+Machine learning is a term closely associated with data science. It refers to a broad class of methods that revolve around data modeling to (1) algorithmically make predictions, and (2) algorithmically decipher patterns in data.
+
+Machine learning for making predictions --- Core concept is to use tagged data to train predictive models. Tagged data means observations where ground truth is already known. Training models means automatically characterizing tagged data in ways to predict tags for unknown data points. E.g. a credit card fraud detection model can be trained using a historical record of tagged fraud purchases. The resultant model estimates the likelihood that any new purchase is fraudulent. Common methods for training models range from basic regressions to complex neural nets. All follow the same paradigm known as supervised learning.
+
+Machine learning for pattern discovery --- Another modeling paradigm known as unsupervised learning tries to surface underlying patterns and associations in data when no existing ground truth is known (i.e.~no observations are tagged). Within this broad category of methods, the most commonly used are clustering techniques, which algorithmically detect what are the natural groupings that exist in a data set. For example, clustering can be used to programmatically learn the natural customer segments in a company's user base. Other unsupervised methods for mining underlying characteristics include: principal component analysis, hidden markov models, topic models, and more.
+
+Not all machine learning methods fit neatly into the above two categories. For example, collaborative filtering is a type of recommendations algorithm with elements related to both supervised and unsupervised learning. Contextual bandits are a twist on supervised learning where predictions get adaptively modified on-the-fly using live feedback.
+
+This wide-ranging breadth of machine learning techniques comprise an important part of the data science toolbox. It is up to the data scientist to figure out which tool to use in different circumstances (as well as how to use the tool correctly) in order to solve analytically open-ended problems.
+
+\hypertarget{what-is-the-difference-between-data-mining-and-data-science}{%
+\subsection{What is the difference between data mining and data science?}\label{what-is-the-difference-between-data-mining-and-data-science}}
+
+Raw data can be unstructured and messy, with information coming from disparate data sources, mismatched or missing records, and a slew of other tricky issues. Data munging is a term to describe the data wrangling to bring together data into cohesive views, as well as the janitorial work of cleaning up data so that it is polished and ready for downstream usage. This requires good pattern-recognition sense and clever hacking skills to merge and transform masses of database-level information. If not properly done, dirty data can obfuscate the `truth' hidden in the data set and completely mislead results. Thus, any data scientist must be skillful and nimble at data munging in order to have accurate, usable data before applying more sophisticated analytical tactics.
 
 \hypertarget{tools}{%
 \chapter{Get Your Tools Ready}\label{tools}}
@@ -1342,8 +1391,8 @@ Create a first R program called \texttt{DSPR1},
 
 Okay. Save your file and move to next Tutorial.
 
-\hypertarget{exercise-1}{%
-\section*{Exercise}\label{exercise-1}}
+\hypertarget{exercise-2}{%
+\section*{Exercise 2}\label{exercise-2}}
 
 
 \begin{enumerate}
@@ -1409,6 +1458,8 @@ Okay. Save your file and move to next Tutorial.
 \tightlist
 \item
   Explore project and working directory from RStudio.
+\item
+  Create a R project called ``MyDataScienceProject''.
 \end{enumerate}
 
 \hypertarget{prob}{%
@@ -1420,7 +1471,7 @@ Okay. Save your file and move to next Tutorial.
 
 }
 
-\caption{The sink of Titanic. Credits: Canoe1967/wikipeida.org}\label{fig:unnamed-chunk-9}
+\caption{The sink of Titanic. Credits: Canoe1967/wikipeida.org}\label{fig:unnamed-chunk-7}
 \end{figure}
 
 \begin{quote}
@@ -1448,7 +1499,7 @@ Using the human competitive spirit, Kaggle created a platform for organizations 
 
 }
 
-\caption{Kaggle Competition web site}\label{fig:unnamed-chunk-10}
+\caption{Kaggle Competition web site}\label{fig:unnamed-chunk-8}
 \end{figure}
 
 Generally, Each competition has a host, and each host has to prepare and provide data. When providing data, the host has the opportunity to give additional information such as a description, evaluation method, timeline, and prize for winning. Although this may not be an ideal real world data problem, which data scientist may face in the business. But it provides a good starting point for learners. In a real world, you may need to start from understand the business and find data sources by your self. Although competition host has provided data. You cannot assume the data provided are clean data and ready for analysis. Cleaning and preprocess data are part of the competition. Therefore, any solution can be tested to see how good a participant is with the whole process of data science project.
@@ -1464,7 +1515,7 @@ Titanic perhaps is the oldest and most participated competition on the Kaggle co
 
 }
 
-\caption{Kaggle Competition on Titanic}\label{fig:unnamed-chunk-11}
+\caption{Kaggle Competition on Titanic}\label{fig:unnamed-chunk-9}
 \end{figure}
 
 We take Titanic as an example through this tutorial because of the following reasons:
@@ -1520,7 +1571,7 @@ Any model fundamentally expresses relationships between inputs and outputs. So a
 \subsection*{The data}\label{the-data}}
 
 
-Kaggle competition usually provides competition data. There is a ``Data'' tab on any competition site. Click on the Data tab at the top of the competition page, you will find the raw data provided and most of time there are brief explanation of the data attributes too.
+Kaggle competition usually provides competition data. There is a ``Data'' tab on any competition site. Click on the Data tab at the top of the competition page, you will find the raw data provided and most of time there are brief explanation of the data attributes\footnote{We have used Data Science terminology in here. Data represent objects in natural world. Object's properties are represented by attributes. That is a data record has a number of attributes representing a natural object with a number of properties. records is also called observations or samples in statistics, property is also called variables, parameters or dimensions} too.
 
 There are three files in the Titanic Challenge:
 
@@ -1535,15 +1586,38 @@ There are three files in the Titanic Challenge:
   gender\_submission.csv.
 \end{enumerate}
 
+The training set is supposedly used to build your models. For the training set, it provides the outcome (also known as the ``ground truth'') for each passenger. Your model will be based on attributes like passengers' gender and class. You can also use feature engineering to create new features.
+
+The test set should be used to see how well your model performs on unseen data. For the test set, there is no ground truth for each passenger is provided. It is your job to predict these outcomes. For each passenger in the test set, use the model you trained to predict whether or not they survived the sinking of the Titanic.
+
+The data sets has also include gender\_submission.csv, a set of predictions that assume all and only female passengers survive, as an example of what a submission file should look like.
+
 \hypertarget{submission}{%
 \subsection*{Submission}\label{submission}}
 
 
-Submission at the Titanic competition is equivalent to the final report of any data science project. that is one of the questions you need to understand in the beginning of the project.
+Submission at the Titanic competition is equivalent to the requirements on the final report of any data science project. that is one of the questions you need to understand in the beginning of the project.
 
-Titanic competition requires the results need be submitted in the file. The file structure is demonstrated in the ``gender\_submission.csv''. It is aslo provided as an example that shows how you should structure your results, which means predictions.
+Titanic competition requires the results need be submitted in the file. The file structure is demonstrated in the ``gender\_submission.csv''. It is also provided as an example that shows how you should structure your results, which means predictions.
 
-The example submission in ``Gender\_submission'' predicts that all female passengers survived, and all male passengers died. It is clearly biased. Your hypotheses regarding survival will probably be different, which will lead to a different submission file. But, just like this file, your submission should have:
+The example submission in ``Gender\_submission'' predicts that all female passengers survived, and all male passengers died. It is clearly biased. Your hypotheses regarding survival will probably be different, which will lead to a different submission file. Properly it is a good idea now to rename the ``Gender\_submission.csv'' file into ``My\_submission.csv'' now. So you know that you have to submit ``my\_submission.csv'' as the final report of your project and the submission indicate your completion of your project.
+
+\begin{rmdaction}
+Do it yourself:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Download data file from Kaggel web site.(\url{https://www.kaggle.com/c/titanic/data})
+\item
+  Unzip it into your working directory.
+\item
+  Rename ``Gender\_submission.csv'' file into ``My\_submission.csv''.
+\end{enumerate}
+\end{rmdaction}
+
+Make sure your submission should have:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1570,8 +1644,26 @@ For the example, the first problem in the above list needs to know what is the n
 
 Understand problem is actually more complicated in real world. Until you have completely understood it and turned it into a list of analytical problems you can move to next step.
 
-\hypertarget{exercise}{%
-\section*{Exercise}\label{exercise}}
+With the Titanic problem, combining the story and the requirements on the Kaggle web site, I would consider these:
+
+\begin{itemize}
+\tightlist
+\item
+  On April 14 and 15, 1912, during her maiden voyage, the Titanic sank after colliding with an iceberg, killing 1502 out of 2224 passengers and crew. The overall survival rate is 32\%.
+\item
+  One of the reasons that the shipwreck led to such loss of life was that there were not enough lifeboats for the passengers and crew.
+\item
+  Although there was some element of luck involved in surviving the sinking, some groups of people were more likely to survive than others, such as women, children, and the upper-class.
+\item
+  The story tells us that when they were get on board the lifeboats, they applied a policy of ``women and children first'' and also ``the ship crew are the last''.
+\item
+  Sometimes the family was boarding the life boat together and some of the family members were swimming together too.
+\end{itemize}
+
+Those thoughts form some kind of assumptions in mind. They will guide later data explorations.
+
+\hypertarget{exercises-3}{%
+\section*{Exercises 3}\label{exercises-3}}
 
 
 \begin{enumerate}
@@ -1586,62 +1678,2652 @@ Understand problem is actually more complicated in real world. Until you have co
 \hypertarget{understand-data}{%
 \chapter{Understand Data}\label{understand-data}}
 
-{[}Understand data see \href{understanddata}{section} section@(understanddata) with two major purposes: 1. access data quantity; 2. access data quality. in practice these two can be done together or separately.
+\begin{figure}
 
-input data
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/buildingmaterial} 
+
+}
+
+\end{figure}
+
+Understand your building raw materials can help you choose correct tools and make the most use of them to construct your ideal buildings.
+
+\textbf{Understand data} is the foundation for solving analytical problems. The two major purposes of understand data are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Access data quantity
+\item
+  Access data quality
+\item
+  Set up objects for \textbf{data preprocess}
+\end{enumerate}
+
+In practice the two initial data assessments can be done together or separately. The purpose of them is to setup objective for \textbf{data preprocess} to accomplish. The methods used to understand data can be both Descriptive analysis and Exploratory analysis.
+
+\hypertarget{load-data}{%
+\section{Load data}\label{load-data}}
+
+Here are my initial plan for understand Titanic data:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Get Titanic data load into RStudio
+\item
+  Assess Data quantity (number of files, size of each file in number of records, number of attributes in each record)
+\item
+  Attributes types assessment
+\item
+  Attributes value assessment (numbers and summary, description).
+\end{enumerate}
+
+Now, get your RStudio ready.
+
+If you have not done the Exercises 2.5, which asked you to create a new R project named ``MyDataScienceProject''. You can do it now.
+
+Open your RStudio, Click File-\textgreater{} New project-\textgreater New Directory -\textgreater{} choose New R Project``, then, enter''MyDataScienceProject" in the Directory name box and select your directory. Click ``Create Project'' at the right bottom as shown in Figure \ref{fig:newproject}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/NewProject} 
+
+}
+
+\caption{Create a new project in RStudio }\label{fig:newproject}
+\end{figure}
+
+Load file ``TitanicDataScience1.R'' into RStudio. create a new R file and name it ``MyTitanicDataScience1''.
+
+The protocol is you copy lines indicated from this tutorial ``chunk'' by ``chunk'' into your R file and run them.
+
+Okay let us start,
+
+In your RStudio (WorkSpace), copy lines from ``TitanicDataScience1.R'' into your file ``MyTitanicDataScience1'',
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Load raw data}
+\NormalTok{train <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"train.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"test.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You will see this in your Console,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{>}\DataTypeTok{ train <- read.csv("train.csv", header = TRUE)}
+\DataTypeTok{Error in file(file, "rt") : cannot open the connection}
+\DataTypeTok{In addition: Warning message:}
+\DataTypeTok{In file(file, "rt") :}
+\DataTypeTok{  cannot open file 'train.csv': No such file or directory}
+\DataTypeTok{> test <- read.csv("test.csv", header = TRUE)}
+\DataTypeTok{Error in file(file, "rt") : cannot open the connection}
+\DataTypeTok{In addition: Warning message:}
+\DataTypeTok{In file(file, "rt") :}
+\DataTypeTok{  cannot open file 'test.csv': No such file or directory}
+\DataTypeTok{> }
+\end{Highlighting}
+\end{Shaded}
+
+Don't panic. let us look into it.
+
+The first thing I want you to learn is to use RStudio help. Remember how to use it?
+
+Now type \textbf{\texttt{?\ read.cvs}} in your Console, look at the Multifunction pane, the tab \textbf{Help} is auto selected and help message for \textbf{\texttt{read.cvs}} is appeared. See Figure \ref{fig:Rhelp}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{img/Rhelp} 
+
+}
+
+\caption{Screen capture of Error and Help}\label{fig:Rhelp}
+\end{figure}
+
+Now, notice that the error message says, ``\texttt{cannot\ open\ file\ \textquotesingle{}test.csv\textquotesingle{}:\ No\ such\ file\ or\ directory}''. We don't have file \texttt{train.csv} and \texttt{test.csv} in our working directory.
+
+Now, Download the \texttt{traon.csv} and \texttt{test.csv} from Kaggle (if you did not download already) and stored into our project working directory\footnote{The data files were asked to be downloaded and unzipped in the previous chapter \ref{act-download} . If you simply unzip it into the working directory, it will exists in ``\textasciitilde/Titanic/'' directory. In this case, you need to move them into your working directory.}.
+
+Please note that it is a common practice that data scientist download datasets from data sources and save to a local drive. Having a local version of the raw datasets is good idea. But a lot of times, it is unfeasible to do so either because the data is too big or there are some access restriction prevent you have a local version. So, you have to using service provider's API or data URI through HTTP protocol or other protocol like FTP etc.
+
+Once, you have download the datasets from Kaggle website and unzipped (or moved) them into your local working directory, run the same code again by select them all and click ``Run'' or type ``Ctr + Enter'' .
+
+You will see the two new attributes have been created and displayed in the \textbf{WorkSpace pane}. See Figure \ref{fig:importdata}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.95\linewidth]{img/importdata} 
+
+}
+
+\caption{Screen capture of import raw data}\label{fig:importdata}
+\end{figure}
+
+\begin{rmdaction}
+Try yourself:
+
+Import data from \textbf{WorkSpace pane} by click ``\textbf{Import Dataset}'' button.
+\end{rmdaction}
+
+\hypertarget{assess-data-quantity}{%
+\section{Assess Data Quantity}\label{assess-data-quantity}}
+
+After we have load the raw data into our WorkSpace, we can start to explore and exam the raw data.
+
+In R code, the best way to explore a dataset and get the first impression on its size (number of records and numbers of attributes) is using \texttt{str()} function. If you wan tot know more about it, as I mentioned earlier, using help by typing \texttt{?\ str()} in your Console. There is an equivalent R code is called \texttt{help\ \textless{}statement\textgreater{}}, you can try \texttt{help\ str()}.
+
+Now let us run the following code,
+
+\begin{verbatim}
+# Exam train and test datasets
+train <- read.csv("train.csv", header = TRUE)
+test <- read.csv("test.csv", header = TRUE)
+\end{verbatim}
+
+You will see this in your console, Figure \ref{fig:Rstr}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1.3\linewidth]{img/RstrResult} 
+
+}
+
+\caption{Screen capture of str(tain) and str(test)}\label{fig:Rstr}
+\end{figure}
+
+Firstly, you will see the size of the two datasets:
+
+\begin{itemize}
+\tightlist
+\item
+  train has \textbf{891 records} and each record has \textbf{12 attributes}. Okay, R uses statistics terminology, observation is record in data science term. properties of an observation are attributes of a record. Notice that train has a type of data.from. Data.frame is the most used data type in R. (Try \texttt{?data.frame} to explore)
+\item
+  test has \textbf{418 records} and each record has \textbf{11 attributes}, which are less than train's in both number of records and attributes.
+\end{itemize}
+
+Dataset \texttt{test} has less number of records makes sense because any model you need large data to train and less data to test ( it will become clear later). However, why \texttt{test} has one less attribute? compare with \texttt{train}, it is easy to find out that the missing attribute is \emph{Survived}. Do you understand now? The dataset \texttt{test} is supposedly to be used for testing our model (we will have it later) for predicting passengers' have lived and dead. So, it should not have a value now. The entire problem is for us to come up with a value on the attribute.
+
+RStudio has a conveniently build-in function to explore data size. At the \textbf{WorkSpace pane}, you can see the under \textbf{Environment} tab, the two attributes we have created are listed there. In font of each attribute there is a
+\includegraphics{img/arrow.png} sign. click it you can exam its size and structure. It is equivalent to run \texttt{str()} R instruction. You can also lick on the attribute name to explore the entire dataset.
+
+\begin{rmdaction}
+Try yourself:
+
+At RStudio \textbf{WorkSpace pane},
+
+Click varaible name \texttt{train} and \texttt{test} to explore the contents of datasets.
+
+Click on the \includegraphics{img/arrow.png} sign in front of attribute to explore it sstructure.
+\end{rmdaction}
+
+\hypertarget{general-data-attributes-assessment}{%
+\section{General Data Attributes Assessment}\label{general-data-attributes-assessment}}
+
+After a brief assessment on the data quantity, we know that the both datasets are not too big in terms of both number records (891 and 418) and number of attributes (12 and 11). We also have an intuitive understanding about the attributes, some obvious names like \emph{Name}, \emph{Sex} and \emph{Age}; and some not so obvious names like \emph{SibSp} and \emph{Parch}.
+
+Before we looking into individual attributes (single variate analysis) in our datasets, let us get some general sense of all attributes and make sure we understand each of them.
+
+We knew that dataset \texttt{test} has 11 attributes and \texttt{train} has 12 attributes. The one attribute short is the \emph{Survived}. The rest are the same. Let us look into those attributes, the following is from the Kaggel web site:
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{img/DatafrKaggle} 
+
+}
+
+\caption{Data Dectionary from Kaggle website.}\label{fig:unnamed-chunk-13}
+\end{figure}
+
+\begin{verbatim}
+attribute Notes
+*Pclass*: A proxy for socio-economic status (SES)
+1st = Upper
+2nd = Middle
+3rd = Lower
+
+*Age*: Age is fractional if less than 1. If the age is estimated, is it in the form of xx.5
+
+*Sibsp*: The dataset defines family relations in this way...
+*Sibling* = brother, sister, stepbrother, stepsister
+*Spouse* = husband, wife (mistresses and fiancés were ignored)
+
+*Parch*: The dataset defines family relations in this way...
+Parent = mother, father
+Child = daughter, son, stepdaughter, stepson
+Some children travelled only with a nanny, therefore parch=0 for them.
+\end{verbatim}
+
+Just looking into these attributes' description, a few thoughts are occurred:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Attribute types
+\end{enumerate}
+
+There are attributes should be categorical types. The values of those attributes can be any types but the importance is that they can classify the records into sets of similar groups and this grouping make sense to the problem to be solved. In Titanic datasets, attributes should have \textbf{categorical} type are: \emph{Survived}, \emph{Sex}, \emph{Embarked}, and \emph{Pclass}.
+
+Other attribute perhaps should have numerical type. Thsi is because these attributes values change from record to record. They can be the values of discrete, continuous, or timeseries. One thing in common is that these values can be manipulated and applied with many math functions and plotting tools for visualization. In Titanic datasets, attributes should have \textbf{numerical} type are: \emph{Age}, \emph{Fare}, \emph{SibSp}, \emph{Parch}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Contribution to Survive
+\end{enumerate}
+
+The final goal is to predict passenger's survived or not. It makes sense to assess the prediction power of each attribute. which is the contribution of an attribute to attrribute \emph{Survived}. In other words, the potential relationships among these attributes and with the attribute \emph{Survived} need to be assessed. Here are some thoughts:
+
+\begin{itemize}
+\item
+  \emph{Pclass} should somehow linked with \emph{Fare} and \emph{Cabin}. Generally, the higher the class is and the more expensive of the fare will be and the better cabin locations are. So those should have some sort of correlations among them. they together should have some affect on survive. You would think that the expensive ticket, means better cabin location and has privilege to escape first in the disaster.
+\item
+  What is the ticket number to do with survive? Is it just a random number? Or is associated with cabin? Or anything else like Port of embarkation? ticket number in some other systems could have more information rather than just an unique number.
+\item
+  Is the \emph{Fair} in someways associated with journey length, which means the Port of embarkation and the port of disembarkation? Or cabin location and condition?
+\end{itemize}
+
+You can have other thoughts too. To prove or disprove these assumptions and thoughts, we need to look into the actual datasets at least to see:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What are the data types for various attributes?
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Which attributes are available in the dataset?
+\item
+  Which attributes are categorical?
+\item
+  Which attributes are numerical?
+\item
+  Which attributes are mixed data types?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Any errors in the attributes values?
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Which features may contain errors or typos?
+\item
+  Which features contain blank, null or empty values?
+\end{itemize}
+
+These questions will be answered in the following two sections.
+
+\hypertarget{actual-attributes-types-examination}{%
+\section{Actual Attributes Types Examination}\label{actual-attributes-types-examination}}
+
+Since we have our raw data in RStudio, We can exam attributes' types. From figure \ref{fig:Rstr}, we can see that all the attributes have three types, \texttt{int}, \texttt{Factor}, \texttt{num}.
+
+Attributes have \texttt{int} types are: \emph{PassengerId}, \emph{Survived}, \emph{SibSp}, \emph{Parch}.
+
+Attributes has \texttt{Factor} types are: \emph{Name}, \emph{Sex}, \emph{Ticket}, \emph{Cabin} and \emph{Embarked}.
+
+Attributes has \texttt{num} types are: \emph{Age} and \emph{Fare}.
+
+We know that, the type \texttt{int} is for attribute that has an integer value; and \texttt{num} is for an numeric attribute, which has the values of real numbers.
+
+Type \texttt{Factor} is R language's way to say category type. It is a attribute that can take on one of a limited, and usually fixed, number of possible values, such as blood type.
+
+Attributes types affect the operations we can apply on that attributes. In other words inappropriate types can prevent us to do proper analysis on that attribute. For example, it doe's not make sense to calculate average on sex, so it is better to be with a type of Category, in R is a \texttt{Factor}. Similarly, \emph{Survived} will have only two values 0 or 1, to represent death or live. It makes sense to be an \texttt{Factor} too. Being a \texttt{int} type, it will prevent us to apply many methods that only works for a \texttt{Factor} type attribute.
+
+Another example is \emph{Name}, its original type is \emph{Factor} to reflect on its uniqueness. However, Type ``Factor'' is not good for string processing. It has been prevented that to apply regular expression\footnote{A regular expression is a sequence of characters that define a search pattern, which is used by string-searching algorithms to find a particular string or validate a input string.} on it. So, it is appropriate to change it into \emph{chr} as a character.
+
+There are other inappropriate or wrong attribute's types too such as \emph{SibSp} and \emph{Parch} are currently typed \emph{int}. May be they should be considered as \emph{Factor}. It is a common practice that data scientists apply different analyses on a attribute and change the attribute type to apply other different algorithms again. The goal is to dig the insight out of data.
+
+So, looking into data attributes types, compare with the original meaning of each attributes can help us to spot any inappropriate types or wrong types.
+
+\begin{rmdthinking}
+Thinking:
+
+Is \textbf{Servived typed} \texttt{int} approriate?
+
+What other attributes do you think are in a wrong type?
+\end{rmdthinking}
+
+\hypertarget{attvalue}{%
+\section{Actual Data Attributes Value Examination}\label{attvalue}}
+
+To understand given datasets needs to carefully examine the values of each data attributes to:
+
+\begin{itemize}
+\tightlist
+\item
+  find any errors and missing values
+\item
+  find value distribution
+\item
+  find potential relation with the attribute to be predicted (also called dependent variable)
+\end{itemize}
+
+Finding errors, typos and missing values can set up the goals for data prepsocess.
+
+Since the examine covers both datesets \texttt{train} and \texttt{test}, it make sense to combine the two datasets into one big dataset, so it can save us to run the same code twice on the different datasets.
+
+Copy the following code into your script,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Add a "Survived" attribute to the test dataset to allow for combining with train dataset}
+
+\NormalTok{test <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(test[}\DecValTok{1}\NormalTok{], }\DataTypeTok{Survived =} \KeywordTok{rep}\NormalTok{(}\StringTok{"NA"}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(test)), test[ ,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(test)])}
+
+\CommentTok{# Combine data sets. Append test.survived to train}
+\NormalTok{data <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(train, test)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we have a dataset \texttt{data}, which combines both datasets \texttt{train} and \texttt{test} datasets. We assigned the value of attribute \emph{Survived} in the original dataset \texttt{test} as ``NA''. You can check them in the \textbf{WorkSpace pane} by click variable data.
+
+\begin{rmdtry}
+Thinking:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Can we combine \texttt{train} and \texttt{test} without add \emph{Survived} attribute to the test? Like,
+\end{enumerate}
+
+\texttt{data\ \textless{}-\ rbind(train,\ test)}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Why add attibute \emph{Survived} as the second attribute? Can we add it as the first one? Like,
+\end{enumerate}
+
+\texttt{test\ \textless{}-\ data.frame(Survived\ =\ rep("NA",\ nrow(test)),\ test{[},{]})}
+\end{rmdtry}
+
+It is good idea to have bird eye's view on our combined dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# check out data with a summary}
+\KeywordTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   PassengerId     Survived             Pclass     
+##  Min.   :   1   Length:1309        Min.   :1.000  
+##  1st Qu.: 328   Class :character   1st Qu.:2.000  
+##  Median : 655   Mode  :character   Median :3.000  
+##  Mean   : 655                      Mean   :2.295  
+##  3rd Qu.: 982                      3rd Qu.:3.000  
+##  Max.   :1309                      Max.   :3.000  
+##                                                   
+##                                Name          Sex           Age       
+##  Connolly, Miss. Kate            :   2   female:466   Min.   : 0.17  
+##  Kelly, Mr. James                :   2   male  :843   1st Qu.:21.00  
+##  Abbing, Mr. Anthony             :   1                Median :28.00  
+##  Abbott, Mr. Rossmore Edward     :   1                Mean   :29.88  
+##  Abbott, Mrs. Stanton (Rosa Hunt):   1                3rd Qu.:39.00  
+##  Abelson, Mr. Samuel             :   1                Max.   :80.00  
+##  (Other)                         :1301                NA's   :263    
+##      SibSp            Parch            Ticket          Fare        
+##  Min.   :0.0000   Min.   :0.000   CA. 2343:  11   Min.   :  0.000  
+##  1st Qu.:0.0000   1st Qu.:0.000   1601    :   8   1st Qu.:  7.896  
+##  Median :0.0000   Median :0.000   CA 2144 :   8   Median : 14.454  
+##  Mean   :0.4989   Mean   :0.385   3101295 :   7   Mean   : 33.295  
+##  3rd Qu.:1.0000   3rd Qu.:0.000   347077  :   7   3rd Qu.: 31.275  
+##  Max.   :8.0000   Max.   :9.000   347082  :   7   Max.   :512.329  
+##                                   (Other) :1261   NA's   :1        
+##              Cabin      Embarked
+##                 :1014    :  2   
+##  C23 C25 C27    :   6   C:270   
+##  B57 B59 B63 B66:   5   Q:123   
+##  G6             :   5   S:914   
+##  B96 B98        :   4           
+##  C22 C26        :   4           
+##  (Other)        : 271
+\end{verbatim}
+
+This summary \ref{fig:sofdata} tell us a lot of information. Most obvious are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \emph{PassengerID} is useless in terms of predicting survived or not. in addition, it is not much help that provide a statistical summary on it.
+\item
+  \emph{Survived} and \emph{Pclass} numbers are useful and interesting.
+\item
+  \emph{Name} is mostly unique, which comes a surprise that only 2 names are repeated twice.
+\item
+  \emph{Gender} distribution among passenger is unbalanced that male overweight female.
+\item
+  \emph{Age} is interesting that minimum age 0.17 is alarming and there is 263 missing values.
+\item
+  \emph{SibSp} tells us the largest relatives travel together is 8.
+\item
+  \emph{ParCh} tells us the largest family travel together is 9.
+\item
+  There are a number of \emph{ticket} has the same number. The most repeat number is CA. 2343, which has 11 duplicates.
+\item
+  Ticket \emph{Fare} shows the minimum is 0, which is interesting that someone take a free ride. The maximum is over 512, which is far too expensive when the mean value is only about 33.
+\item
+  \emph{Cabin} has a large number of missing values (identified by "").
+\item
+  \emph{Embarked} only has three values which is not a good sign for prediction. it also has 2 missing value.
+\end{enumerate}
+
+You can see now one function can provide so much information. Quantitative summary is a great tool for a data scientist.
+
+Now, Let us exam each attribute,
+
+\hypertarget{passengerid.}{%
+\subsection{PassengerID.}\label{passengerid.}}
+
+\emph{PassengerId} is an identifier, So only its uniqueness and missing value are considered.
+
+There are many ways you can use to find out. I simply check its total number and its unique number. If the both equal to the number of records in the dataset, it shows that there is no duplication and no missing values in the attribute.
+
+So we do,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Exam PassengerID}
+
+\KeywordTok{length}\NormalTok{(data}\OperatorTok{$}\NormalTok{PassengerId)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1309
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(data}\OperatorTok{$}\NormalTok{PassengerId))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1309
+\end{verbatim}
+
+The results shows the both number 1309, which is equal to the total number of records in the dataset. It proves the \emph{PassengerID} has not missing value and duplication.
+
+\hypertarget{survived}{%
+\subsection{Survived}\label{survived}}
+
+\emph{Survived} is the attribute that its value will be produced by a model for the dataset \texttt{test}. It is called \textbf{Consequencer} in modeling contrast with other attributes. which are used to produce a prediction, are called \textbf{Predictor}. So, our exam will be conducted only on dataset \texttt{train}. Again we can check the numbers whether they can add up or not. As we already mentioned that it makes sense to change the \emph{Servived} from type \texttt{chr} into \texttt{Factor}. We do,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Exam Survived}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Survived <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Survived)}
+\KeywordTok{table}\NormalTok{(data}\OperatorTok{$}\NormalTok{Survived)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   0   1  NA 
+## 549 342 418
+\end{verbatim}
+
+The results proved that the \emph{Survived} value has the correct numbers:
+
+\begin{itemize}
+\tightlist
+\item
+  418 `NA' values are the \emph{Survived}'s value in the dataset \texttt{test}, and
+\item
+  the 549 death and 342 survived, together maded up the total number of dataset \texttt{train}, which is 891.
+\end{itemize}
+
+So we know the value of \emph{Survived} in the dataset \texttt{train} are correct and has no missing values. It is interesting here to think about the survive rate. How to calculate?
+
+I will do this,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate the survive rate in train data is 38% and the death rate is 61.61%}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(train}\OperatorTok{$}\NormalTok{Survived)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##         0         1 
+## 0.6161616 0.3838384
+\end{verbatim}
+
+So we know the survive rate in the dataset \texttt{train} is about 61\%. This is interesting because it reflects the overall survival rate.
+
+\hypertarget{pclass}{%
+\subsection{Pclass}\label{pclass}}
+
+\emph{Pclass} is the feature which splits the passengers into three division namely class-1, class-2, class-3. As we understood it should be in type of \texttt{Factor} rather than \texttt{int}. We shall change its type first and then to see if there missing value or errors. It is also good to know the survival rate in each class. So. we can compare with the overall survival rate in the dataset \texttt{train}.
+
+Copy the following code into your script.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Examine Pclass value,}
+\CommentTok{# Look into Kaggle's explanation about Pclass: it is a proxy for social class i.e. rich or poor}
+\CommentTok{# It should be factor and it does not make sense to stay in int.}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Pclass <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Pclass)}
+\NormalTok{test}\OperatorTok{$}\NormalTok{Pclass <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(test}\OperatorTok{$}\NormalTok{Pclass)}
+\NormalTok{train}\OperatorTok{$}\NormalTok{Pclass <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(train}\OperatorTok{$}\NormalTok{Pclass)}
+
+\CommentTok{# Distribution across classes}
+\KeywordTok{table}\NormalTok{(data}\OperatorTok{$}\NormalTok{Pclass)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   1   2   3 
+## 323 277 709
+\end{verbatim}
+
+If you want, you can check the total of the three classes which is 1309. It equals to the total number of records in the \texttt{data} (total number fo passenger). And there is no other numbers than 1,2 and 3. So we can conclude that there is no missing value and no errors in \emph{Pcalss}.
+
+It will be interesting to see the survival rate for each class,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Distribution across classes with survive}
+\KeywordTok{table}\NormalTok{(data}\OperatorTok{$}\NormalTok{Pclass, data}\OperatorTok{$}\NormalTok{Survived)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    
+##       0   1  NA
+##   1  80 136 107
+##   2  97  87  93
+##   3 372 119 218
+\end{verbatim}
+
+These numbers tell us many things:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{The death distribution}. Among the three classes from class-1 to class-3 is: 80, 97 and 379. It confirms that the passenger in Class-3 has largest number of death (372);
+\item
+  \textbf{The survival distribution}. Among the three classes, class-1 has the highest number of survival (136);
+\item
+  \textbf{The passengers distribution}. Among the three classes, class-3 has the largest passenger numbers (372+119+218) in total, and overtaking other two classes together for both datasets \texttt{train} and \texttt{test} (372+119) \textgreater{} ((80+97) + (136+87)).
+\item
+  The last column is the pasenger distribution among the three glasses for dataset \texttt{test}. This is because its \emph{Survived} value is ``NA'' (not defined).
+\end{enumerate}
+
+We can calculate distributions among the three classes in terms of percentage.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The overall passenger's distribution among the three classes:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate the distribution on Pclass}
+\CommentTok{# Overall passenger distribution on classes.}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Pclass)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##         1         2         3 
+## 0.2467532 0.2116119 0.5416348
+\end{verbatim}
+
+That is 24.67\% passenger in Class-1, 21.16\% passenger is class-2 and 54.16\% of passenger in class-3.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  The passenger's distribution among the three classes given by dataset \texttt{train}:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Train data passenger distribution on classes.}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(train}\OperatorTok{$}\NormalTok{Pclass)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##         1         2         3 
+## 0.2424242 0.2065095 0.5510662
+\end{verbatim}
+
+The number tells us the distribution of passengers from dataset \texttt{train} is: class-1, 24.24\%; class-2, 20.65\% and class-3 has 55.1\%.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The passenger's distribution among the three classes given by dataset \texttt{test}:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Test data passenger distribution on classes.}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(test}\OperatorTok{$}\NormalTok{Pclass)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##         1         2         3 
+## 0.2559809 0.2224880 0.5215311
+\end{verbatim}
+
+Lastly, the passenger distribution from dataset \texttt{test} are: 25.6\% in class-1, 22.24\% in class-2 and 52.15\% percent in class-3.
+
+We can see that the distribution of passengers, in terms of percentage, among the three classes are almost identical both in order and in proportion. That is the most passenger are in class-3, then class-1 and finally class-2.
+
+Let us look into death and survive distribution among the three classes\footnote{This code is not brilliant. It used many intermediate variables, you can check their structure and contents from \textbf{WorkSpace pane}. You can come up with a better code.},
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate death distribution across classes with Train data}
+\NormalTok{SurviveOverClass <-}\StringTok{ }\KeywordTok{table}\NormalTok{(train}\OperatorTok{$}\NormalTok{Pclass, train}\OperatorTok{$}\NormalTok{Survived)}
+\CommentTok{# Convert SurviveOverClass into data frame}
+\NormalTok{SoC.data.fram <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(SurviveOverClass) }
+\CommentTok{# Retrieve death distribution in classes}
+\NormalTok{Death.distribution.on.class <-}\StringTok{ }\NormalTok{SoC.data.fram}\OperatorTok{$}\NormalTok{Freq[SoC.data.fram}\OperatorTok{$}\NormalTok{Var2}\OperatorTok{==}\DecValTok{0}\NormalTok{]}
+\KeywordTok{prop.table}\NormalTok{(Death.distribution.on.class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1457195 0.1766849 0.6775956
+\end{verbatim}
+
+These numbers tell us the distribution of death among the three classes are: 14.57\% death from class-1, 17.66\% from class-2 and 67.75\% death from class-3.
+
+Similarly, we can calculate survive distribution among the three classes,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# calculate survive distribution among the three classes}
+\NormalTok{Survive.distribution.on.class <-}\StringTok{ }\NormalTok{SoC.data.fram}\OperatorTok{$}\NormalTok{Freq[SoC.data.fram}\OperatorTok{$}\NormalTok{Var2}\OperatorTok{==}\DecValTok{1}\NormalTok{]}
+\KeywordTok{prop.table}\NormalTok{(Survive.distribution.on.class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3976608 0.2543860 0.3479532
+\end{verbatim}
+
+The results tell us that 39.76\% of survived passenger are from class-1, and 25.43\% from class-2, and 34.79\% from class-3.
+
+Let us thinking about this numbers. Class-3 has 55.1\% of passenger distribution but has 34.79\% passenger survival distribution. Clearly, the survive rate in class-3 is lower than other two classes. It is equivalent to say, \textbf{the survival chances of a passenger who is in class-1 are higher than who is a class-2 and class-3}.
+
+\begin{rmdaction}
+Do it yourself:
+
+Calculate the Survival rate among the three classes. What conclusion you have by compare them?
+\end{rmdaction}
+
+Numbers are good to provide summary and test some assumptions. Analyzing given data by means of statistical summary and other numbering methods is called \textbf{Descriptive analysis}. See section \ref{analyse} .
+
+Perhaps, it is a good time to introduce \textbf{Exploratory analysis}, on the contrast with the Descriptive analysis, it uses graphical tools to explore the inside of given datasets.
+
+To do so, we need to import some useful graphical tools provided by R community. We can then use them to plot \emph{Survived} as an factor on \emph{Pclass} numbers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Load up ggplot2 package to use for visualizations}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+
+\KeywordTok{ggplot}\NormalTok{(train, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Pclass, }\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(Survived))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Pclass"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{Do-Data-Science-in-10-Hours_files/figure-latex/Survivalrate-1.pdf}
+\caption{\label{fig:Survivalrate}Total count and survive rate of passenger on Pcalss.}
+\end{figure}
+
+Graph is better, isn't it? It is very intuative.
+
+Let's briefly interpret this graph. The graph shown \ref{fig:Survivalrate} tells us that the survive rate in Class-3 is the worst, and followed by class-2 and lastly, class-1. More people perished in the class-3 than any other two classes. It provides an important point that the chance of survive is associated with the \textbf{social glass}, if we can prove the Class-3 ticket is cheaper.
+
+To sum up the analysis with Pclass, We have used both \textbf{Descriptive analysis} and \textbf{Exploratory analysis}. The results suggested that \textbf{the \emph{Pclass} has a strong relation with death rate}. That is passengers in Class-3 have a higher chance of death. The correlation with social class (richer or poor) is waiting to be proved if the class-3 ticket is cheaper than others.
+
+\hypertarget{name}{%
+\subsection{Name}\label{name}}
+
+\emph{Name} attribute by definition shows peoples' name. It should not have any impact on passengers' live and death. Never heard of someone was survived because one's name!
+However we still need to asess its quality. Fir
+
+Firstly, you may notice that the type of \emph{Name} is a \texttt{Factor}, which is contradicted with the conventional understanding that name is a string or a list characters. Type \texttt{chr} would be more appropriate. Change its type to \texttt{chr} will help us to apply character functions to it and get it contents easily. Factor shows the uniqueness. it could help us to assess if there is missing value or duplicated values.
+
+Notice that attribute \emph{Name} only has 1307 levels (can be observed from the \texttt{data} structure on the \textbf{WorkSpace pane}). In addition, the \texttt{data} summary, see Figure \ref{fig:summaryofdata}, not only confirmed this but also identified the two shorts because of the value ``Connolly, Miss. Kate'' and ``Kelly, Mr.~James'' have been repeated twice each.
+
+Let us explore \emph{Name} values in details.
+Firstly, let us convert \emph{Name} type into \texttt{chr}. Then we can check duplicated names using \texttt{which} function in R to get the duplicate names and store them into a vector \texttt{dup.names}. And echo them out.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Convert Name type}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Name <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(data}\OperatorTok{$}\NormalTok{Name)}
+\CommentTok{# Find the two duplicate names}
+\CommentTok{# First used which function to get the duplicate names and store them as a vector dup.names }
+\CommentTok{# check it up ?which.}
+\NormalTok{dup.names <-}\StringTok{ }\NormalTok{data[}\KeywordTok{which}\NormalTok{(}\KeywordTok{duplicated}\NormalTok{(data}\OperatorTok{$}\NormalTok{Name)), }\StringTok{"Name"}\NormalTok{]}
+
+\CommentTok{# Echo out }
+\NormalTok{dup.names}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Kelly, Mr. James"     "Connolly, Miss. Kate"
+\end{verbatim}
+
+Our code confirmed that the two duplicated names are indeed "``Kelly, Mr.~James'' and ``Connolly, Miss. Kate''. It comes no surprise that the both names are pretty common in UK and USA.
+
+One discovery though is that the names appeared has a title in it! \textbf{Mr.} is used in Kelly James and \textbf{Miss.} is used in Connolly Kate. This could be interesting. We can leave this for \textbf{Preprocess} to explore more. For the quality assessment it is mission accomplished.
+
+\hypertarget{sex}{%
+\subsection{Sex}\label{sex}}
+
+\emph{Sex} attribute value assessment is simple. Its type \texttt{Factor} helps a lot. Since it only has two values ``male'' and ``female'', we could easily check if there are missing values and any errors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Use summary to check numbers and distribution}
+\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{Sex)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## female   male 
+##    466    843
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# If you prefer you can use data.table functions}
+\end{Highlighting}
+\end{Shaded}
+
+It is obvious that there is no error and missing values. The result confirms this: male 843 and female 466, together we have 1309 passengers, which is the total numbers of the passenger.
+
+It is also simple to explore the relationship between gender and the survival rate. We had an assumption that the male passengers have a high death rate. We have plot tools in our disposal, let's make use of it. Since only dataset \texttt{train} has the values on \emph{Survived}, it makes sense that we only plot relation between gender and survival on dataset \texttt{train}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot Survived over Sex on dataset train}
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Sex, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Sex"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{Do-Data-Science-in-10-Hours_files/figure-latex/Survivalrateonsex-1.pdf}
+\caption{\label{fig:Survivalrateonsex}Total count and survive rate of passenger on sex.}
+\end{figure}
+
+The graph shows that the male death rate is much higher than female passengers.
+
+\begin{rmdthinking}
+Thinking:
+
+We have used \texttt{data{[}1:891,{]}} in our \texttt{ggplot} code. Why we do not use dataset \texttt{train} instead? What are the differnce if there is any?
+\end{rmdthinking}
+
+\hypertarget{age}{%
+\subsection{Age}\label{age}}
+
+To examine values of attribute \emph{Age}, we do this,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Examine Age over data, train and test.}
+\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{Age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.17   21.00   28.00   29.88   39.00   80.00     263
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(train}\OperatorTok{$}\NormalTok{Age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.42   20.12   28.00   29.70   38.00   80.00     177
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(test}\OperatorTok{$}\NormalTok{Age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.17   21.00   27.00   30.27   39.00   76.00      86
+\end{verbatim}
+
+These summary tell us that the minimum, median, mean, maximum and missing values (as NA). They are useful. but they failed telling us on the value distribution.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/img/ageresult} 
+
+}
+
+\caption{*Age* summary as categorical data.}\label{fig:ats}
+\end{figure}
+
+From Figure \ref{fig:ats}, we can see a few problems:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Age values have decimal point which is a sort of surprise and not sure if it is a mistake.
+\item
+  There are large number of missing values: 177 missing value in dataset \texttt{train} and 86 missing value in dataset \texttt{test}, in total of 263, which count as 263/1309 = 20\%. large number of missing values sets up a task for \textbf{data preprocess} to deal with. In the same time, it make you think whether it is a valid predictor or not.
+\end{enumerate}
+
+We can assess its impact on survive rate. So we need to look into dataset \texttt{train}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot distribution of age group}
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{10}\NormalTok{, }\DataTypeTok{fill=}\StringTok{"steelblue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Age"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 263 rows containing non-finite values (stat_bin).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot Survived on age group using train dataset}
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Age, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{10}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Age"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 177 rows containing non-finite values (stat_bin).
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/age-1} \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/age-2} 
+
+}
+
+\caption{*Age* ditribution and its Survive rate of passenger}\label{fig:age}
+\end{figure}
+
+The graph shows the relationship between \emph{Age} and survival rate. It becomes apparent that age group between 15 and 25 has the worst survival rate. It is also interesting to know that there are some age has values less than 0!
+
+With this, we could conclude that.
+
+The attribute \emph{Age} has a serious quality problem: some age values are negative and large number 177 values are missing. If it is to be used as a predictor in our model for prediction, it needs a lot of work in the stage of preprocess.
+
+\hypertarget{sibsp}{%
+\subsection{SibSp}\label{sibsp}}
+
+Attribute \emph{SibSp} represents passenger's siblings and sprouts who travels with the passenger. We will a have pretty good idea about its values. This will help us to spot any errors and missing values.
+
+We do this,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{### Exam SibSp, Its original type is int}
+\KeywordTok{summary}\NormalTok{((data}\OperatorTok{$}\NormalTok{SibSp))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.0000  0.0000  0.4989  1.0000  8.0000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# How many possible unique values?}
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(data}\OperatorTok{$}\NormalTok{SibSp))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#is there an y missing values? check the total number}
+\KeywordTok{length}\NormalTok{(data}\OperatorTok{$}\NormalTok{SibSp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1309
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Treat it as a factor, so we know the value distribution}
+\NormalTok{data}\OperatorTok{$}\NormalTok{SibSp <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{SibSp)}
+\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{SibSp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   0   1   2   3   4   5   8 
+## 891 319  42  20  22   6   9
+\end{verbatim}
+
+The results have provided us with good evidence for access its values. Firstly, we know the minimum value is 0, and there are 891 records have 0 values. It means that there are 891 passenger who travel without siblings and sprouts; secondly, apart from the value 0, the 3 quarters of the passenger who has 1 company; and lastly the maximum number of the company a passenger had is 8. There are 9 of them. There are totally 7 kinds of company in terms of the numbers of company a passenger can have.
+
+It has not error or missing value since the total number are correct.
+
+We can assess its prediction power by looking into the relationship between \emph{SibSp} and \emph{Suvivied},
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot entire SibSp distribution among the 7 values}
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ SibSp)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"SibSp"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_cartesian}\NormalTok{()}
+
+\CommentTok{# Plot on the survive on SibSp}
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ SibSp, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"SibSp"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)  }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/SibSp-1} \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/SibSp-2} 
+
+}
+
+\caption{Plot *SibSp* distribution among the 7 values and its survive rate.}\label{fig:SibSp}
+\end{figure}
+
+We run two plots: the first one is the value distribution on entire dataset to have an impression on its distribution shape; and the second one is checking the survival rate over its distribution groups by dataset \texttt{train}. It seems that passenger who have two companies tend to have a better survival rate. This could be an interesting pattern to explore.
+
+\begin{rmdaction}
+Do it yourself:
+
+Calculate the Survival rate among the 7 possibilities in terms of have siblings or sprouds treval with them. What conclusion you have by compare them?
+\end{rmdaction}
+
+We can conclude that the value of \texttt{SibSp} have a pretty good quality and there is no apparent error and missing values. Its predication power needs further investigation but it is informative.
+
+\hypertarget{parch}{%
+\subsection{Parch}\label{parch}}
+
+Attribute \emph{Parch}, similar with \emph{SibSp}, is representing the travel company or groups. \emph{Parch} specifically represents parents or children. I don't know why Kaggle separate them but it seems reasonable to think they together represent one thing that is ``travel with family''.
+
+To access its value, we will do the same as we did on \texttt{SibSp}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{### Exam Parch, Its original type is int}
+\KeywordTok{summary}\NormalTok{((data}\OperatorTok{$}\NormalTok{Parch))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   0.000   0.000   0.385   0.000   9.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# How many possible unique values?}
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(data}\OperatorTok{$}\NormalTok{Parch))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#is there an y missing values? check the total number}
+\KeywordTok{length}\NormalTok{(data}\OperatorTok{$}\NormalTok{Parch)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1309
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Treat it as a factor, so we know the value distribution}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Parch <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(data}\OperatorTok{$}\NormalTok{Parch)}
+\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{Parch)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    0    1    2    3    4    5    6    9 
+## 1002  170  113    8    6    6    2    2
+\end{verbatim}
+
+The discovery is similar again with \emph{SibSp}, that is:
+1. The minimum value is 0, and there are 1002 records have 0 values. It means that there are 1002 passenger who travel without without parents or children (we still cannot see the passenger travel alone, he or she could travel with a sibling or a sprout, However, this rise an idea to look into passenger who travel alone, which means no sibling, sprout, parents and children.);
+2. The maximum number is 9. There are 2 of them.
+3. Apart from the value 0, the largest company number is 1. There are 170.
+4. There are totally 8 possibilities in terms of the numbers of company a passenger can have.
+5. It has not error or missing value since the total number are correct.
+
+We can assess its prediction power too by looking into the relationship between \emph{Parch} and \emph{Survived},
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot entire Parch distribution among the 7 values}
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Parch)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Parch"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_cartesian}\NormalTok{()}
+
+\CommentTok{# Plot on the survive on Parch}
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Parch, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Parch"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)  }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/Parch-1} \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/Parch-2} 
+
+}
+
+\caption{Plot *Parch* distribution among the 8 values and its survive rate.}\label{fig:Parch}
+\end{figure}
+
+The plot shows us that it is definitely have impact on survival. But it i snot clear the prediction power in comparison with \emph{SibSp}. I am not sure there are difference between ``travel with parents or children'' and ``travel with siblings and sprout''. In addition, value 0 in each attributes does not excludes other attributes. Travel without parents or children does not mean travel without siblings or sprout. If we try to see the impact on survived in terms travel alone or with a company, we need to re-engineer these attributes. It is a good point anyway and give another task for \textbf{data preprocess } to do.
+
+\hypertarget{ticket}{%
+\subsection{Ticket}\label{ticket}}
+
+Intuitively, as mentioned before, ticket number like passenger names, should not be considered as bounded with the survival of a passenger. Unless the ticket number has other hidden information such as class or location on the boat. Bearing this in mind, let us assess its value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(}\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ticket),}\DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      CA. 2343          1601       CA 2144       3101295        347077 
+##            11             8             8             7             7 
+##        347082      PC 17608  S.O.C. 14879        113781         19950 
+##             7             7             7             6             6 
+##        347088        382652        113503         16966        220845 
+##             6             6             5             5             5 
+##        349909          4133      PC 17757    W./C. 6608        113760 
+##             5             5             5             5             4 
+##         12749         17421        230136         24160          2666 
+##             4             4             4             4             4 
+##         36928     C.A. 2315    C.A. 33112    C.A. 34651          LINE 
+##             4             4             4             4             4 
+##      PC 17483      PC 17755      PC 17760 SC/Paris 2123    W./C. 6607 
+##             4             4             4             4             4 
+##        110152        110413         11767         13502         19877 
+##             3             3             3             3             3 
+##         19928        230080        239853        248727        248738 
+##             3             3             3             3             3 
+##         26360          2650          2653          2661          2662 
+##             3             3             3             3             3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Take a look at the ticket value}
+\KeywordTok{str}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ticket)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Factor w/ 929 levels "110152","110413",..: 524 597 670 50 473 276 86 396 345 133 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{which}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{Ticket))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## integer(0)
+\end{verbatim}
+
+The value of \emph{Ticket} appears has no missing value and there are 929 different numbers and some with letters and some with special characters like ``.'' and ``/''. There is no immediately apparent structure in the data.
+Let us plot them and also see if there is any pattern with survival.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#plot it value }
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Ticket)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Ticket"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)}
+\CommentTok{# Plot on the survive on Ticket}
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Ticket, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Ticket Number"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{)  }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/tecket-1} \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/tecket-2} 
+
+}
+
+\caption{Plot of *Ticket* distribution and survival rate.}\label{fig:tecket}
+\end{figure}
+
+The same tickets number has such a small number. It does not have any statistical meaning. It is possible to reengineer \emph{ticket} number into groups like ``number only'' vs ``with letter'' or ``with special characters'', or simply group them with the length of the ticket or with the initials, etc. There is a lot of thing you can do to see if there is any patterns connected with the survival.
+
+Over all, \emph{Ticket} has a good quality and has no missing value and errors (we dont count repeated ticket number is an error). However, there is no obvious relations with the survive rate.
+
+\hypertarget{fare}{%
+\subsection{Fare}\label{fare}}
+
+The value of \emph{Fare} are expected associated with ``passenger's wealth''. You would naturally associate its value with cabin condition and perhaps location of he cabin. Let us assess its value quality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{Fare)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##   0.000   7.896  14.454  33.295  31.275 512.329       1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(data}\OperatorTok{$}\NormalTok{Fare))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 282
+\end{verbatim}
+
+The initial assessment tells us that:
+1. The value of \texttt{Fare} has one missing value.
+2. They are 282 different prices among 1308 tickets.
+3. The minimum value is 0 (Free ride?) and the maximum value is 512.329.
+4. The mean value is 33.295 and the median is only 14.454.
+5. There are two potential issues in here: 512.329 is extremely higher than others, it could be considered as an outlier or an error; another potential issue is the precision. Any currency cannot have a physical money which carry value three digits after the decimal point. so any value has three digits after decimal point could be an error.
+
+Let us examine the prediction power of attribute \emph{Fare}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Fare)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Fare Distribution"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Fare"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1 rows containing non-finite values (stat_bin).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 rows containing missing values (geom_bar).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Let's check to see if fare has predictive power}
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Fare, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Fare"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 6 rows containing missing values (geom_bar).
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/Fareplot-1} \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/Fareplot-2} 
+
+}
+
+\caption{Plot of *Fare* distribution and survival rate.}\label{fig:Fareplot}
+\end{figure}
+
+It is not clear about \emph{Fare} prediction power. One thing is clear that to be useful for predcition, Fare needs more engineer such as group it in different groups like \textless5, 5 to 10, 10 to 15, \ldots, etc.
+
+\hypertarget{cabin}{%
+\subsection{Cabin}\label{cabin}}
+
+\emph{Cabin} has a large number of missing values as we noticed from the beginning of this section \ref{attvalue}. So its quality is expected to be bed. let us find out how many missing values is the dataset \texttt{train}, so we can assess its predictive power over survive.
+
+Firstly, by looking into the structure of the dataset,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Examine cabin values}
+\KeywordTok{str}\NormalTok{(data}\OperatorTok{$}\NormalTok{Cabin)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Factor w/ 187 levels "","A10","A14",..: 1 83 1 57 1 1 131 1 1 1 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Cabin really isn't a factor, make a string and the display first 100}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Cabin <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(data}\OperatorTok{$}\NormalTok{Cabin)}
+\NormalTok{data}\OperatorTok{$}\NormalTok{Cabin[}\DecValTok{1}\OperatorTok{:}\DecValTok{100}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] ""            "C85"         ""            "C123"        ""           
+##   [6] ""            "E46"         ""            ""            ""           
+##  [11] "G6"          "C103"        ""            ""            ""           
+##  [16] ""            ""            ""            ""            ""           
+##  [21] ""            "D56"         ""            "A6"          ""           
+##  [26] ""            ""            "C23 C25 C27" ""            ""           
+##  [31] ""            "B78"         ""            ""            ""           
+##  [36] ""            ""            ""            ""            ""           
+##  [41] ""            ""            ""            ""            ""           
+##  [46] ""            ""            ""            ""            ""           
+##  [51] ""            ""            "D33"         ""            "B30"        
+##  [56] "C52"         ""            ""            ""            ""           
+##  [61] ""            "B28"         "C83"         ""            ""           
+##  [66] ""            "F33"         ""            ""            ""           
+##  [71] ""            ""            ""            ""            ""           
+##  [76] "F G73"       ""            ""            ""            ""           
+##  [81] ""            ""            ""            ""            ""           
+##  [86] ""            ""            ""            "C23 C25 C27" ""           
+##  [91] ""            ""            "E31"         ""            ""           
+##  [96] ""            "A5"          "D10 D12"     ""            ""
+\end{verbatim}
+
+we find out that \emph{Cabin} is in a type of \texttt{Factor} and has 187 unique values with empty string "" and string start with letter like ``A10''.
+
+By looking actual 100 values, we have a pretty good understand its contents. Notice that some string looks like multiple numbers, for instance ``C23 C25 C27'', it is odd in comparison with others.
+
+let us have a close look at the dataset \texttt{train} and assess its prediction power.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Find out number of the missing value in the train}
+\NormalTok{train}\OperatorTok{$}\NormalTok{Cabin <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(train}\OperatorTok{$}\NormalTok{Cabin)}
+\CommentTok{# number of the missing value in the train}
+\KeywordTok{table}\NormalTok{(train[}\KeywordTok{which}\NormalTok{(train}\OperatorTok{$}\NormalTok{Cabin }\OperatorTok{==}\StringTok{""}\NormalTok{), }\StringTok{"Cabin"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##     
+## 687
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# percentage of the missing value in the train}
+\KeywordTok{table}\NormalTok{(train[}\KeywordTok{which}\NormalTok{(train}\OperatorTok{$}\NormalTok{Cabin }\OperatorTok{==}\StringTok{""}\NormalTok{), }\StringTok{"Cabin"}\NormalTok{])}\OperatorTok{/}\KeywordTok{length}\NormalTok{(train}\OperatorTok{$}\NormalTok{Cabin)}\OperatorTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##          
+## 77.10438
+\end{verbatim}
+
+The above code tells us that in the dataset \texttt{train}, there are 687 missing value and it count as 71 percent of total value. This is significant number. Generally it will write off the attribute for any meaning for use. However, like its relation with survive with the consideration of the missing value.
+
+Since the small number of passenger in each cabin, we accumulate passenger with the first latter of the cabin number. That means we bin the passengers based on the first letter of their cabin number. Then we plot the survived number over the total number.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Take a look at just the first char as a factor and add to data as a new attribute}
+\NormalTok{data}\OperatorTok{$}\NormalTok{cabin.first.char<-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(}\KeywordTok{substr}\NormalTok{(data}\OperatorTok{$}\NormalTok{Cabin, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\CommentTok{# first cabin letter survival plot}
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ cabin.first.char, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"First Cabin Letter"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{750}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/Cabin-1} 
+
+}
+
+\caption{Plot of the passenger number and  the survived number based on the first letter of their cabin number.}\label{fig:Cabin}
+\end{figure}
+
+To sumup, \emph{Cabin} attribute has large number of missing value. The dataset \texttt{train} has 687 missing value and it counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. To use it in any possible predictio model, it needs some re-engineering.
+
+\hypertarget{embarkded}{%
+\subsection{Embarkded}\label{embarkded}}
+
+Attribute \emph{Embarked} records where a passenger get on board. From the Kaggle data description we know that there are three possible values for Embark --- Southampton (S), Cherbourg (C), and Queenstown (Q). Let's check the data quality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Examine Embark values}
+\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{Embarked)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       C   Q   S 
+##   2 270 123 914
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(data}\OperatorTok{$}\NormalTok{Embarked)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1309
+\end{verbatim}
+
+The results confirms that there two missing values and three ports. Southampton as its initial depart port has largest passengers get on board. Let's see its distribution and the survival rate.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Plot data distribution and the survival rate for analysis}
+\KeywordTok{ggplot}\NormalTok{(data, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Embarked)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width=}\FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Passenger embarked port"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }
+
+
+\KeywordTok{ggplot}\NormalTok{(data[}\DecValTok{1}\OperatorTok{:}\DecValTok{891}\NormalTok{,], }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Embarked, }\DataTypeTok{fill =}\NormalTok{ Survived)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{width=}\FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Embarked port"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Total Count"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"Survived"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/Fare-1} \includegraphics[width=0.5\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/Fare-2} 
+
+}
+
+\caption{Plot of *Embarked* distribution and survival rate.}\label{fig:Fare}
+\end{figure}
+
+The graph shows that about 70\% of the people boarded from Southampton (914/1309 = 0.698). Just over 20\% boarded from Cherbourg (270/1309 = 0.206) and the rest boarded from Queenstown about 10\%.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate death distribution over Embarked port with Train data}
+\CommentTok{# creat Embarked and Survived contingency table}
+\NormalTok{SurviveOverEmbarkedTable <-}\StringTok{ }\KeywordTok{table}\NormalTok{(train}\OperatorTok{$}\NormalTok{Embarked, train}\OperatorTok{$}\NormalTok{Survived)}
+\CommentTok{# Death-0/survived-1 value distribution (percentage) based on embarked ports}
+\CommentTok{# prop.table(mytable, 2) give us column (Survived) percentages}
+\NormalTok{Deathandsurvivepercentage <-}\StringTok{ }\KeywordTok{prop.table}\NormalTok{(SurviveOverEmbarkedTable, }\DecValTok{2}\NormalTok{)}
+\CommentTok{# Plot}
+\NormalTok{M <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"c-Cherbourg"}\NormalTok{, }\StringTok{"Q-Queenstown"}\NormalTok{, }\StringTok{"S-Southampton"}\NormalTok{)}
+\KeywordTok{barplot}\NormalTok{(Deathandsurvivepercentage[}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\DecValTok{100}\NormalTok{, }\DataTypeTok{xlab =}\NormalTok{(}\StringTok{""}\NormalTok{), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{), }\DataTypeTok{ylab=}\StringTok{"Death distribution in percentage %"}\NormalTok{,  }\DataTypeTok{names.arg =}\NormalTok{ M, }\DataTypeTok{col=}\StringTok{"steelblue"}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Death distribution"}\NormalTok{, }\DataTypeTok{border=}\StringTok{"black"}\NormalTok{, }\DataTypeTok{beside=}\OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{barplot}\NormalTok{(Deathandsurvivepercentage[}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\DecValTok{100}\NormalTok{, }\DataTypeTok{xlab =}\NormalTok{(}\StringTok{""}\NormalTok{), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{), }\DataTypeTok{ylab=}\StringTok{"Death distribution in percentage %"}\NormalTok{,  }\DataTypeTok{names.arg =}\NormalTok{ M, }\DataTypeTok{col=}\StringTok{"blue"}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Death distribution"}\NormalTok{, }\DataTypeTok{border=}\StringTok{"black"}\NormalTok{, }\DataTypeTok{beside=}\OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{## Calculate survived RATE distribution based on embarked ports}
+\CommentTok{# Death-0/survived-1 value distribution (percentage) based on embarked ports}
+\CommentTok{# prop.table(mytable, 1) give us row (Port) percentages}
+\CommentTok{# col-1 (Survived=0, perished) and col-2 (Survived =1, survived)}
+\NormalTok{DeathandsurviveRateforeachport <-}\StringTok{ }\KeywordTok{prop.table}\NormalTok{(SurviveOverEmbarkedTable, }\DecValTok{1}\NormalTok{)}
+\CommentTok{#plot}
+\KeywordTok{barplot}\NormalTok{(Deathandsurvivepercentage[}\DecValTok{2}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{]}\OperatorTok{*}\DecValTok{100}\NormalTok{, }\DataTypeTok{xlab =}\NormalTok{(}\StringTok{""}\NormalTok{), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{100}\NormalTok{), }\DataTypeTok{ylab=}\StringTok{"Death rate in percentage %"}\NormalTok{,  }\DataTypeTok{names.arg =}\NormalTok{ M, }\DataTypeTok{col=}\StringTok{"red"}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Death rate comparison among mebarked ports"}\NormalTok{, }\DataTypeTok{border=}\StringTok{"black"}\NormalTok{, }\DataTypeTok{beside=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.3\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/embark-1} \includegraphics[width=0.3\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/embark-2} \includegraphics[width=0.3\linewidth]{Do-Data-Science-in-10-Hours_files/figure-latex/embark-3} 
+
+}
+
+\caption{Plots of death distribution, survive distribution and death rate comparision over embarked port.}\label{fig:embark}
+\end{figure}
+
+The plot shows that both death and survive number distribution are similar. Southampton takes most death and survive portion because it has the largest number of passenger get on board, then Cherbourg, and last is Queenstown. However, in terms of death rate, which is the death/total from the passenger who get on board, southampton is the is the highest and then Queenstown, teh last is Cherbourg. That is to say, people who boarded from Cherbourg had a higher chance of survival than people who boarded from Southampton or Queenstown.
+
+In summary, we have explored all attributes through descriptive analysis, which is mainly using numbers and through exploratory analysis, which is using plot. We have examined the quality of each attributes by finding missing values and duplication. We have spoted some outliars and odd values.
+
+We have also assessed relationship between attribute \emph{Survived} and all other attributes. The prediction power of each attributes have been understand to some extend. More prediction power study such as combination of two or three attributes are needed.
+
+The findings of each attributes provide tasks and goals for data preprocess step to accomplish.
+
+\hypertarget{data-recods-level-assessment}{%
+\section{Data Recods Level Assessment}\label{data-recods-level-assessment}}
+
+Although we have examined the raw datasets records' numbers in attributes level. We have a good knowledge about the record numbers in each given dataset. It is still necessary to check at the record level. It means if there some records have too many missing attributes' value, for example, although some records have ids and may be names but most of the useful attributes' value are missing. These records are bed or invalid records, should be removed or solve the missing values.
+
+On other hand some records have most attributes values are identical. These could be considered as duplicates. depends on the problem to be solved, they could be problematic and need to be dealt with.
+
+In our Titanic problem, record level assessment is not an issue. Since we have almost all the records are different. This does not mean we should completely ignore this step and doing the checking.
+
+\hypertarget{summary-4}{%
+\section*{Summary 4}\label{summary-4}}
+
+
+All the analyses actions provide demonstrations how to access the raw data and understand their quantity and data quality. Notice that the understanding data is never a single one-off action. You never fully understood the given data. once the analytical process moving on, you may need to come back to apply some new decomposition on some attributes to explore more.
+
+Since our raw data is not too big in terms of both the number of records and the number of attributes. So it is relatively easy to assess their quality. In a real world project the raw data can be huge or can be too little. To perform an effective analysis you may need to reduce the data size or in other cases to increase the size. It means you need to do sampling on the given datasets and probably attributes selection too. Other cases you may need to create new attributes or combine a few attribute together. These are called attributes re-engineering. They are the part of important tasks in data preprocess , which is covered in the next chapter on \textbf{data preprocess}.
+
+\begin{rmdinfo}
+The entire R code in this chapter is avalable in the file ``TitanicDataAnalysis\_UnderstandData.R'' and it can be find in the appendix.
+\end{rmdinfo}
+
+\hypertarget{exercises-4}{%
+\section*{Exercises 4}\label{exercises-4}}
+
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Identify the code in this tutorial which can be conceptually categorized as Descriptive analysis and which one can be Exploratory analysis?
+\item
+  Find out what is ``rt'' mean in R \texttt{train\ \textless{}-\ read.csv("train.csv",\ header\ =\ TRUE)} error message. Explore how to load files other than \emph{csv} file.
+\item
+  Explore load data through RStudio build-in functions. Check ``File -\textgreater{} Import Dataset'', also check how to load data from a databases like MySql.
+\item
+  Calculate survival rate among the three Pclass.
+\item
+  Calculate the percentage of survival among different SibSp\texttt{and\ Parch} groups.
+\item
+  Plot distributions of Fare, Embarked of passengers who survived or did not survive.
+\item
+  Plot survival rate by Sex, Plot survival rate by Pclass, Plot survival rate by SibSp,Plot survival rate by Parch.
+\item
+  Plot survival rate (percentage of survived over total number) by over Embarked ports.
+\end{enumerate}
 
 \hypertarget{data-preprocess}{%
 \chapter{Data PreProcess}\label{data-preprocess}}
+
+quick correlations with modelled correlations later in the project.
+\url{https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8}
+
+\hypertarget{dealt-with-miss-values-and-errors-age}{%
+\section{Dealt with Miss values and Errors (Age, )}\label{dealt-with-miss-values-and-errors-age}}
+
+\hypertarget{attributes-selection-prediction-power}{%
+\section{Attributes selection (prediction power)}\label{attributes-selection-prediction-power}}
+
+explore relations for survivle
+
+\hypertarget{attribute-reengineering-title-from-name-treval-famail-_-relatives-alone-from-parch-and-sibsb}{%
+\section{Attribute reengineering ( title from name, treval famail \_ relatives, alone from ParCh and SibSb)}\label{attribute-reengineering-title-from-name-treval-famail-_-relatives-alone-from-parch-and-sibsb}}
+
+\hypertarget{assemble-final-datasets-for-modelling}{%
+\section{Assemble final datasets for modelling}\label{assemble-final-datasets-for-modelling}}
+
+need model, train and test.
+the goal is to get data ready for analysis
+
+what analysis?
+
+prediction
+
+1 dealt with error missing value
+2. make attribute suiatble for modeling
+3. features reenginering
+
+name: extract title from name,
+
+Create family size and category for family size
+\url{https://www.kaggle.com/helgejo/an-interactive-data-science-tutorial}
+
+Extract ticket class from ticket number¶
+
+The purposes of data preprocess is to make data suitable for analyzing.
+
+I this particular project, the purpose is to predict passengers survival. whatever a prediction model we may come up with, it should reflect the relations between other data attributes with the special one, which is ``survived''. So the data preprocess, whatever actions we are take, should focused on the attributes that has relations with the survive, or our preprocess should help to enhance the attribute's prediction power. An example is, ``PassengerId'', it has no relation with the survive, apart from to identify a passenger, its prediction power is 0. so there should be any efforts on this attributes apart from make sure its unique.
+
+Therefor it make sense to explore all attributes with surviels.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Survived
+  The first attribute reported if a traveler lived or died. A comparison revealed that more than 61\% of the passengers had died.
+\end{enumerate}
+
+code
+
+\begin{verbatim}
+table(as.factor(train$Survived))
+prop.table(table(as.factor(train$Survived)))
+\end{verbatim}
 
 完成数据的基本探索后，在建立模型之前，我们还需要对数据进行清洗，并且对数据集中缺失的数据进行补全。
 
 首先了解数据的缺失情况：
 
-train.info()
-print(`-'*30)
-test.info()
+To begin this step, we first import our data. Next we use the info() and sample() function, to get a quick and dirty overview of variable datatypes (i.e.~qualitative vs quantitative). Click here for the Source Data Dictionary.
 
-训练集中有891条数据，而测试集中有418条数据。
+The Survived variable is our outcome or dependent variable. It is a binary nominal datatype of 1 for survived and 0 for did not survive. All other variables are potential predictor or independent variables. It's important to note, more predictor variables do not make a better model, but the right variables.
+The PassengerID and Ticket variables are assumed to be random unique identifiers, that have no impact on the outcome variable. Thus, they will be excluded from analysis.
+The Pclass variable is an ordinal datatype for the ticket class, a proxy for socio-economic status (SES), representing 1 = upper class, 2 = middle class, and 3 = lower class.
+The Name variable is a nominal datatype. It could be used in feature engineering to derive the gender from title, family size from surname, and SES from titles like doctor or master. Since these variables already exist, we'll make use of it to see if title, like master, makes a difference.
+The Sex and Embarked variables are a nominal datatype. They will be converted to dummy variables for mathematical calculations.
+The Age and Fare variable are continuous quantitative datatypes.
+The SibSp represents number of related siblings/spouse aboard and Parch represents number of related parents/children aboard. Both are discrete quantitative datatypes. This can be used for feature engineering to create a family size and is alone variable.
+The Cabin variable is a nominal datatype that can be used in feature engineering for approximate position on ship when the incident occurred and SES from deck levels. However, since there are many null values, it does not add value and thus is excluded from analysis.
 
-训练集缺失值：Age，Cabin，Embarked，其中Cabin字段缺失数量较多； 测试集缺失值：Age，Cabin，Fare，其中Cabin字段缺失数量较多。
+\hypertarget{data-analysis}{%
+\chapter{Data Analysis}\label{data-analysis}}
 
-差早错误
+\begin{center}\includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/Prediction} \end{center}
 
-\hypertarget{reference}{%
-\chapter*{Reference}\label{reference}}
+``This will be the year of AI!'' \ldots{}
+
+``Mobil device will dominate the world.'' \ldots{}
+
+``Pay by face will be a reality in 20XX'' \ldots{}
+
+All of these are based the data collected.
+
+How many tiems you heard about this? It basically tells us that data tells us what is going to happening.
+
+The core of Data Sciecne is analyzing data and interpreting what data tells us.
+
+\hypertarget{predictive-data-analysis}{%
+\section{Predictive Data Analysis}\label{predictive-data-analysis}}
+
+We have used other two data analyzing methods in the previous chapters: \textbf{Descriptive data analysis} and \textbf{Exploratiory data analysis}. This chapter will practice \textbf{Predictive data analysis (PDA)}.
+
+PDA as a method encompasses both of DDA and EDA. It is truying to analyze current and historical data to make predictions about future or unknown data values. The way todo it is building a predictive model through training dataset and testing with testing dataset. After a model is created then it will be evaluated, improved and finally applied to unknown data for applications.
+
+A classic example of predictive model is a customer scoring as shown in Figure \ref{fig:modelexam}. Customer scoring model factors together individual customer's attributes (properties or attributes), weights them and adds them up to produce an overall score.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/examplemodel} 
+
+}
+
+\caption{Example of predictive model for customer score}\label{fig:modelexam}
+\end{figure}
+
+The process of constructing and prediction model is called \textbf{predictive modeling}. Predictive modeling is generally involves three steps: \textbf{Predictor selection}, \textbf{model construction} and \textbf{model evaluation}.
+
+\hypertarget{predictor-selection}{%
+\subsection*{Predictor Selection}\label{predictor-selection}}
 
 
-\hypertarget{r-markdown}{%
-\section{R Markdown}\label{r-markdown}}
+Predictor, in data science, is an attribute that a prediction model used to predict values of another attribute. The attribute to be predicted is called \textbf{consequencer} (in some cases also called dependence). Generally, there are a large number of attributes an data object can have and be potentially used as predictors by a model to produce consequencer. The most models do not use all of the data attributes instead only used a number of selected attributes, then it is needed examining the relationship between each predictor and the consequencer using appropriate methods. Filter and wrapper are the most common methods used in attributes selection:
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see \url{http://rmarkdown.rstudio.com}.
+\begin{itemize}
+\item
+  \textbf{Filters}. Filters is a method that examines each predictor in turn. A numerical measure is calculated, representing the strength of the correlation\footnote{Correlation, in statistics, is a measurement of any statistical relationship two attributes. It can be any associations. It commonly refers to the degree to which a pair of attributes are linearly related.} between the predictor attribute and the consequencer. Only predictor attributes where the correlation measure\footnote{The most commonly used measurement of correaltion between two attributes is the ``Pearson's correlation coefficient'', commonly called simply ``the correlation coefficient''.} exceeds a given threshold are selected.
+\item
+  \textbf{Wrappers}. A wrapper takes a group of predictors and considers the ``value add'' of each attribute compared to other attributes in the group. If two attributes tell you more or less the same thing (e.g.~age and date of birth) then one will be discarded because it adds no value. Step-wise linear regression\footnote{In statistics, stepwise linear regression is a method of fitting regression models in which the selection of predictors is carried out by a procedure that in each step, one attribute is considered for addition to or subtraction from the set of selected attributes based on some pre-specified criterion.} and principal component analysis\footnote{Principal component analysis (PCA) is the process of computing the principal components and using only the first few principal components and ignoring the rest in a prediction or data dimension reduction. The principal components are often computed by eigendecomposition of the data covariance matrix or singular value decomposition of the data matrix.} are two popular wrapper methods.
+\end{itemize}
 
-When you click the \textbf{Knit} button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Attribute selection is a parsimonious process that aims to identify a minimal set of predictors for the maximum gain (predictive accuracy). This approach is the opposite of data pre-process where as many meaningful attributes as possible are considered for potential use.
+
+It is also important to recognize that attribute selection cloud be an iterative process that occurs throughout the model building process. It finishes after no more improvement can be achieved in terms of model accuracy.
+
+\hypertarget{model-construction}{%
+\subsection*{Model Construction}\label{model-construction}}
+
+
+Model construction normally involves two phases: \textbf{induction} and \textbf{deduction}.
+
+\begin{itemize}
+\item
+  Induction is also called model learning, which means learn to predict;
+\item
+  Deduction is called model apply, which means model applied to predict.
+\end{itemize}
+
+The division of model learn and model apply allows a predictive model to be mature while induction using \textbf{training dataset} to construct a model and deduction using \textbf{testing dataset} to test and adjust the model constructed.
+
+Depends on applications different prediction models can use different mathematical approach and algorithms. Model constricted for classification problem can use decision trees while scoring prediction model can use regressions. There are also \textbf{rule based models} and \textbf{machine learning} models.
+
+\hypertarget{model-validation}{%
+\subsection*{Model Validation}\label{model-validation}}
+
+
+As explained earlier, a major problem when building predictive models is that it is easy to find relationships that are the result of random patterns in the training and testing datasets, but which may not exist in the unseen datasets. This problem is called model ``over-fitting''. The result is that if you measure the performance of the model using the test dataset the results will be over-optimistic. The \textbf{over-fitting problem} will affect model's performance when presented with new data when the model is deployed.
+
+To determine if over-fitting has occurred, the model needs to be tested on ``\textbf{validation dataset}''. Validation datasets is a subset from the given datasets that have targeted attributes values. This subset was not used to construct the model. Validation dataset is genially taken from the training datasets with certain percentage.
+
+Over-fitting is quite common and this is not necessarily a problem. However, if the degree of over-fitting is large, the model may need to be reconstructed using a different set of attributes.
+
+Apart from checking model's over-fitting, Depends on the model being constructed, there a number of evaluation methods are available to perform the model validation such as \textbf{Confusion Matrix} for nominal output like class labels, AUC (Area Under Curve),accuracy and other evaluation metrics are used fo r evaluate other models.
+
+\hypertarget{prediction-models}{%
+\section{Prediction Models}\label{prediction-models}}
+
+There are many predictive models exists for different purposes. Many different methods can be used to create a model, and more are being developed all the time. Three broad predictive models based on the model format and the way it is built:
+
+\hypertarget{math-model.}{%
+\subsection{Math model.}\label{math-model.}}
+
+Mathematical formulated model is the model produced by mathematical formula which combines multiple predictors (attributes) to predict a response (we called it targeted attribute). A predictor is a single attribute in a data object that contributes to the result of the prediction, which is consequencer (also called dependents in same applications).
+
+A well-known example of math model is regression model. A linear regression model is a target function \(f\) that maps each attribute set \(X\) into a continuous-valued output \(y\) with minimum error.
+
+\begin{equation} 
+  y = f(x) = f(x)= ω_1 x+ω_0,
+  \label{eq:binom}
+\end{equation}
+
+where \(ω_0\) and \(ω_1\) are parameters of the model and are called the \emph{regression coefficients}. The model is to find the parameters \((ω_1, ω_0)\) that minimize the sum of the squared error (SSE),
+
+\begin{equation} 
+ SSE= \Sigma^{N}_{i=1}[y_i-f(x_i)]^2 = \Sigma^{N}_{i=1}[y_i - ω_1 x + ω_0 ]^2
+  \label{eq:sse}
+\end{equation}
+
+\hypertarget{rule-based-model}{%
+\subsection{Rule-based model}\label{rule-based-model}}
+
+In a rule-based model, the model is a collection of rules. Such as \texttt{if\ the\ customer\ is\ rural,\ and\ her\ monthly\ usage\ is\ high,\ then\ the\ customer\ will\ probably\ renew}.
+In rule-based model, a model is a collection of \texttt{if\ \ldots{}\ then\ \ldots{}} rules. Table 11.2 shows an example of a classification model generated by a rule-based classifier for the vertebrate classification problem.
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-44}Example of a rule set for the vertebrate classification problem.}
+\centering
+\begin{tabular}[t]{ll}
+\toprule
+  & Rules of the vertebrate classification\\
+\midrule
+r1 & (Gives Birth = no) \textasciicircum{} (Aerial Creature = yes) -> Birds\\
+r2 & (Gives Birth = no) \textasciicircum{} (Aquatic Creature = yes) -> Fishes\\
+r3 & (Gives Birth = yes) \textasciicircum{} (Body Temperature = warm-blooded) -> Mammals\\
+r4 & (Gives Birth = no) \textasciicircum{} (Aerial Creature = no) -> Reptiles\\
+r5 & (Aquatic Creature = semi) -> Amphibians\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The rules for the model are represented in a disjunctive normal form \(R=(r_1 \vee r_2\vee … \vee r_k)\), where \(R\) is known as the rule set and \(r_i\) are the model rules.
+Each rule is expressed in a form of:
+
+\begin{equation} 
+r_i:   (Condition_i) →  y_i.
+  \label{eq:rule}
+\end{equation}
+
+The left-hand side of the rule is called the \textbf{rule antecedent or precondition}. It contains a conjunction of attribute test:
+
+\begin{equation} 
+condition_i = (A_1 op v_1 ) ∧ (A_2 op v_2 ) ∧ … ∧(A_k  op v_k ),
+  \label{eq:condition}
+\end{equation}
+
+Where \((A_j\quad op\quad v_j )\) is an attribute-value pair and \(op\) is a relation operator chosen from the set \$ \{ =, ≠, \textless, \textgreater, ≤, ≥ \} \$. Each attribute test \((A_j\quad op \quad v_j )\) is known as a conjunct. The right hand of the rule is called the rule consequent which contains the value of conceqencer \(y_i\).
+
+\hypertarget{machine-learning-model}{%
+\subsection{Machine Learning Model}\label{machine-learning-model}}
+
+In many applications the relationship between the predictor set and the concequencer is non-deterministic or it is too difficult to either formulate a model or figure out rules by human. In these cases, advanced technologies are used to generate prediction models automatically taking advantage of massive computer storage and fast computation power of distributed and cloud based computing infrastructure. The models used are ether Neural networks or statistical math models.
+
+In the machine learning models, different predictive models like regression, decision tree, and decision forest can be utilized and tested to produce a valid prediction. In general, predictive modeling software undertakes a mixture of training data go through number crunching, trial, and error correction and finally produce a working prediction model. During the process of machine generating model human involvement is much less but needed. It enables fine tune the model and improving on its performance.
+
+Classification is one form of the predictive analysis. In classification the prediction model is called \textbf{classifier}. Its input are training dataset, which has the targeted values in it; Its prediction results are class labels, which nrmally is the test dataset, which the atrgeted value is not there. The most commonly sued classifiers are: \textbf{Decision trees}, \textbf{Random Forest} and \textbf{Gaussian Naive Bayes}.
+
+Titanic problem as we understood is a prediction problem. The prediction on an passenger's death or survive based on train dataset is actually a classification problem. It on ly has two possibilities , it is also called binary classification. Because we only need to classify a passenger either belongs to survived class or perished class.
+
+\hypertarget{data-analysis-with-decision-trees}{%
+\section{Data Analysis with Decision Trees}\label{data-analysis-with-decision-trees}}
+
+A decision tree is the most commonly used classification model, which in a flowchart-like tree structure. In a decision tree, each internal node (non-leaf node) denotes a test on an attribute, each branch represents an outcome of the test, and each leaf node (or terminal node) holds a class label. The topmost node in a tree is the root node. A typical decision tree is shown in Figure \ref{ref:decisiontree}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/decision tree} 
+
+}
+
+\caption{An example of decision tree}\label{fig:decisiontree}
+\end{figure}
+
+It represents the concept buys\_computer, that is, it predicts whether a customer is likely to purchase a computer or not. \texttt{Yes} is like to buy and \texttt{no} is unlikely to buy. Internal nodes are denoted by rectangles are test conditions, and leaf nodes are denoted by ovals, which are the final predictions. Some decision tree produce only branches, where each internal node branches to exactly two other nodes. Others can produce non-binary trees, like \texttt{age?} in the above tree has three branches. A prediction for a input data is actually a traverse from the tree root to a tree leaf through different tree branches.
+
+Decision tree can be built by the tree \textbf{induction} which is the learning of decision trees from class-labeled training sets.
+
+Once a decision tree has been constructed, classifying a test record is straightforward. Starting from the root node, we apply the test condition to the record and follow the appropriate branch based on the outcome of the test. This will lead us either to another internal node, for which a new test condition is applied, or to a leaf node. The class label associated with the leaf node is then assigned to the record.
+
+Build a decision tree classier needs to make two decisions: 1) which attributes to use for test conditions? 2) and in what order. Answering these two questions differently forms different decision tree construction algorithms. Each algorithm builds a decision tree differently. In terms of prediction, some of the trees are more accurate and cheaper to run than others. Finding the optimal tree is computationally expensive because of the exponential size of the search space. Nevertheless, efficient algorithms have been developed to induce a reasonably accurate decision tree in a reasonable amount of time. For example Hunt's algorithm , ID3, C4.5 and CART algorithms are all this kind of algorithms for classification. The common feature of these algorithms is that they all employ a greedy strategy as demonstrated in the Hunt's algorithm:
+
+\hypertarget{steps-to-build-a-decision-tree-in-hunts-algorithm}{%
+\subsection{Steps to Build a decision tree in Hunt's Algorithm}\label{steps-to-build-a-decision-tree-in-hunts-algorithm}}
+
+Hunt's algorithm builds a decision tree in a recursive fashion by partitioning the training dataset into successively purer subsets. Hunt's algorithm takes three input values:
+1. A training dataset, \(D\) with a number of attributes,
+2. A subset of attributes \(Att_{list}\) and its testing criterion together to form a test condition, such as \texttt{age\ \textgreater{}=\ 25} is a test condition, where, \texttt{age} is the attribute and \texttt{\textgreater{}=25} is the test criterion.
+3. A \texttt{Attribute\_selection\_method}, a procedure to determine the best splitting.
+
+The general recursive procedure is defined as below \citep{Tan2005}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create a node \(N\), suppose the training dataset when reach to note \(N\) is \(D_{N}\). Initially, \(D_{N}\) is the entire training set \(D\). Do the following:
+\item
+  If \(D_{t}\) contains records that belong the same class \(y_{t}\), then \(t\) is a leaf node labeled as \(y_{t}\);
+\item
+  If \(D_{t}\) is not empty set but \(Att_{list}\) is empty, (there is no more test attributes left untested), then \(t\) is a leaf node labeled by the the label of the majority records in the dataset;
+\item
+  If \(D_{t}\) contains records that belong to more than one class and \(Att_{list}\) is not empty, use \texttt{Attribute\_selection\_method} to choose next best attribute from the \(Att_{list}\) and remove that list from \(Att_{list}\). use the attribute and its condition as next test condition. 5. Repeat steps 2,3 and 4 until all the records in the subset belong to the same class.
+\end{enumerate}
+
+\hypertarget{how-to-determine-the-best-split-condition}{%
+\subsection{How to Determine the Best Split Condition?}\label{how-to-determine-the-best-split-condition}}
+
+There are many measures that can be used to determine the best way to split the records. These measures are defined in terms of the class distribution of the records before and after splitting. The best splitting is the one that has more purity after the splitting. If we were to split D into smaller partitions according to the outcomes of the splitting criterion, ideally each partition after splitting would be pure (i.e., all the records that fall into a given partition would belong to the same class). Instead of define a split's purity the impurity of its child node is used. There are a number of commonly used impurity measurements: \textbf{Entropy}, \textbf{Gini Index} and \textbf{Classification Error}.
+
+\textbf{Entropy:} measures the degree of uncertainty, impurity, or disorder. The formula for calculate entropy is as shown below:
+
+\begin{equation} 
+E(x)= ∑_{i=1}^{n}p_ilog_2(p_i),
+  \label{eq:entropy}
+\end{equation}
+
+Where \(p\) represents the probability, and \(E(x)\) represents the entropy.
+
+\textbf{Gini Index:} also called Gini impurity, measures the degree of probability of a particular variable being incorrectly classified when it is chosen randomly. The degree of the Gini index varies between zero and one, where zero denotes that all elements belong to a certain class or only one class exists, and one denotes that the elements are randomly distributed across various classes. A Gini index of 0.5 denotes equally distributed elements into some classes.
+
+The formula used to calculate Gini index is shown below:
+
+\begin{equation} 
+GINI(x) = 1- ∑_{i=1}^{n}p_i^2,
+  \label{eq:Gini}
+\end{equation}
+
+Where \(p_i\) is the probability of an object being classified to a particular class.
+
+\textbf{Classification Error} measures the misclassified class labels. It is calculated with the formula shows below:
+\begin{equation} 
+Classification error(x)= 1 - max_{i}p_i.
+  \label{eq:clerror}
+\end{equation}
+
+Among these three impurity measurements, Gini is Used by the CART (classification and regression tree) algorithm for classification trees, and Entropy is Used by the ID3, C4.5 and C5.0 tree-generation algorithms.
+
+With above explanation we can now say that the aims of a decision tree algorithm is to reduce Entropy level from the root to the leaves and the best tree is the one that takes order from the most to the least in reducing Entropy level. The good news is that we do not need to calculate impurity of each test condition to build a decision tree. The most tools have the tree construction built in already. But it is still important to understand the algorithms.
+
+\hypertarget{the-simplest-decision-tree-for-titanic}{%
+\subsection{The Simplest Decision Tree for Titanic}\label{the-simplest-decision-tree-for-titanic}}
+
+In the Titanic problem, Let's take a quick review of the possible attributes we could use. Previously we understand that apart from PassengerID, Passenger Name (passenger name has been re-engineered into titles), all other attributes can all be used to do prediction since they all have some power of prediction.
+
+Let us consider a simple decision tree firstly. The most simple decision tree perhaps is the one only has one internal note and two branches. There are only one attribute meet with the requirements. That is \emph{Sex}, so our decision tree will be build only base on passenger's gender. Here we go, We need a number of liberties to make our code works.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(cars)}
+\KeywordTok{library}\NormalTok{(rpart)}
+\CommentTok{# build our first model. we only use Sex attribute, check help on rpart, }
+\CommentTok{# this model only takes Sex as predictor and Survived as the consequencer}
+\NormalTok{train <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"train.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"test.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{model <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(Survived }\OperatorTok{~}\StringTok{ }\NormalTok{Sex, }\DataTypeTok{data =}\NormalTok{ train,}
+              \DataTypeTok{method=}\StringTok{"class"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Simple! isn't it? R function did the job for us so we do not need go through the model construction phase to build our classifier. The decision tree has been already built. Now we can make a prediction on the test dataset and produce our first prediction. We can submit our prediction to Kaggle.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The firs prediction produced by the first decision tree which on ly used Sex}
+\NormalTok{Prediction <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(model, test, }\DataTypeTok{type =} \StringTok{"class"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Our prediction is produced, We can convert it into Kaggle required format and save it into a file called ``myFirstResult.CSV''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# produce a submit with Kaggle required format that is only two attributes: PassengerId and Survived}
+\NormalTok{submit <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{PassengerId =}\NormalTok{ test}\OperatorTok{$}\NormalTok{PassengerId, }\DataTypeTok{Survived =}\NormalTok{ Prediction)}
+\CommentTok{# Wrtie it into a file "myFirstResult.CSV"}
+\KeywordTok{write.csv}\NormalTok{(submit, }\DataTypeTok{file =} \StringTok{"myFirstResult.CSV"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We can submit this result to Kaggle. Kaggle feedback is that we have got 76.555\% accurate! That is not too bad.
+
+Let us have a brief check on our prediction.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Inspect prediction}
+\KeywordTok{summary}\NormalTok{(submit}\OperatorTok{$}\NormalTok{Survived)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
+##   0   1 
+## 266 152
 \end{verbatim}
 
-\hypertarget{including-plots}{%
-\section{Including Plots}\label{including-plots}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(submit}\OperatorTok{$}\NormalTok{Survived))}
+\end{Highlighting}
+\end{Shaded}
 
-You can also embed plots, for example:
+\begin{verbatim}
+## 
+##         0         1 
+## 0.6363636 0.3636364
+\end{verbatim}
 
-\includegraphics{Do-Data-Science-in-10-Hours_files/figure-latex/pressure-1.pdf}
+The result shows that among total of 418 passenger in the test dataset, 266 passenger predicted perished, which counts as 63.63 percent and 152 passenger predicted to be survived and which count as 36.36 percent.
 
-Note that the \texttt{echo\ =\ FALSE} parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+We know that our model only had one test which is \emph{Sex}. From the train dataset we knew that the
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# add Sex back to the submit and form a new data frame called compare}
+\NormalTok{compare <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(submit[}\DecValTok{1}\NormalTok{], }\DataTypeTok{Sex =}\NormalTok{ test}\OperatorTok{$}\NormalTok{Sex, submit[}\DecValTok{2}\NormalTok{])}
+\CommentTok{# Check train sex and Survived ratios}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(train}\OperatorTok{$}\NormalTok{Sex, train}\OperatorTok{$}\NormalTok{Survived), }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         
+##                  0         1
+##   female 0.2579618 0.7420382
+##   male   0.8110919 0.1889081
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Check predicted sex radio}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(compare}\OperatorTok{$}\NormalTok{Sex))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##    female      male 
+## 0.3636364 0.6363636
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#check predicted Survive and Sex radio}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(compare}\OperatorTok{$}\NormalTok{Sex, compare}\OperatorTok{$}\NormalTok{Survived), }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         
+##          0 1
+##   female 0 1
+##   male   1 0
+\end{verbatim}
+
+It is clear that our model is too simple: it predict andy male will be perished and every female will be survived. This is approved by the male and female ratio in the test dataset is identical to the death ratio in our prediction result. Further, pur results' survival ratio on sex is male 0\% and female is 100\%. It make sense, isn't it? since our model was trained using train data. teh gender survive ratio were male only 18.89 and the death rate was 81\%. Similarly, Female survival rate was 74.2 percent and death only has 25.79 percent. Any prediction model will have to go for majority.
+
+This is only the starting, we can improve on it, a lot.
+
+R has provided many useful library for classification, we can make use of them and improve our classifier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#plot our decision tree}
+\KeywordTok{fancyRpartPlot}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Do-Data-Science-in-10-Hours_files/figure-latex/unnamed-chunk-51-1.pdf}
+
+This graph is pretty and informative. The first box top number is the voting (either 0 - dead or 1-survived). the two percentages shows the value of the voting (also called \textbf{confidence}). The final number on each node shows the percent of population which resides in this node. Also the color of nodes signify the two classes here. For example, the root node, ``0'' (death) shows the way root node is voting; ``.62'' and ``.38'' represents the proportion of those who die and those who survive; 100\% implies that the entire population resides in root node.
+
+\hypertarget{the-most-complecated-decision-tree-for-titanic}{%
+\subsection{The Most Complecated Decision Tree for Titanic}\label{the-most-complecated-decision-tree-for-titanic}}
+
+Let us try another extreme, we use all the attributes, which knowing from the \textbf{understanding data} step that have some prediction power and not too many levels (possibilities). Among of our attributes, choose \emph{Pclass}, \emph{Sex}, \emph{Age},,\emph{SibSp}, \emph{Parch}, \emph{Fare}, \emph{Cabin} and \emph{Embarked}, we only escaped \emph{Name} and \emph{Ticket} because we knew that they are not really have any power of prediction. This is basically the full house of attributes without any \emph{Data preprocess}.
+
+We have an error message. It tells us that the \texttt{test} dataset has some cabin values that our newly build model had never seen it. It means the value appeared in the \texttt{test} dataset is never appeared in the \texttt{train} dataset. so our model did not learn them. Let us remove \emph{Cabin} attribute temporally from our model construction.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The full-house classifier apart from name and ticket }
+\NormalTok{model <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(Survived }\OperatorTok{~}\StringTok{ }\NormalTok{Pclass }\OperatorTok{+}\StringTok{ }\NormalTok{Sex }\OperatorTok{+}\StringTok{ }\NormalTok{Age }\OperatorTok{+}\StringTok{ }\NormalTok{SibSp }\OperatorTok{+}\StringTok{ }\NormalTok{Parch }\OperatorTok{+}\StringTok{ }\NormalTok{Fare }\OperatorTok{+}\StringTok{ }\NormalTok{Embarked,}
+              \DataTypeTok{data=}\NormalTok{train,}
+              \DataTypeTok{method=}\StringTok{"class"}\NormalTok{)}
+\NormalTok{Prediction <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(model, test, }\DataTypeTok{type =} \StringTok{"class"}\NormalTok{)}
+\NormalTok{submit <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{PassengerId =}\NormalTok{ test}\OperatorTok{$}\NormalTok{PassengerId, }\DataTypeTok{Survived =}\NormalTok{ Prediction)}
+\KeywordTok{write.csv}\NormalTok{(submit, }\DataTypeTok{file =} \StringTok{"myFullhouseResult.CSV"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You can submit our result to Kaggle website for second evaluation. You will see the score has been increased to something like 0.77511.
+
+Let us examine our classifer again,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot our full house classifier }
+\KeywordTok{fancyRpartPlot}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Do-Data-Science-in-10-Hours_files/figure-latex/unnamed-chunk-54-1.pdf}
+
+The decision tree that have been built goes a lot deeper than what we saw last time. Note that the tree is a binary tree. For test conditions that more than two possible answers have been changed to a binary by auto add a split with them. For example, age are numbers and have 10s of possibilities, our model simple split it by a test dondition \texttt{Age\ \textgreater{}=\ 6.5}. Conditions have been set for others as well such as \texttt{Pclass\ \textgreater{}=\ 2.5}, \texttt{SibSp\textgreater{}=2.5}, and \texttt{Fare\ \textgreater{}=\ 18}, etc.. This conditions are not ideal, they can be changed if you know how to optimize decision tree. For the moment it looks very promising that resonates with the famous naval law that ``women and kids first'' is visible in our model.
+
+If you want look into the difference between our two predictions, you can do,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# build a comparison data frame  to record each prediction results}
+\NormalTok{compare <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(submit[}\DecValTok{1}\NormalTok{], }\DataTypeTok{predict1 =}\NormalTok{ compare}\OperatorTok{$}\NormalTok{Survived , }\DataTypeTok{predict2 =}\NormalTok{ Prediction)}
+\CommentTok{# Find differences}
+\NormalTok{dif <-}\StringTok{ }\NormalTok{compare[compare[}\DecValTok{2}\NormalTok{] }\OperatorTok{!=}\StringTok{ }\NormalTok{compare[}\DecValTok{3}\NormalTok{], ]}
+\CommentTok{#show dif}
+\NormalTok{dif}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     PassengerId predict1 predict2
+## 2           893        1        0
+## 19          910        1        0
+## 33          924        1        0
+## 34          925        1        0
+## 37          928        1        0
+## 38          929        1        0
+## 73          964        1        0
+## 81          972        0        1
+## 88          979        1        0
+## 90          981        0        1
+## 99          990        1        0
+## 133        1024        1        0
+## 139        1030        1        0
+## 141        1032        1        0
+## 158        1049        1        0
+## 166        1057        1        0
+## 170        1061        1        0
+## 189        1080        1        0
+## 197        1088        0        1
+## 198        1089        1        0
+## 200        1091        1        0
+## 202        1093        0        1
+## 215        1106        1        0
+## 269        1160        1        0
+## 281        1172        1        0
+## 282        1173        0        1
+## 285        1176        1        0
+## 308        1199        0        1
+## 346        1237        1        0
+## 355        1246        1        0
+## 366        1257        1        0
+## 368        1259        1        0
+## 377        1268        1        0
+## 413        1304        1        0
+\end{verbatim}
+
+We can see the second classifier have produced 34 different predictions in comparison with the first classifier. That is a great improvement.
+
+\hypertarget{the-rational-decision-tree-for-titanic}{%
+\subsection{The Rational Decision tree for Titanic}\label{the-rational-decision-tree-for-titanic}}
+
+now let us use our re-engineered train Dataset to train our classifier to see how could we improve our prediction results
+
+\hypertarget{random-forest}{%
+\section{Random Forest}\label{random-forest}}
+
+The random forest algorithm was derived from the decision tree algorithm. It combines multiple decision trees and takes a voting with each tree's prediction and produces its final output based on the majority votes.
+
+The following is an example of what a random forest classifier in general looks like:
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/Random_forest_diagram_complete} 
+
+}
+
+\caption{Example of the Random Forest.}\label{fig:forest}
+\end{figure}
+
+Forests are like the pulling together of decision tree algorithm efforts. Taking the teamwork of many trees thus improving the performance of a single random tree. The classifier uses different training datasets; each training dataset contains different values and powers in terms of prediction. Multiple decision tree models are created with the help of these datasets. Based on the output of these models, a vote is carried out to find the result with the highest frequency. A test set is evaluated based on these outputs to get the final predicted results.
+
+\hypertarget{steps-to-build-a-random-forest}{%
+\subsection{Steps to Build a Random Forest}\label{steps-to-build-a-random-forest}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Randomly select \(k\) attributes from total \(m\) attributes where \(k < m\)
+\item
+  Among the \(k\) attributes, calculate the node \(d\) using the \textbf{best split point}
+\item
+  Split the node into daughter nodes using the \textbf{best split method}
+\item
+  Repeat the previous steps until you reach the ``l'' number of nodes
+\item
+  Build a forest by repeating all steps for \(n\) number times to create \(n\) number of trees
+\end{enumerate}
+
+After the random forest trees and classifiers are created, predictions can be made using the following steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Run the test data through the rules of each decision tree to predict the outcome and then 2. store that predicted target outcome
+\item
+  Calculate the votes for each of the predicted targets
+\end{enumerate}
+
+The most highly voted predicted target is the final prediction
+
+a few different terminologies that are used in random forest algorithms, such as:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Variance} - When there is a change in the training data algorithm, this is the measure of that change.
+\item
+  \textbf{Bagging} - This is a variance-reducing method that trains the model based on random subsamples of training data.
+\item
+  \textbf{Out-of-bag (oob)} error estimate - The random forest classifier is trained using bootstrap aggregation, where each new tree is fit from a bootstrap sample of the training dataset. The out-of-bag (oob) error is the average error for each calculation using predictions from the trees that do not contain their respective bootstrap sample. This enables the random forest classifier to be adjusted and validated during training.
+\item
+\end{enumerate}
+
+Let's now look at how we can implement the random forest algorithm for our Titanic prediction.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#install.packages('randomForest')}
+\CommentTok{# Install the random forest library}
+\KeywordTok{library}\NormalTok{(randomForest) }
+
+\NormalTok{train <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"train.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"test.csv"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{test <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(test[}\DecValTok{1}\NormalTok{], }\DataTypeTok{Survived =} \KeywordTok{rep}\NormalTok{(}\StringTok{"NA"}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(test)), test[ ,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(test)])}
+
+\NormalTok{samp <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(train), }\FloatTok{0.8} \OperatorTok{*}\StringTok{ }\KeywordTok{nrow}\NormalTok{(train))}
+\NormalTok{trainData <-}\StringTok{ }\NormalTok{train[samp, ]}
+\NormalTok{testData <-}\StringTok{ }\NormalTok{train[}\OperatorTok{-}\NormalTok{samp, ]}
+
+
+\CommentTok{# let’s build the random forest model}
+\CommentTok{# model <- randomForest(Survived ~ Sex, data = trainData, ntree = 1000, mtry = 5)}
+\end{Highlighting}
+\end{Shaded}
+
+library(randomforest) \# Install the random forest library
+
+\hypertarget{now-that-we-have-installed-the-randomforest-library-lets-build-the-random-forest-model}{%
+\subsection{Now that we have installed the randomforest library, let's build the random forest model}\label{now-that-we-have-installed-the-randomforest-library-lets-build-the-random-forest-model}}
+
+model \textless- randomforest(taste \textasciitilde{} . - quality, data = train, ntree = 1000, mtry = 5)
+
+model
+
+model\$confusion
+
+\hypertarget{gaussian-naive-bayes}{%
+\section{Gaussian Naive Bayes}\label{gaussian-naive-bayes}}
+
+\hypertarget{regression}{%
+\section{Regression}\label{regression}}
+
+One of the best demonstration of machine learning model is Regression. Regression is a statistical relationship between a dependent variable (often called the `outcome variable') and one or more independent variables (often called `predictors' or `attributes') that a change in independent variable is associated with a change in dependent variable.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/regression} 
+
+}
+
+\caption{Weigh and Age in a linear regression model.}\label{fig:regression}
+\end{figure}
+
+It is important to note that not all variables are related to each other. For example, a person's favorite color may not be related to revenue from a website. But if you look at a chart showing weight and age, see Figure \ref{fig:regression}, the change in one variable \texttt{weight} is closely associated with the change in the other variable \texttt{age}. This makes intuitive sense, as from birth, as you get older, you get heavier. If you plot that data, you would see those green points on the graph up to some particular age where growth would taper off. The plot in the middle shows the clear linear relationship between age and weight, which is indicated by the solid red line. We sometimes call that line a regression line or a trend line, or the line of best fit. You see that the weight is the dependent variable, and age is the independent variable.
+
+There are various types of regression: \textbf{Linear regression}, \textbf{Logistic regression} and \textbf{Polynomial regression}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.3\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/Linear_regression} \includegraphics[width=0.3\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/logistic_curve} \includegraphics[width=0.3\linewidth]{C:/Users/gangmin.li/Documents/Books/Bookdown-Do-Data/images/polynormal} 
+
+}
+
+\caption{Example of the three different types of regression models.}\label{fig:typeofregression}
+\end{figure}
+
+Linear regression is the most commonly used type. By definition, when there is a linear relationship between a dependent variable, which takes continuous values, and an independent variable, which is continuous or discrete, linear regression is used to model the relationship between them.
+
+Logistic regression is normally used to model a depended variable that takes value of a categorical such as yes or no, true or false, depends on other independent variables. Notice that the trend line for logistic regression is in a shape of \textbf{S}, It is also called \textbf{sigmoid Curve}.
+
+Polynomial regression is when the relationship between the dependent variable and the independent variable is in the \texttt{nth} degree of independent variable. In a plot, you can see that the relationship is not linear; there is a curve to that best-fit trend line.
+
+Figure \ref{fig:typeofregression} shows the three different types of regression.
+Logistic Regression is a useful model to use. Logistic regression measures the relationship between the categorical dependent variable (feature) and one or more independent variables (attributes) by estimating probabilities using a logistic function, which is the cumulative logistic distribution.
+
+Choice of using linear regress or logistic regression actually depends on the applications. Linear regression answers the question like ``How much?'', So it is generally used to predict a continuous variable, like height and weight. Whereas logistic regression predicts if something will happen or not happen. Therefore logistic regression is used when a response variable has only two outcomes: yes or no, true or false. Sometimes logistic regression is regarded as a binary classifier, since there are only two outcomes.
+
+Note the confidence score generated by the model based on our training dataset.
+
+I was surprised at the results. The Gaussian Naive algorithm performed poorly and the Random Forest on the other hand was consistently predicting with an accuracy of more than 80\%.
+
+Classification and regression trees (CART). CART is a non-parametric decision tree learning technique that produces either classification or regression trees, depending on whether the dependent variable is categorical or numeric, respectively (Breiman et al 1984).
+
+\hypertarget{evaluation}{%
+\section{Evaluation}\label{evaluation}}
+
+\url{https://www.rpubs.com/rezapci/Data_Science_Machine_Learning_HarvardX}
+
+models and valiadition
+
+\hypertarget{apendix}{%
+\chapter*{Apendix}\label{apendix}}
+
+
+\hypertarget{UnderstandDatacode}{%
+\section{TitanicDataAnalysis\_UnderstandData.R}\label{UnderstandDatacode}}
+
+\begin{verbatim}
+############################################################################
+# Copyright 2020 Gangmin Li
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#  	http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# The base of this code was from Dave Langer "Intoduction to Data Science."
+# Credit to him. You can find him on Github: https://github.com/EasyD
+# I have also integrated other sources like Titanic Forum, Python code
+# and some Chinese R code.
+#
+# Notably,
+# https://www.kaggle.com/startupsci/titanic-data-science-solutions
+#
+# The whole purpose of this is to teach My students on Data Science.
+#
+# This R source code file corresponds to video 1 of the YouTube series
+# "Introduction to Data Science with R" located at the following URL:
+#     http://www.youtube.com/watch?v=32o0DnuRjfg
+#
+# The task is to build a model based on the train data
+# then to predict test data who can survive in Kaggle Titanic competition
+##########################################################################
+# Tutorial One - Understand Data
+#
+# Understand data involves three steps:
+# 1. Load data into memory - RStudio
+# 2. Assess Data quantity
+# 3. Assess data quality - set goals for next step in data preprocess
+##########################################################################
+
+### Load raw data
+
+train <- read.csv("train.csv", header = TRUE)
+test <- read.csv("test.csv", header = TRUE)
+
+# RStudio help function
+# what help with any R function just type ?
+# for example ?read.csv in Console
+
+# First explore of datasets
+# the first R code you can use is str.
+# use ?str to find more
+
+help(str)
+
+# use str to explore train and test
+
+str(train)
+str(test)
+
+# Add a "Survived" variable to the test set to allow for combining data sets
+test <- data.frame(Survived = rep("NA", nrow(test)), test[,])
+
+# Now check test. you can see that it has 12 variable now.
+# And Survived is the first variable. because we used test[,]
+# if you want add Survived into the second position Do this,
+# test <- data.frame(test[1], Survived = rep("NA", nrow(test)), test[,2:ncol(test)])
+
+# Combine datasets together. actually append test to train
+data <- rbind(train, test)
+
+#### We have done combined datasest with only a few line of code
+# notice that the type of Survived has been changed to Chr.
+# This is because we used "NA" as its value
+# A bit about R data types
+# ?str structure of dataset
+# chr, int
+# Factor in R is 'category'. it likes a selection from a list.
+# for example, Cabin Factor w/187 levels. It means there are 187 selections.
+# Sex Factor w/ 2 "female", "male", 2,1 means, two options 2- female, 1- male.
+#
+# NA : not available (absent value, missing value)
+
+str(data)
+
+# Exam PassengerID, type INT, we can check total number and the number of unique values.
+# If they are equal and both equal to the number of records. it means there are
+# unique and has no missing value.
+length(data$PassengerId)
+length(unique(data$PassengerId))
+
+### Exam Survived
+data$Survived <- as.factor(data$Survived)
+table(data$Survived)
+
+# Calculate the survive rate in train data is 38% and the death rate is 61.61%
+prop.table(table(as.factor(train$Survived)))
+
+### Examine Pclass value,
+# Look into Kaggle's explanation about Pclass: it is a proxy for social class i.e. rich or poor
+# It should be factor and it does not make sense to stay in int.
+data$Pclass <- as.factor(data$Pclass)
+test$Pclass <- as.factor(test$Pclass)
+train$Pclass <- as.factor(train$Pclass)
+
+# Distribution across classes
+table(data$Pclass)
+
+# Distribution across classes with survive
+table(data$Pclass, data$Survived)
+
+# Calculate the distribution on Pclass
+# Overall passenger distribution on classes.
+prop.table(table(data$Pclass))
+
+# Train data passenger distribution on classes.
+prop.table(table(train$Pclass))
+
+# Test data passenger distribution on classes.
+prop.table(table(test$Pclass))
+
+# Calculate death distribution across classes with Train data
+SurviveOverClass <- table(train$Pclass, train$Survived)
+# Convert SurviveOverClass into data frame
+SoC.data.fram <- data.frame(SurviveOverClass)
+# Retrieve death distribution in classes
+Death.distribution.on.class <- SoC.data.fram$Freq[SoC.data.fram$Var2==0]
+prop.table(Death.distribution.on.class)
+
+# Calculate death rate in train data
+# Distribution across classes with survive in Train data
+SurviveOverClass <- table(train$Pclass, train$Survived)
+# Convert SurviveOverClass into data frame
+SoC.data.fram <- data.frame(SurviveOverClass)
+# Retrieve death distribution in classes
+Death.distribution.on.class <- SoC.data.fram$Freq[SoC.data.fram$Var2==0]
+prop.table(Death.distribution.on.class)
+
+# Try summary on data
+summary.data.frame(data)
+
+## Exploratory data analysis with graph
+# Load up ggplot2 package to use for visualizations
+# load it into memory
+library(ggplot2)
+
+# High class passenger has more chance of survive than passenger with lower class
+# Hypothesis - Rich passengers can but expensive ticket. class=1 is more expensive
+# survived at a higher rate
+ggplot(train, aes(x = Pclass, fill = factor(Survived))) +
+  geom_bar(width = 0.5) +
+  xlab("Pclass") +
+  ylab("Total Count") +
+  labs(fill = "Survived")
+
+# It sort of proved the survive rate with social class
+# more people perished in the third class
+
+### Exam Name attribute
+# the original name typed as factor, which we really don't want (shows the uniqueness)
+# convert Name type
+data$Name <- as.character(data$Name)
+
+# Confirm the name has 1037 unique values
+length(unique(data$Name))
+
+# Find the two duplicate names
+# First used which function to get the duplicate names and store them as a vector dup.names
+# check it up ?which.
+dup.names <- data[which(duplicated(data$Name)), "Name"]
+
+# Echo out
+dup.names
+
+### Exam Sex attribute
+# Retrial male and females. then check their numbers.
+summary(data$Sex)
+
+#Plot Sex distribution on entire dataset and get general an impression
+ggplot(data[1:891,], aes(x = Sex)) +
+  geom_bar(fill="steelblue") +
+  xlab("Sex") +
+  ylab("Total Count")
+
+# plot Survived over Sex on train. use data[1:891,]
+ggplot(data[1:891,], aes(x = Sex, fill = Survived)) +
+  geom_bar() +
+  xlab("Sex") +
+  ylab("Total Count") +
+  labs(fill = "Survived")
+
+### Examine Age
+# Summary over data, train and test.
+summary(data$Age)
+summary(train$Age)
+summary(test$Age)
+
+#It makes sense to change Age type to Factor to see distribution
+summary(as.factor(data$Age))
+
+# Plot distribution of age group
+ggplot(data, aes(x = Age)) +
+  geom_histogram(binwidth = 10, fill="steelblue") +
+  xlab("Age") +
+  ylab("Total Count")
+
+# Plot Survived on age group on train dataset
+ggplot(data[1:891,], aes(x = Age, fill = Survived)) +
+  geom_histogram(binwidth = 10) +
+  xlab("Age") +
+  ylab("Total Count")
+
+### Exam SibSp, Its original type is int
+summary((data$SibSp))
+
+# How many possible unique values?
+length(unique(data$SibSp))
+
+# Treat it as a factor, so we know the value distribution
+data$SibSp <- as.factor(data$SibSp)
+summary(data$SibSp)
+
+# Plot entire SibSp distribution among the 7 values
+ggplot(data, aes(x = SibSp)) +
+  geom_bar() +
+  xlab("SibSp") +
+  ylab("Total Count")+
+  coord_cartesian()
+
+# Plot on the Survived on SibSp
+ggplot(data[1:891,], aes(x = SibSp, fill = Survived)) +
+  geom_bar() +
+  xlab("SibSp") +
+  ylab("Total Count")  +
+  labs(fill = "Survived")
+
+### Exam Parch
+summary(data$Parch)
+
+# How many possible values?
+length(unique(data$Parch))
+
+# Treat is as a factor so we know the value distribution
+data$Parch <- as.factor(data$Parch)
+summary(data$Parch)
+
+# Plot entire Parch distribution among the 8 posibilites
+ggplot(data, aes(x = Parch)) +
+  geom_bar() +
+  xlab("Parch") +
+  ylab("Total Count")
+
+# Plot on the Survived on SibSp
+ggplot(data[1:891,], aes(x = Parch, fill = Survived)) +
+  geom_bar() +
+  xlab("Parch") +
+  ylab("Total Count")  +
+  labs(fill = "Survived")
+
+### Exam  ticket
+summary(data$Ticket)
+length(unique(data$Ticket))
+str(data$Ticket)
+which(is.na(data$Ticket))
+
+# Plot it value
+ggplot(data[1:891,], aes(x = Ticket)) +
+  geom_bar() +
+  xlab("Ticket") +
+  ylab("Total Count")
+
+# Plot on the survive on Ticket
+ggplot(data[1:891,], aes(x = Ticket, fill = Survived)) +
+  geom_bar() +
+  xlab("Ticket") +
+  ylab("Total Count")  +
+  labs(fill = "Survived")
+
+### Examine Fare
+summary(data$Fare)
+length(unique(data$Fare))
+
+# Can't make fare a factor, treat as numeric & visualize with histogram
+ggplot(data, aes(x = Fare)) +
+  geom_histogram(binwidth = 5) +
+  ggtitle("Fare Distribution") +
+  xlab("Fare") +
+  ylab("Total Count") +
+  ylim(0,200)
+
+# Let's check to see if fare has predictive power
+ggplot(data[1:891,], aes(x = Fare, fill = Survived)) +
+  geom_histogram(binwidth = 5) +
+  xlab("fare") +
+  ylab("Total Count") +
+  ylim(0,50) +
+  labs(fill = "Survived")
+
+# Explore Fare distribution between train and test to see if they are overlapped?
+ggplot(train, aes(x = Fare)) +
+  geom_histogram(binwidth = 5) +
+  ggtitle("Fare Distribution") +
+  xlab("Fare") +
+  ylab("Total Count") +
+  ylim(0,200)
+
+ggplot(test, aes(x = Fare)) +
+  geom_histogram(binwidth = 5) +
+  ggtitle("Fare Distribution") +
+  xlab("Fare") +
+  ylab("Total Count") +
+  ylim(0,200)
+
+### Cabin
+# Examine cabin values
+str(data$Cabin)
+# Cabin really isn't a factor, make a string and the display first 100
+data$Cabin <- as.character(data$Cabin)
+data$Cabin[1:100]
+
+# Find number of the missing value
+table(train[which(train$Cabin ==""), "Cabin"])
+
+# Analysis of the cabin variable
+str(data$Cabin)
+
+# Cabin really isn't a factor, make a string and the display first 100
+data$Cabin <- as.character(data$Cabin)
+data$Cabin[1:100]
+
+# Find out number of the missing value in the train
+train$Cabin <- as.character(train$Cabin)
+table(train[which(train$Cabin ==""), "Cabin"])
+
+# Replace empty cabins with a "U"
+#data[which(data$Cabin == ""), "Cabin"] <- "U"
+data$Cabin[1:100]
+
+# Take a look at just the first char as a factor
+cabin.first.char <- as.factor(substr(data$Cabin, 1, 1))
+str(cabin.first.char)
+levels(cabin.first.char)
+
+# Add to combined data set and plot
+data$cabin.first.char <- cabin.first.char
+
+# High level plot
+ggplot(data[1:891,], aes(x = cabin.first.char, fill = Survived)) +
+  geom_bar() +
+  ggtitle("Survivability by cabin.first.char") +
+  xlab("cabin.first.char") +
+  ylab("Total Count") +
+  ylim(0,750) +
+  labs(fill = "Survived")
+
+### Examine Embark
+str(data$Embarked)
+summary(data$Embarked)
+
+# Plot Embarked data distribution and the Survived data over it
+ggplot(data, aes(x = Embarked)) +
+  geom_bar(width=0.5) +
+  xlab("Passenger embarked port") +
+  ylab("Total Count")
+
+ggplot(data[1:891,], aes(x = Embarked, fill = Survived)) +
+  geom_bar(width=0.5) +
+   xlab("embarked") +
+  ylab("Total Count") +
+  labs(fill = "Survived")
+
+##Calculate death RATE distribution over Embarked port with Train data
+# We use table in R, you can check with ?table. A good example is
+# mytable <- table(A,B) # A will be rows, B will be columns
+# mytable # print table
+
+# margin.table(mytable, 1) # A frequencies (summed over B)
+# margin.table(mytable, 2) # B frequencies (summed over A)
+
+# prop.table(mytable) # cell percentages
+# prop.table(mytable, 1) # row percentages
+# prop.table(mytable, 2) # column percentages
+
+# We need prop.table to get column percentage which is the survived
+
+# creat Embarked and Survived contingency table
+SurviveOverEmbarkedTable <- table(train$Embarked, train$Survived)
+# Death-0/survived-1 value distribution (percentage) based on embarked ports
+# prop.table(mytable, 2) give us column (Survived) percentages
+Deathandsurvivepercentage <- prop.table(SurviveOverEmbarkedTable, 2)
+# Plot
+M <- c("c-Cherbourg", "Q-Queenstown", "S-Southampton")
+barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death distribution in percentage %",  names.arg = M, col="steelblue", main="Death distribution", border="black", beside=TRUE)
+barplot(Deathandsurvivepercentage[2:4,2]*100, xlab =(""), ylim=c(0,100), ylab="Death distribution in percentage %",  names.arg = M, col="blue", main="Death distribution", border="black", beside=TRUE)
+
+## Calculate survived RATE distribution based on embarked ports
+# Death-0/survived-1 value distribution (percentage) based on embarked ports
+# prop.table(mytable, 1) give us row (Port) percentages
+# col-1 (Survived=0, perished) and col-2 (Survived =1, survived)
+DeathandsurviveRateforeachport <- prop.table(SurviveOverEmbarkedTable, 1)
+#plot
+barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death rate in percentage %",  names.arg = M, col="red", main="Death rate comparison among mebarked ports", border="black", beside=TRUE)
+
+#End ###########################################################
+\end{verbatim}
 
   \bibliography{book.bib,packages.bib}
 

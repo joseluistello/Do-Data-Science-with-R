@@ -1,3 +1,11 @@
 `r if (knitr:::is_html_output()) '
 # Result Interpretation
+
+each model will have its own evaluation methods.
+
+Results interpretation is mostly an explanation of your prediction model.
+
+
+
+
 '`

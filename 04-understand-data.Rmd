@@ -119,7 +119,7 @@ In R code, the best way to explore a dataset and get the first impression on its
 Now let us run the following code,
 
 ```
-# Exam train and test datasets
+# load train and test datasets
 train <- read.csv("train.csv", header = TRUE)
 test <- read.csv("test.csv", header = TRUE)
 ```
@@ -241,7 +241,7 @@ There are other inappropriate or wrong attribute's types too such as *SibSp* and
 So, looking into data attributes types, compare with the original meaning of each attributes can help us to spot any inappropriate types or wrong types. 
 
 
-```{block2,  type='rmdthinking'}
+```{block2,  type='rmdthinking', warn = FALSE}
 Thinking:
 
 Is **Servived typed** `int` approriate?
@@ -328,7 +328,7 @@ length(data$PassengerId)
 length(unique(data$PassengerId))
 
 ```
-The results shows the both number 1309, which is equal to the total number of records in the dataset. It proves the *PassengerID* has not missing value and duplication. 
+The results shows the both number 1309, which is equal to the total number of records in the dataset. It proves the *PassengerID* has no missing value and duplication. 
 
 ### Survived
 
@@ -737,7 +737,7 @@ ggplot(data[1:891,], aes(x = Fare, fill = Survived)) +
 ```
 It is not clear about *Fare* prediction power. One thing is clear that to be useful for predcition, Fare needs more engineer such as group it in different groups like <5, 5 to 10, 10 to 15, ..., etc.
 
-### Cabin
+### Cabin {#cabin}
 
 *Cabin* has a large number of missing values as we noticed from the beginning of this section \@ref(attvalue). So its quality is expected to be bed. let us find out how many missing values is the dataset `train`, so we can assess its predictive power over survive. 
 
@@ -751,7 +751,7 @@ data$Cabin <- as.character(data$Cabin)
 data$Cabin[1:100]
 ```
 
-we find out that *Cabin* is in a type of `Factor` and has 187 unique values with empty string "" and string start with letter like "A10".
+We find out that *Cabin* is in a type of `Factor` and has 187 unique values with empty string "" and string start with letter like "A10".
 
 By looking actual 100 values, we have a pretty good understand its contents. Notice that some string looks like multiple numbers, for instance "C23 C25 C27", it is odd in comparison with others. 
 
@@ -780,7 +780,7 @@ ggplot(data[1:891,], aes(x = cabin.first.char, fill = Survived)) +
   ylim(0,750) +
   labs(fill = "Survived")
 ```
-To sumup, *Cabin* attribute has large number of missing value. The dataset `train` has 687 missing value and it counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. To use it in any possible predictio model, it needs some re-engineering. 
+To sum up, *Cabin* attribute has large number of missing value. The dataset `train` has 687 missing value and it counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. To use it in any possible prediction model, it needs some re-engineering. 
 
 ### Embarkded
 
@@ -846,7 +846,7 @@ On other hand some records have most attributes values are identical. These coul
 
 In our Titanic problem, record level assessment is not an issue. Since we have almost all the records are different. This does not mean we should completely ignore this step and doing the checking.   
 
-## Summary {-}
+## Summary 4 {-}
 
 All the analyses actions provide demonstrations how to  access the raw data and understand their quantity and data quality. Notice that the understanding data is never a single one-off action. You never fully understood the given data. once the analytical process moving on, you may need to come back to apply some new decomposition on some attributes to explore more. 
 

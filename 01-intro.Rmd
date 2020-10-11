@@ -130,7 +130,7 @@ If you don’t want to learn these skills on your own, take an online course or 
 Understand what data science is about is just a start of becoming a data scientist. Once the goal is set. The next task is to select a correct path and work hard to to reach your destination. The path is important which can be shorter or longer, or direct and smooth,  or curvy and bumpy. It is vital to follow a short and smooth path. This path is the data science project process. Figure \@ref(fig:process) is the 6 steps process, which is inspired by the CRISP (Cross Industry Standard Process for Data Mining) [@Chapman2000], [@Shearer2000] and KDD (knowledge discovery in data bases) process [@Li2018].  
 
 
-```{r process, include=TRUE, fig.cap='Process of doing Data Science', out.width='100%', fig.asp=.75, fig.align='center', echo = FALSE}
+```{r processimg, include=TRUE, fig.cap='Process of doing Data Science', out.width='100%', fig.asp=.75, fig.align='center', echo = FALSE}
 knitr::include_graphics("img/process.png")
 ```
 
