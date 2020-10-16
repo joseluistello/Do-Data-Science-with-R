@@ -510,6 +510,7 @@ It is also simple to explore the relationship between gender and the survival ra
 
 ```{r Survivalrateonsex, fig.cap = "Total count and survive rate of passenger on sex."}
 # plot Survived over Sex on dataset train
+
 ggplot(data[1:891,], aes(x = Sex, fill = Survived)) +
   geom_bar(width = 0.3) +
   xlab("Sex") +
@@ -573,7 +574,7 @@ ggplot(data[1:891,], aes(x = Age, fill = Survived)) +
 
 ```
 
-The graph shows the relationship between *Age* and survival rate. It becomes apparent that age group between 15 and 25 has the worst survival rate. It is also interesting to know that there are some age has values less than 0! 
+The graph shows the relationship between *Age* and survival rate. It becomes apparent that age group between 15 and 25 has the worst survival rate. 
 
 With this, we could conclude that.
 
@@ -683,8 +684,8 @@ head(summary(data$Ticket),50)
 str(data$Ticket)
 which(is.na(data$Ticket))
 ```
-The value of *Ticket* appears has no missing value and there are 929 different numbers and some with letters and some with special characters like "." and "/". There is no immediately apparent structure in the data.
- Let us plot them and also see if there is any pattern with survival.
+The value of *Ticket* appears has no missing value and there are 929 different numbers. It indicates that there are passengers share the same ticket number. Ticket  appeared in two major formats: some with letters and special characters like "." and "/". others just numbers. There is no immediately apparent structure in the data.
+Let us plot them and also see if there is any pattern with survival.
  
 ```{r  tecket, fig.align = 'center', fig.show="hold", out.width = "50%", fig.cap = "Plot of *Ticket* distribution and survival rate."}
 #plot it value 
@@ -699,7 +700,7 @@ ggplot(data[1:891,], aes(x = Ticket, fill = Survived)) +
   ylab("Total Count")  +
   labs(fill = "Survived")
 ```
-The same tickets number has such a small number. It does not have any statistical meaning. It is possible to reengineer *ticket* number into groups like "number only" vs "with letter" or "with special characters", or simply group them with the length of the ticket or with the initials, etc. There is a lot of thing you can do to see if there is any patterns connected with the survival. 
+The same tickets number has such a small number of passenger sharing. It does not have any statistical meaning. It is possible to re-engineer *ticket* number into groups like "number only" vs "with letter" or "with special characters", or simply group them with the length of the ticket or with the initials, etc. There is a lot of thing you can do to see if there is any patterns connected with the survival. 
 
 Over all, *Ticket* has a good quality and has no missing value and errors (we dont count repeated ticket number is an error). However, there is no obvious relations with the survive rate.
 
@@ -811,7 +812,7 @@ The graph shows that about 70% of the people boarded from Southampton (914/1309 
 ```{r  embark, fig.align = 'center', fig.show="hold", out.width = "30%", fig.cap = "Plots of death distribution, survive distribution and death rate comparision over embarked port."}
 
 # Calculate death distribution over Embarked port with Train data
-# creat Embarked and Survived contingency table
+# create Embarked and Survived contingency table
 SurviveOverEmbarkedTable <- table(train$Embarked, train$Survived)
 # Death-0/survived-1 value distribution (percentage) based on embarked ports
 # prop.table(mytable, 2) give us column (Survived) percentages
