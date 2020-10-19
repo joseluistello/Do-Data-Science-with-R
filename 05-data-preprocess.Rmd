@@ -1,17 +1,32 @@
+---
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
 # Data PreProcess
 
-
-```{r fig.align = 'center', out.width = "60%", echo=FALSE, fig.cap ="" }
+```{r sand, fig.align = 'center', out.width = "60%", message=FALSE,  warning=FALSE, echo=FALSE, fig.cap =""}
+# 
+library(dplyr)# data manipulation
+library(ggplot2)
+# library(rattle)
+# library(rpart.plot)
+# library(RColorBrewer)
+ library(rpart)
+# library(caret) # tuning & cross-validation
+ library(gridExtra) # visualizations
+# library(tictoc) # timing models
 
 knitr::include_graphics(here::here("images", "preparation.jpg"))
 
 ```
 
->“before anything else, preparation is the key to success” 
->
->--- Alexander Graham Bell
+>     “before anything else, preparation is the key to success” 
+>    
+>                                        --- Alexander Graham Bell
 
-Previous chapter we have done **Data understanding** by examining the given data quantity and quality. we had a pretty good understanding of the raw data. That also set up some obnjectives for data preparation that is what we need to do in the chapter.
+Previous chapter we have done **Data understanding** by examining the given data quantity and quality. We had a pretty good understanding of the raw data. That also sets up some objectives for the data preparation to accomplish, which are what we need to do in the chapter.
 
 ## General data prepartion tasks
 
@@ -24,40 +39,29 @@ Section \@ref(preprocess) has listed a number of tasks that needs to be performe
 
 This chapter we will carry on using Titanic problem to demonstrate the tasks to be performed and the methods to achieve data preprocess object that is make data suitable for analyzing. 
 
-quick correlations with modelled correlations later in the project.
-https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8
 
 ## Dealt with Miss values
 
 We had a pretty good understanding about the Titanic datasets. We knew there are missing values and some errors. they needs to be resolved first of all. The systematic way to find missing value is write a function to check missing values, like this one,
-```{r echo = FALSE, warning=FALSE, message=FALSE}
+
+Firstly, let us quick recap the datasets we have,
+
+```{r dataglimpse, fig.align = 'center', out.width = "95%", fig.cap = "Missing data summary" }
 # assume we had imported both train and test dataset and we have combined them into on data
-library(dplyr) # data manipulation
-library(rattle)
-library(rpart.plot)
-library(RColorBrewer)
-library(rpart)
-library(caret) # tuning & cross-validation
-library(gridExtra) # visualizations
-library(tictoc) # timing models
 
 train <- read.csv("train.csv", header = TRUE)
 test <- read.csv("test.csv", header = TRUE)
 # integrate into one file for checking save to do the dame for both files.
 data <- bind_rows(train, test) # comapare with data <- rbind(train, test)
 
-```
-```{r}
 # Check our combined dataset details
 glimpse(data) # compare with str(data)
 ```
-
-
-We can observe that the 12 attributes and their types and sample attributed values. For our Titanic problem, there are 10 attributes present in the combined dataframe that are potentially useful. 
+We can observe that the 12 attributes, their types and values. WE understood the Titanic problem is tp predicte given passengers' survival. There are 10 attributes present in the combined dataframe that are potentially useful. Other two are less useful intuitively and also confirmed for the previous chapter. Let us focus on solve the data missing problem. 
 
 We can define a function missing_vars, which can get proportion of values are missing in each attribute. 
 
-```{r}
+```{r missfunction}
 # Define a function to check missing values
 missing_vars <- function(x) {
   var <- 0
@@ -73,9 +77,10 @@ missing_vars <- function(x) {
   arrange(desc(missing_prop)))
 }
 ```
-apply our function to dataset `data`. 
 
-```{r}
+Apply our function to the combined dataset `data`. 
+
+```{r fig.align = 'center', out.width = "95%", fig.cap = "Missing data summary" }
 missing_vars(data)
 ```
 *Survived* has 418 missing value that is the `test` dataset number. Our entire `test` dataset needs to be filled with that value. It is not an issue. 
@@ -88,7 +93,8 @@ We will use Cabin and Age as examples to demonstrate the general methods used to
 
 Cabin has large number of missing value. Total of 687 missing value in the `train` dataset counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. Facing a attribute that has a large percentage of missing values, in the most analysis, it will be simply dropped. However, if you think carefully, the missing value may have some reasons and that reasons could be a factor affect on passengers lived or perished. Therefore, the first thought, which is normally apply to large number of value missing, is to replace the attribute with another attribute simply reflects on the missing value or not, rather than to fill the missing value themselves.  So we create a new attribute called "*HasCabinNum*" which only records if *Cabin* values is "" (empty). It has two values "`has`" and "`hasnot`". We can exmain our newly created cabin replacemnt's realtion with the Survival.
 
-```{r warning=FALSE, echo = TRUE}
+```{r cabinPro, warning=FALSE, echo = TRUE, fig.align = 'center', out.width = "95%", fig.cap = "Distribution and survival percentage of the newly created HasCabinNum attribute"}
+
 # create a new arribute and assign it with new values
 data$HasCabinNum <- ifelse((data$Cabin != ""), "Has", "HasNo")
 
@@ -115,8 +121,6 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```
 
-
-
 ### Age Attribute
 
 Now we can tackle the issue of missing values with the age attribute. *Age* is a typical numerical value. There a number of options for fill the missing values:
@@ -128,13 +132,11 @@ Let us looking into them one by one, Be aware of this if you have multiple optio
 
 1. Take the mean value to replace missing value. It is the simplest way to impurate the missing value.
 
-```{r}
+```{r agepro, fig.align = 'center', out.width = "95%", fig.cap = "Distribution and survival percentage on the Age with missing value filled"}
 # replace missing value in Age with its average
 ageEverage <- summarise(data, Average = mean(Age, na.rm = TRUE))
-
 # create a new attribute Age_RE1 and assign it with new values
 data$Age_RE1 <- ifelse(is.na(data$Age), as.numeric(ageEverage), as.numeric(data$Age))
-
 # plot newly altered age attribute 
 # Make sure survived is in factor type 
 p1 <- data %>%
@@ -144,8 +146,7 @@ ggplot(aes(x = factor(Age_RE1), fill = factor(Survived))) +
    xlab("Age_RE1") +
    ylab("Total Count") +
    labs(fill = "Survived")+
-   ggtitle("Newly created Age_RE1 attribute on Survived")
-
+   ggtitle("Survived value on Age_RE1")
 # show survive percentage on HasCabinNum 
 p2 <- data %>%
   filter(!is.na(Survived)) %>%
@@ -154,7 +155,7 @@ ggplot(aes(x = factor(Age_RE1), fill = factor(Survived))) +
   scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
   scale_fill_discrete(name = "Survived") +
   labs(x = "Age_RE1", y = "Percentage of Survived") + 
-  ggtitle("Newly created Age_RE1 attribute (Proportion Survived)")
+  ggtitle("Survived percentage on Age_RE1")
 
 grid.arrange(p1, p2, ncol = 2)
 
@@ -162,22 +163,19 @@ grid.arrange(p1, p2, ncol = 2)
 
 2. Take a random number range between `min` and `max` age, and keep the mean and standard deviation unchanged.
 
-```{r}
+```{r AgePro2, fig.align = 'center', out.width = "95%", fig.cap = "Distribution and survival percentage on the Age with missing value filled with distribution shape maintained"}
 # calculate the non-NA mean and std
 mean <- mean(data[["Age"]], na.rm = TRUE) # take train mean
 std <- sd(data[["Age"]], na.rm = TRUE) # take test std
-
 # replace NA with a list that maintian the mean and std
 temp_rnum <- rnorm(sum(is.na(data$Age)), mean=mean, sd=std)
-
 # add new attribute Age_RE2
 data$Age_RE2 <- ifelse(is.na(data$Age), as.numeric(temp_rnum), as.numeric(data$Age))
+summary(data$Age_RE2)
 # There are possible negative values too, replace them with positive values
-
 data$Age_RE2[(data$Age_RE2)<=0] <- sample(data$Age[data$Age>0], length(data$Age_RE2[(data$Age_RE2)<=0]), replace=F)
 # check
 summary(data$Age_RE2)
-
 # plot newly altered age attribute 
 # Make sure survived is in factor type 
 p1 <- data %>%
@@ -187,7 +185,7 @@ ggplot(aes(x = factor(Age_RE2), fill = factor(Survived))) +
    xlab("Age_RE2") +
    ylab("Total Count") +
    labs(fill = "Survived")+
-   ggtitle("Newly created Age_RE2 attribute on Survived")
+   ggtitle("Survived value on Age_RE2 attribute")
 
 # show survive percentage on HasCabinNum 
 p2 <- data %>%
@@ -197,7 +195,7 @@ ggplot(aes(x = factor(Age_RE2), fill = factor(Survived))) +
   scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
   scale_fill_discrete(name = "Survived") +
   labs(x = "Age_RE2", y = "Percentage of Survived") + 
-  ggtitle("Newly created Age_RE2 attribute (Proportion Survived)")
+  ggtitle("Survived percentage on Age_RE2 attribute")
 
 grid.arrange(p1, p2, ncol = 2)
 ```
@@ -210,7 +208,7 @@ First we want to select a few attributes which we believe having associations wi
 
 1. Change nominal attributes into factor if they are not.
 
-```{r}
+```{r }
 # this model only takes Survived', Pclass, 'Sex', SibSP, Parch, 'Embarked', 'HasCabinNum', 'Deck' as predictor and Age is the consequencer
 
 data_nominal <- c('Pclass', 'Sex', 'Embarked', 'HasCabinNum')
@@ -255,26 +253,23 @@ data[(data$Ticket=="113572"), c("Ticket", "PassengerId", "Embarked", "Fare")]
 
 No. the answer tell us only the tow missing records share the ticket number. So we only need to find out the price (per person) to compare with other price (per person) to allocate the missing embarked port.
 
-```{r fare_pp, warning=FALSE}
+```{r embarkfarepp, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap ="Possible embarked port by value of Fare per person"}
 # calculate fare_PP per person
 fare_pp <- data %>%
   group_by(Ticket, Fare) %>%
   summarize(Friend_size = n()) %>%
   mutate(Fare_pp = Fare / Friend_size)
-
 data <- left_join(data, fare_pp, by = c("Ticket", "Fare"))
-
 data %>%
   filter((Embarked != "")) %>%
 ggplot(aes(x = Embarked, y = Fare_pp)) + 
   geom_boxplot() + 
   geom_hline(yintercept = 40, col = "deepskyblue4")
 ```
-Form above plot, we can see that price 40 is an outlier in embarked group `S` and `Q`. However, if they embarked from ‘C’ the price is only just falls into the upper quartile. So, we want assign `c` to the embarked missing value. 
+From above plot, we can see that price 40 is an outlier in embarked group `S` and `Q`. However, if they embarked from ‘C’ the price is only just falls into the upper quartile. So, we want assign `c` to the embarked missing value. 
 ```{r}
 data$Embarked[(data$Embarked)==""] <- "C"
 ```
-
 
 ### Fare Attribute
 
@@ -285,9 +280,9 @@ data[is.na(data$Fare), ]
 data$Fare[is.na(data$Fare)] <- median(data$Fare, na.rm = T)
 ```
 
-However we discovered that there are fare's values that are shared among multiple passengers (not only the same fare but also the same ticket numbers) see previous section. It appeared to be price of a group ticket. It creates confused information on the fare. So it may be a good idea to re-engineer it into another more useful attribute like *fare_PP* (Fare per person), see next section \@ref(farepp).
+However we discovered that there are fare's values that are shared among multiple passengers (not only the same fare but also the same ticket numbers) see previous section. It appeared to be the price of a group ticket. It creates confused information on the fare. So it may be a good idea to re-engineer it into another more useful attribute like *fare_PP* (Fare per person), see next section \@ref(farepp).
 
-In summary, we have dealt with the 4 discovered missing values. Different approaches and methods are adopted. some of them are simple value fullfilment like replacement with mean/median/mode values, others has more complicated process involved deeper dill-down analysis or even predictions. Depends the applications, appropriate methods may need multiple trails and exploration. 
+In summary, we have dealt with the 4 discovered missing values. Different approaches and methods are adopted. some of them are simple value fulfillment like replacement with mean/median/mode values, others has more complicated process involved deeper dill-down analysis or even predictions. Depends the applications, appropriate methods may need multiple trails and exploration. 
 
 ## Attribute reengineering 
 
@@ -296,24 +291,23 @@ In the previous chapter when we do data understanding. apart from the missing va
 ### Title from *Name* attribute
 
 Name is initially believed is useless for predict passenger's fate. But we have found in it there are information about titles even may be marriage relations. So our first task in attribute re-engineering is to create a new attribute called *Title*. It is abstracted from *Name*. It is the title of the passenger, which can be extracted from the *Name* attribute using a regular expression.
-```{r}
+```{r table}
 # Abstract Title out
  data$Title <- gsub('(.*, )|(\\..*)', '', data$Name)
- 
  data %>%
    group_by(Title) %>%
    count() %>%
  arrange(desc(n))
 # group those less common title’s into an ‘Other’ category.
- 
 data$Title <- ifelse(data$Title %in% c("Mr", "Miss", "Mrs", "Master"), data$Title, "Other")
 
-table(data$Title, data$Sex)
+L<- table(data$Title, data$Sex)
+knitr::kable(L, digits = 2, booktabs = TRUE, caption = "Title and sex confirmation")
 ```
 Checking the table of *Title* vs *Sex* shows nothing anomalous.
 A stacked bar graph of the newly created attribute suggests it could be quite useful that the difference in survival between 'Master' and 'Mr' will be something that hasn't been captured by the `Sex` attribute.
 
-```{r }
+```{r titlePro, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survivial percentage onver Title"}
 data %>%
   filter(!is.na(Survived)) %>%
 ggplot(aes(x = factor(Title), fill = factor(Survived))) + 
@@ -330,7 +324,7 @@ From our previous analyze, we have found out that the cabin numbers are all star
 
 So, we group all cabin number into groups according to its first letter. Create a new attribute with a name *Deck*. and assign records with no cabin number as *U* (no cabin number) for its *Deck* value. 
 
-```{r}
+```{r deckpro, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survivla vlaue and percentage over newly created Deck attribute"}
 data$Cabin <- as.character(data$Cabin)
 data$Deck <- ifelse((data$Cabin == ""), "U", substr(data$Cabin, 1, 1))
 # plot our newly created attribute relation with Survive
@@ -351,11 +345,12 @@ ggplot(aes(x = factor(Deck), fill = factor(Survived))) +
 
 grid.arrange(p1, p2, ncol = 2)
 ```
+
 ### Extract ticket class from ticket number
 
 We knew that values of *Ticket* appears has two major kinds 'Letters Numbers' or just 'Numbers'. This could be worth extracting. However just two class is too rough. As suggested during understanding data, we can group ticket by its first letter or number. let us create a *Ticket_class* to replace *Ticket*.
 
-```{r}
+```{r ticketclass, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Ticket class"}
 data$Ticket <- as.character(data$Ticket)
 data$Ticket_class <- ifelse((data$Ticket != " "), substr(data$Ticket, 1, 1), "")
 data$Ticket_class <- as.factor(data$Ticket_class)
@@ -366,7 +361,7 @@ p1 <- data %>%
   ggplot(aes(x = Ticket_class, fill = factor(Survived))) +
   geom_bar(width = 0.5) +
   labs(x = "Ticket_class", y = "Total account") + 
-  labs(fill = "Survived")
+  labs(fill = "Survived value over Ticket class")
 
 # plot percentage of survive
 p2 <- data %>%
@@ -376,13 +371,14 @@ ggplot(aes(x = factor(Ticket_class), fill = factor(Survived))) +
   scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
   scale_fill_discrete(name = "Survived") +
   labs(x = "Ticket_class", y = "Percentage") + 
-  ggtitle("Newly created Ticket_class (Proportion Survived)")
+  ggtitle("Survived percentage over Newly created Ticket_class")
 
 grid.arrange(p1, p2, ncol = 2)
 ```
+
 Although the plot appeared has a skewed bi-model shape, its prediction is clearly improved by ticket number.
 
-### Travel in groups (ticket number same, Fare is same, Parch SibSp >0)
+### Travel in groups
 
 We have seen that passenger shared ticket numbers and fare. It is a clear indication of the passenger traveling in groups. Travel in group can be an important factor for survive in disasters. The Titanic movie impressed millions because fo the love story about a couple, they want stay together for live and for death. Generally that si the spirit of grouping - stay together for worse or for better. Apart from two friends travel together, we have also seen the family travel together that is indicated by *SibSp* and *Parch* attributes. 
 
@@ -412,7 +408,7 @@ data$Group_size <- pmax(data$Family_size, data$Friend_size)
 ```
 Now let us see our newly created attribute's prediction power,
 
-```{r message = FALSE, warning = FALSE, echo = FALSE}
+```{r message = FALSE, warning = FALSE, echo = FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Group Size"}
 p1 <- data %>%
   filter(!is.na(Survived)) %>%
 ggplot(aes(x = Group_size, fill = factor(Survived))) + 
@@ -421,7 +417,7 @@ ggplot(aes(x = Group_size, fill = factor(Survived))) +
   scale_x_continuous(breaks = seq(0, 10)) +
   scale_fill_discrete(name = "Survived") + 
   labs(x = "Group Size: max(Family Size, Group Size)", y = "Count") + 
-  ggtitle("Group_size - Engineered Variable (Proportion Survived)")
+  ggtitle("Survived count over groupsize")
 
 # plot percentage of survive
 p2 <- data %>%
@@ -431,23 +427,26 @@ ggplot(aes(x = Group_size, fill = factor(Survived))) +
   scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
   scale_fill_discrete(name = "Survived") +
   labs(x = "Group_size", y = "Percentage") + 
-  ggtitle("Newly created Group_size (Proportion Survived)")
+  ggtitle("Survived percentage over Newly created Group_size")
 
 grid.arrange(p1, p2, ncol = 2)
 ```
 The plot shows that most people traveled alone,  small and large groups have the least chance of survival while Medium-sized group (3 and 4) seemed to have the best chance of living.
 
 ### Age in Groups
+
 We have seen the age has a strong correlation with the survival. However, it is too fine granted, it is better to create a demographical groups called *Age_group*. 
 
-```{r}
+```{r agegroup, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Age Group"}
 Age_labels <- c('0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79')
-data$Age_group <- cut(data$Age_RE2, c(0, 10, 20, 30, 40, 50, 60, 70,80), include.lowest=TRUE, labels= Age_labels)
+
+data$Age_group <- cut(data$Age_RE1, c(0, 10, 20, 30, 40, 50, 60, 70, 90), include.highest=TRUE, labels= Age_labels)
 
 p1 <- data %>%
   filter(!is.na(Survived)) %>%
     ggplot(aes(x = Age_group, y = ..count.., fill = factor(Survived))) +
-  geom_bar() 
+  geom_bar() +
+  ggtitle("Survived value ove newly created Age_group")
 
 # plot percentage of survive
 p2 <- data %>%
@@ -457,7 +456,7 @@ ggplot(aes(x = Age_group, fill = factor(Survived))) +
   scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
   scale_fill_discrete(name = "Survived") +
   labs(x = "Age group", y = "Percentage") + 
-  ggtitle("Newly created Age_group (Proportion Survived)")
+  ggtitle("Survived percentage ove newly created Age_group")
 
 grid.arrange(p1, p2, ncol = 2)
 ```
@@ -482,7 +481,7 @@ data$Fare_pp <- data$Fare/data$Friend_size
 
 let us examine our newly created attribute *Fare_PP*'s prediction power,
 
-```{r }
+```{r fareperperson, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Fare per person"}
 # plot Fare_PP against Survived
 
 p1<- data %>%
@@ -492,7 +491,7 @@ ggplot(aes(x = Fare_pp, fill = factor(Survived))) +
   scale_y_continuous(breaks = seq(0, 500, 50)) + 
   scale_fill_discrete(name = "Survived") + 
   labs(x = "Fare (per person)", y = "Count") + 
-  ggtitle("Fare_pp (Proportion Survived)")
+  ggtitle("Survived value over Fare_pp")
 p1
 # plot percentage of survive
 p2 <- data %>%
@@ -502,10 +501,10 @@ ggplot(aes(x = factor(Fare_pp), fill = factor(Survived))) +
   scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
   scale_fill_discrete(name = "Survived") +
   labs(x = "Fare per person", y = "Percentage") + 
-  ggtitle("Newly created Fare_PP (Proportion Survived)")
+  ggtitle("Survived rate over newly created Fare_PP")
 p2
 ```
-```{r}
+```{r fareperperson2, fig.align = 'center', out.width = "95%", fig.cap = "Survival value over newly created Fare per person by boxplot"}
 # plot in box plot
 data %>%
   filter(!is.na(Survived)) %>%
@@ -522,98 +521,128 @@ The graph confirms the fare_PP associated with the passenger's survival. We can 
 
 In summary, attributes re-engineering, we have created 
 
-## Attributes selection (prediction power coorelation) 
+## Attributes Selection
 
+Attributes selection is a tricky task. Many factors can affect the selection: final model's accuracy, computation cost and algorithm used, etc. Attributes selection generally is an iterative "try and see" process. Fundamentally, you want solve the problem initially you understood from the first step in the data science process "Understand the problem" with reasonable accuracy and moderate cost. with the second step you understood the data in hand, you preprocessed the attributes filled up missing values and re-engineered some existing attributes. For most problem you don't necessarily need whole house of the attributes. Instead, you should select appropriate number of attributes. It is definitely not coorect that the more attributes the better solution. How to decide the number of attributes to use and which attributes to use, the general rules are:
+
+1. Analysis the correlation among the attributes. Order them based the correlation with the dependent attribute. Select appropriate number of the attributes from the highest value towards the lowest value of correlation. 
+
+2. Principal component analysis (PCA)^[PCA is a dimensionality reduction method by projecting each data point onto only the first few principal components to obtain lower-dimensional data while preserving as much of the data's variation as possible.] and possibly factor analysis^[Factor analysis is a statistical method used to describe variability among observed, correlated variables in terms of a potentially lower number of unobserved variables called factors. For example, it is possible that variations in six observed variables mainly reflect the variations in two unobserved (underlying) variables.]
+
+Based on PCA, which is works on numerical variables, there are other methods too:
+
+**MCA**: multiple correspondence analysis: only categorical variables
+**FAMD**: factor analysis of mixed data: numerical and categorical variables
+**CA**: correspondence analysis: only two variables (contingency table)
+**MFA**: multiple factor analysis: when you have variables set by group
+
+In this section we will demonstrate these methods to analysis the prediction power of each arributes.
+
+### Attributes Correlation Analysis
+
+Let us consider the correlation among our re-engineered attributes. 
 
 ```{r}
 glimpse(data)
 ```
-Now we have 23 attributes in total. Among of them, there are attributes initially left for re-engineering and attributes re-engineered in differnt ways. It is now time to tight them up. The attributes should be kept are:
-PassengerID (required by the submission), Survived, Pclass, Name (Title), Sex, Age (Age_group), SibSp and Parch (Group_size), Ticket (Ticket_class), Fare (Fare_pp), Cabin(Deck. HasCabinNum), Embarked.
+Now we have 23 attributes in total. Among of them, there are attributes initially left for re-engineering and attributes re-engineered in different ways. It is now time to tight them up. The attributes should be kept are:
+*PassengerID* (required by the submission), *Survived* (our target attributes), *Pclass*,  *Title*, which is derived from *name* and replaces name, *Sex*, *Age_group*, which is derived from *age* and has a larger granularity than age has, *Group_size* summarized both *SibSp* and *Parch* and accomodated with passenger whoshared a ticket,  *Ticket_class* replaces *Ticket* , *Fare_pp* replaces *Fare* , *Deck* and *HasCabinNum* replace the original *Cabin*,  and finally *Embarked* with misisng value added.
 
-```{r}
+
+```{r echo = FALSE, message=FALSE, warning=FALSE}
 #Attributes_RE <- C(PassengerId, Survived, Pclass, Title, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Deck, HasCabinNum, Embarked)
 library(tidyverse)
 data_full <- data %>%
   select(PassengerId, Survived, Pclass, Title, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Deck, HasCabinNum, Embarked)
+# show structure of the new data_full
 glimpse(data_full)
 ```
+let us briefly assess the correlation among our newly re-engineered attributes.  A quick correlation plot of the numeric attributes to get an idea of how they might relate to one another. You can see that we have dropped the two `chr` attributes: *Title* and *Deck*. we could include them if we convert the character value in to numbers. For example, title could be converted into 1-6 numbers as 1 represents `Mr`, 2 represents `Mrs` and so on. 
 
-  
-Explore relations for survival
-Below I create a quick correlation plot of the numeric attributes to get an idea of how they might relate to one another. 
-
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Correlation among numerical attributes"}
 library(caret) # tuning & cross-validation
 library(gridExtra) # visualizations
 library(tictoc) # timing models
 
-data$Survived <- as.numeric(data$Survived)
-data$Pclass <- as.numeric(data$Pclass)
-data %>%
-  select(Survived, Age, Fare, Pclass, SibSp, Parch) %>%
+data_full$Survived <- as.numeric(data_full$Survived)
+data_full$Pclass <- as.numeric(data_full$Pclass)
+data_full$Sex <- as.numeric(data_full$Sex)
+data_full$Age_group <- as.numeric(data_full$Age_group)
+data_full$Ticket_class <- as.numeric(data_full$Ticket_class)
+data_full$HasCabinNum <- as.numeric(data_full$HasCabinNum)
+data_full$Embarked <- as.numeric(data_full$Embarked)
+data_full %>%
+  select(Survived, Pclass, Sex, Age_group, Group_size, Ticket_class, Fare_pp, HasCabinNum, Embarked) %>%
   cor(use="pairwise.complete.obs") %>%
   corrplot::corrplot.mixed(upper = "circle", tl.col = "black")
 ```
+The plot shows not only the correlation between other attributes with the concequence attribute *Survived* but also the correction among predictors. In terms of correlation with *Survived*, *Sex* has the largest value but in negative `-0.54`, the next is *Pclass* with -0.34, and then *HasCabinNum* with -0.32, etc. The largest correlation value is between *Pclass* and *Farepp* with -0.77, the second largest value is 0.71 between *Pcalss* and *HasCabinNum*. They effectively shows one thing that the social class as we suspected in the beginning. The richer people paid more money on ticket and has a better cabin. this also told us if we want reduce the attributes number in a model we can choose one among these three. Correlation analysis is very useful it can have us to reduce the number of attributes and has less information loss. 
 
 
-## Assemble final datasets for modelling
-need model, train and test.
- the goal is to get data ready for analysis
- 
- what analysis?  
- 
- prediction
- 
- 
- 
-1 dealt with error missing value
-2. make attribute suiatble for modeling
-3. features reenginering
+### PCA Analysis
 
-name: extract title from name, 
+PCA and Factor analysis are most commonly used methods in dimension reduction. In general data science project, it is easy the given dataset can have tens or hundreds of features (attributes). For example in text analysis, if we count words appearance in a document we could easily have hundreds even thousands of dimensions, if we want reduce the dimension into a manageable numbers  particularly for visualization, human are not good with anything over three dimensions. PCA uses eigenvalues and eigenvectors^[In linear algebra, an eigenvector or characteristic vector of a linear transformation is a nonzero vector that changes by a scalar factor when that linear transformation is applied to it.] to reserve the original data information and variation as much as possible. Therefore PCA is simple to calculate the given data's eigenvectors. 
 
-Create family size and category for family size
-https://www.kaggle.com/helgejo/an-interactive-data-science-tutorial
+PCA normally has the following steps:
 
-Extract ticket class from ticket number¶
+1. Calculate the Covariance Matrix^[covariance matrix is a square matrix giving the covariance between each pair of elements of a given random vector.] of the given dataset.
+2. Calculate the Eigenvalues and Eigenvectors of the resulting Covariance Matrix.
+3. The resulting Eigenvector that correspond to the largest Eigenvalue can then be used to reconstruct a large fraction of the variance of the original dataset.
 
+In R, we have a function called `prcomp()`. It takes numerical values. So for demonstration we only use the same 9 attributes we have used in our correlation analysis. let us take the first 
 
-
-The purposes of data preprocess is to make data suitable for analyzing. 
-
-I this particular project, the purpose is to predict passengers survival. whatever a prediction model we may come up with, it should reflect the relations between other data attributes with the special one, which is "survived". So the data preprocess, whatever actions we are take, should focused on the attributes that has relations with the survive, or our preprocess should help to enhance the attribute's prediction power. An example is, "PassengerId", it has no relation with the survive, apart from to identify a passenger, its prediction power is 0. so there should be any efforts on this attributes apart from make sure its unique. 
-
-Therefor it make sense to explore all attributes with surviels.
-
-
-
-1. Survived
-The first attribute reported if a traveler lived or died. A comparison revealed that more than 61% of the passengers had died.
-
-code
-
+```{r}
+# data_full %>%
+#   select(Survived, Pclass, Sex, Age_group, Group_size, Ticket_class, Fare_pp, HasCabinNum, Embarked) %>%
+# data_full[1:891, ]
+summary(data_full[1:891,c(2:3,5:9,11,12)])
+data.pca <- prcomp(data_full[1:891,c(2:3,5:9,11,12)], center = TRUE,scale. = TRUE)
+summary(data.pca)
 ```
-table(as.factor(train$Survived))
-prop.table(table(as.factor(train$Survived)))
+We have obtained 9 principal components, which named as PC1-9. Each of these explains a percentage of the total variation in the dataset. That is to say: PC1 explains 32% of the total variance, which means that nearly one-thirds of the information in the dataset (9 variables) can be encapsulated by just that one Principal Component. PC2 explains 17% of the variance. So, by knowing the position of a sample in relation to just PC1 and PC2, you can get a very accurate view on where it stands in relation to other samples, as just PC1 and PC2 can explain 49% almost half of the variance.
 
+Let's call str() to have a look at the PCA object.
+
+```{r}
+str(data.pca)
 ```
+I won't describe the results in detail, but the PCA object contains the following information:
 
+- The center point (`$center`), scaling (`$scale`), standard deviation(`sdev`) of each principal component
+- The relationship (correlation or anticorrelation, etc) between the initial variables and the principal components (`$rotation`)
+- The values of each sample in terms of the principal components (`$x`)
 
- 完成数据的基本探索后，在建立模型之前，我们还需要对数据进行清洗，并且对数据集中缺失的数据进行补全。
+Let us plot PCA, we need to use **biplot**, which includes both the position of each sample in terms of PC1 and PC2 and also will show how the initial variables map onto this. We need ggbiplot package, which offers a user-friendly and pretty function to plot biplots. A biplot is a type of plot that will allow you to visualize how the samples relate to one another in our PCA (which samples are similar and which are different) and will simultaneously reveal how each variable contributes to each principal component.
+```{r PCA, echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "The 1st and the 2nd PCs ploted with ggplot_pca"}
+#install.packages("devtools")
+# install.packages("remotes")
+# remotes::install_github("vqv/ggbiplot")
+# 
+# library(devtools)
+# install_github("vqv/ggbiplot")
+# 
+# library(ggbiplot)
+library(AMR)
+# AMR::ggplot_pca(data.pca)
+ggplot_pca(data.pca)
+# biplot(data.pca)
+```
+The axes are seen as arrows originating from the center point. Here, you see that the variables *Fare_pp*, *Age_group* and *Survived* contribute to PC1, with higher values in those variables moving the records to the right on this plot. This lets you see how the data points relate to the axes. 
 
-首先了解数据的缺失情况：
+WE also have other principal components available, each of which map differently to the original variables. We can also plot these other components, for example PC3 and PC4,
+```{r PCA2, echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "The 3rd and the 4th PC ploted with ggplot_pca"}
+ggplot_pca(data.pca, ellipse=TRUE, choices=c(3,4))
+```
+This Plot shows that original attributes *Ticket_class* and *Group_size* contribute to PC3 in a negative way, with lower values in those variables moving the records to the left on this plot.
 
-To begin this step, we first import our data. Next we use the info() and sample() function, to get a quick and dirty overview of attribute datatypes (i.e. qualitative vs quantitative). Click here for the Source Data Dictionary.
+The relationship between original attributes with the newly created Principle Components indicates the relationship between original attributes and correlation among them. 
 
-The Survived attribute is our outcome or dependent attribute. It is a binary nominal datatype of 1 for survived and 0 for did not survive. All other attributes are potential predictor or independent attributes. It's important to note, more predictor attributes do not make a better model, but the right attributes.
-The PassengerID and Ticket attributes are assumed to be random unique identifiers, that have no impact on the outcome attribute. Thus, they will be excluded from analysis.
-The Pclass attribute is an ordinal datatype for the ticket class, a proxy for socio-economic status (SES), representing 1 = upper class, 2 = middle class, and 3 = lower class.
-The Name attribute is a nominal datatype. It could be used in feature engineering to derive the gender from title, family size from surname, and SES from titles like doctor or master. Since these attributes already exist, we'll make use of it to see if title, like master, makes a difference.
-The Sex and Embarked attributes are a nominal datatype. They will be converted to dummy attributes for mathematical calculations.
-The Age and Fare attribute are continuous quantitative datatypes.
-The SibSp represents number of related siblings/spouse aboard and Parch represents number of related parents/children aboard. Both are discrete quantitative datatypes. This can be used for feature engineering to create a family size and is alone attribute.
+## summary
 
 ## Exercises 5 {-}
 1. Discuss the advantage and disadvantage of fill *Age* missing value with a sample that has the same `mean` and `std`. 
-2. When we make up missing values of *Embarked* attribute we want compare the price of the ticket the passenger paid with other tickets' price to allocate the possible embarked port. It all works well, however one of the factor we did not consider is the variation of the price on *Pclass*. We have knowledge that the higher class the more expensive the price will be. Can you analysis the price per ticket with the *Pclass* to see if it can produce a conflict results against allocation of the embarked por by price comparison.   
+2. When we make up missing values of *Embarked* attribute we want compare the price of the ticket the passenger paid with other tickets' price to allocate the possible embarked port. It all works well, however one of the factor we did not consider is the variation of the price on *Pclass*. We have knowledge that the higher class the more expensive the price will be. Can you analysis the price per ticket with the *Pclass* to see if it can produce a conflict results against allocation of the embarked por by price comparison.  
+3. Explore principal component analysis (PCA) and Factor analysis to see if attributes re-engineer can use them to refine our attibutes for Titanic problem. 
+
+
+

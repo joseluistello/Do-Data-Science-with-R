@@ -1,22 +1,16 @@
----
-title: "Plotting"
-output:
-  pdf_document:
-    fig_caption: yes
----
-
-
 # Understand Data
 
 
-```{r fig.align = 'center', out.width = "80%", echo=FALSE, fig.cap ="" }
+```{r material, fig.align = 'center', out.width = "80%", echo=FALSE, fig.cap =""}
 
 knitr::include_graphics(here::here("images", "buildingmaterial.png"))
 
 ```
-
-Understand your building raw materials can help you choose correct tools and make the most use of them to construct your ideal buildings. 
-
+```
+     Understand your building raw materials can help you choose correct tools 
+     
+     and make the most use of them to construct your ideal buildings. 
+```
 **Understand data** is the foundation for solving analytical problems. The two major purposes of understand data are: 
 
 1. Access data quantity 
@@ -25,7 +19,7 @@ Understand your building raw materials can help you choose correct tools and mak
 
 In practice the two initial data assessments can be done together or separately. The purpose of them is to setup objective for **data preprocess** to accomplish. The methods used to understand data can be both Descriptive analysis and Exploratory analysis.
 
-## Load data 
+## Load Data 
 
 Here are my initial plan for understand Titanic data:
 

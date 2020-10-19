@@ -1,23 +1,28 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 
 # Data Analysis
 
-```{r out.width = "80%", fig.align ="center", echo =FALSE}
+```{r prediction， out.width = "80%", fig.align ="center", echo =FALSE}
 knitr::include_graphics(here::here("images", "Prediction.png"))
 
 ```
 
 
-“This will be the year of AI!” ...
+        “This will be the year of AI!” ...
 
-“Mobil device will dominate the world.” ...
+        “Mobil device will dominate the world.” ...
 
-"Pay by face will be a reality in 20XX" ...
+        “Pay by face will be a reality in 20XX” ...
 
-All of these are based the data collected. 
+    All of these are based the data collected. 
 
-How many tiems you heard about this? It basically tells us that data tells us what is going to happening.
+    How many times you heard about this? It basically tells us that data tells us what is going to happening.
 
-The core of Data Sciecne is analyzing data and interpreting what data tells us.
+    The core of Data Science is analyzing data and interpreting what data tells us.
 
 ## Predictive Data Analysis
 
@@ -375,16 +380,18 @@ Similar with the decision tree model, random forest also has many implementation
 
 ### Titanic prediciton with a Random Forest
 
-Let’s now look at how we can implement the random forest algorithm for our Titanic prediction. R provides `'randomForest'` package. You can check the details of the package, but it does not like attributes that has `NAs` values. So we have to dealt with `NA` values. We will try the original `train` dataset first and finally using our preprocessed data sets.
+Let’s now look at how we can implement the random forest algorithm for our Titanic prediction. R provides `'randomForest'` package. You can check the details of the package. We will try the original `train` dataset first and finally using our preprocessed data sets.
 
 ```{r echo = FALSE, warning=FALSE, message=FALSE}
-#install.packages('randomForest')
 # Install the random forest library
+install.packages('randomForest')
+#load library
 library(randomForest) 
 # load raw data if you have not
 train <- read.csv("train.csv", header = TRUE)
 test <- read.csv("test.csv", header = TRUE)
 test <- data.frame(test[1], Survived = rep("NA", nrow(test)), test[ ,2:ncol(test)])
+
 
 # Deal with missing values NA. we have checked missing value 
 # in Chap 4 with individual attributes and dealt with in Chap 5.
@@ -412,7 +419,7 @@ knitr::kable(k1, digits = 2, caption = "Training Data: NA's")
 We can observe from the above summary results (before and after imputation) that changes have worked. We now can use randomForest package to build RF model on train1 data:
 
 ```{r}
-# Check attributes tyeps 
+# Check attributes types 
 sapply(train, class)
 sapply(test, class)
 
@@ -447,7 +454,7 @@ Let us check our random forest model's performance by compare our predicted valu
 ```{r}
 options('digits'= 3)
 conf_matrix <- RF_prediction$confusion
-knitr::kable(conf_matrix, digits = 2, caption = "My first RF model's prediciton Errors: ")
+#knitr::kable(conf_matrix, digits = 2, caption = "My first RF model's prediciton Errors: ")
 ```
 
 let us check our model,
@@ -461,7 +468,7 @@ let try again, this teim we use all the possible attributes as we did with decis
 
 We need to change attribute types which is a factor and has over 53 levels. They are *Names*, *Ticket* and *Cabin*.
 ```{r}
-modelFull <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch +  Embarked, data = trainData, importance=TRUE, ntree = 2000)
+#modelFull <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch +  Embarked, data = trainData, importance=TRUE, ntree = 2000)
 ```
 Let us make a prediction, 
 ```{r}
@@ -476,13 +483,6 @@ conf_matrix <- modelFull$confusion
 knitr::kable(conf_matrix, digits = 2, caption = "My first RF model's prediciton Errors: ")
 ```
 
-
-
-model <- randomforest(taste ~ . - quality, data = train, ntree = 1000, mtry = 5)
-
-model
-
-model$confusion
 
 
 
