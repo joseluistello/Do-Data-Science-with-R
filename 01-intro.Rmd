@@ -136,6 +136,7 @@ knitr::include_graphics("img/process.png")
 
 
 ### Step 1: Understand the Problem - Define Objectives {#step1 -}
+
 Any data analysis must begin with business issues. With business issues a number of questions should be asked. These questions have to be the right questions and measurable, clear and concise. Define analysis question is regarded as define a Data Requirements engineering and to get a a data project specification. It starts from a business issue and asking relevant questions, only after you fully understand the problem and the issues you may be able to turn practical problem into analytical questions. 
 
 For example, start with a business issue: A contractor is experiencing rising costs and is no longer able to submit competitive contract proposals. One of many questions to solve this business problem might include: Can the company reduce its staff without compromising quality? Or, can company find alternative suppler on the production chain?
@@ -158,7 +159,8 @@ Thinking about how you measure the success fo your data science project, the dee
 + What is your unit of measure? (e.g., USD versus Euro)
 + What factors should be included? (e.g., just annual salary versus annual salary plus cost of staff benefits)
 
-### Step 2: Undertand Data {#step2 -}
+### Step 2: Undertand Data - knowing your raw materials {#step2 -}
+
 The second step is understand data. It includes **Data collection** and **Data Validation**. With problem understood and analytical questions defined and your validation criteria and measurements set, It is time to collect data. 
 
 
@@ -178,7 +180,7 @@ Data validation id the process to Assess data quality. It is to ensure the colle
 + Relevancy validation 
 
 
-### Step 3: Data Preprocess {#preprocess -}
+### Step 3: Data Preprocess - Get your data ready {#preprocess -}
 
 Data preprocess is step that takes data processing method and technique to transforms raw data into a formatted and understandable form and ready for analyzing. Real world data is often incomplete, inconsistent, and is likely to contain many errors. Data preprocess is a proven method of resolving such issues. Tasks of data preprocess may include:
 
@@ -195,7 +197,7 @@ Re-engineering data is necessary when raw data come from many different data sou
 
 
 
-### Step 4: Analyze Data{#analyse -}
+### Step 4: Data Analyese - do your job {#analyse -}
 
 After your collected data being preprocessed and suitable for analysis. Now you can drill down and attempt to answer your question from [Step 1](#step1) with the actions called Data Analyzing. It is the core activity in data science project process by writing, executing, and refining computer programs that utilize some analytical methods and algorithms to obtain insights from data sets. The methods in data analysis can be categorized into three major groups: **Descriptive data analysis (DDA)**, **Exploratory data analysis (EDA)** and **Predictive data analysis (PDA)**. DDA and EDA uses quantitative and statistical methods on data sets and data attributes measurements and their value distributions while DDA focus on numeric summary but EDA emphasis on graphical (plot) means. PDA on other hand may involve modeling and machine learning. Data analyzing is generally starting from Descriptive analysis, and goes further with Exploratory analysis. The most advanced methods are predictive analysis and machine learning. The later is built based on the results form the former methods. Some times mixed methods work better. 
 
@@ -226,7 +228,7 @@ After analyzing your data and get some answers about your original questions, it
 
 If your interpretation of the data holds up under all of these questions and considerations, then you likely have come to a productive conclusion. However, there could be a chance that you may find you might need to revise your original question or collect more data and you may need to roll the ball from the starting line. Again. Either way, this initial analysis of trends, correlations, variations and outliers are not completely wasted. They help you focus your data analysis on better answering your question and any objections others might have. That is the next step report and communication. 
 
-### Step 6: Data Report and Communication) {-}
+### Step 6: Data Report and Communication {-}
 
 Whereas the analysis phase involves programming and run programs on different computer platforms, the reporting involves narrative the results of analysis, thinking how close the results address the original problems and communicating about the outputs of analyses with interesting parties in many cases in visual formats.
 During this step, data analysis tools and software are helpful but visual tools are intuitive and worth a lot of words. Visio, tableau (https://www.tableau.com/), Minitab (https://www.minitab.com/) and Stata are all good software packages for advanced statistical data analysis. There are also plenty of open source data visualization tools available.

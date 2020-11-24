@@ -1,3 +1,6 @@
-`r if (knitr:::is_html_output()) '
-# Data Report
-'`
+# data Report
+
+>You are entitled to your own opinion, but you are not entitled to your own facts.
+>
+>
+>                                           --   Daniel Patrick Moynihan

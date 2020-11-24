@@ -1,5 +1,9 @@
-`r if (knitr:::is_html_output()) '
-# Result Interpretation
+# Data Interpretation and Evaluation
+
+
+
+
+Data report is also called analytical results Interpretation and communication 
 
 each model will have its own evaluation methods.
 

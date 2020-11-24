@@ -30,7 +30,7 @@ Previous chapter we have done **Data understanding** by examining the given data
 
 ## General data prepartion tasks
 
-Section \@ref(preprocess) has listed a number of tasks that needs to be performed to make data suitable for analyzing. Depends on the understanding of the problem, the tasks can be different. In our previous analyses at both records and attributes levels. WE have found some problems and they need to be solved in the data preprocess.
+[Section 1.3](process.html) has listed a number of tasks that needs to be performed to make data suitable for analyzing. Depends on the understanding of the problem, the tasks can be different. In our previous analyses at both records and attributes levels. WE have found some problems and they need to be solved in the data preprocess.
 
 1. There are inappropriate data types which needs conversion. For example, a lot of features need to be converted into numeric ones so that the machine learning algorithms can process them. 
 2. There are errors or missing values.
