@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 getting the probabilities of our predictions | report</title>
+  <meta name="description" content="Chapter 1 getting the probabilities of our predictions | report" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 getting the probabilities of our predictions | report" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 getting the probabilities of our predictions | report" />
+  
+  
+  
+
+<meta name="author" content="Gangmin Li" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="UnderstandDatacode.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Authoring Books with R Markdown</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="apendix.html"><a href="apendix.html"><i class="fa fa-check"></i>Apendix</a><ul>
+<li class="chapter" data-level="0.1" data-path="UnderstandDatacode.html"><a href="UnderstandDatacode.html"><i class="fa fa-check"></i><b>0.1</b> TitanicDataAnalysis_UnderstandData.R</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-the-probabilities-of-our-predictions.html"><a href="getting-the-probabilities-of-our-predictions.html"><i class="fa fa-check"></i><b>1</b> getting the probabilities of our predictions</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">report</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="getting-the-probabilities-of-our-predictions" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> getting the probabilities of our predictions</h1>
+<p>y_scores = random_forest.predict_proba(X_train)
+y_scores = y_scores[:,1]</p>
+<p>precision, recall, threshold = precision_recall_curve(Y_train, y_scores)
+def plot_precision_and_recall(precision, recall, threshold):
+plt.plot(threshold, precision[:-1], “r-”, label=“precision”, linewidth=5)
+plt.plot(threshold, recall[:-1], “b”, label=“recall”, linewidth=5)
+plt.xlabel(“threshold”, fontsize=19)
+plt.legend(loc=“upper right”, fontsize=19)
+plt.ylim([0, 1])</p>
+<p>plt.figure(figsize=(14, 7))
+plot_precision_and_recall(precision, recall, threshold)
+plt.show()
+Image for post
+Above you can clearly see that the recall is falling of rapidly at a precision of around 85%. Because of that you may want to select the precision/recall tradeoff before that — maybe at around 75 %.
+You are now able to choose a threshold, that gives you the best precision/recall tradeoff for your current machine learning problem. If you want for example a precision of 80%, you can easily look at the plots and see that you would need a threshold of around 0.4. Then you could train a model with exactly that threshold and would get the desired accuracy.
+Another way is to plot the precision and recall against each other:
+def plot_precision_vs_recall(precision, recall):
+plt.plot(recall, precision, “g–”, linewidth=2.5)
+plt.ylabel(“recall”, fontsize=19)
+plt.xlabel(“precision”, fontsize=19)
+plt.axis([0, 1.5, 0, 1.5])</p>
+<p>plt.figure(figsize=(14, 7))
+plot_precision_vs_recall(precision, recall)
+plt.show()
+Image for post
+ROC AUC Curve
+Another way to evaluate and compare your binary classifier is provided by the ROC AUC Curve. This curve plots the true positive rate (also called recall) against the false positive rate (ratio of incorrectly classified negative instances), instead of plotting the precision versus the recall.
+from sklearn.metrics import roc_curve
+# compute true positive rate and false positive rate
+false_positive_rate, true_positive_rate, thresholds = roc_curve(Y_train, y_scores)
+# plotting them against each other
+def plot_roc_curve(false_positive_rate, true_positive_rate, label=None):
+plt.plot(false_positive_rate, true_positive_rate, linewidth=2, label=label)
+plt.plot([0, 1], [0, 1], ‘r’, linewidth=4)
+plt.axis([0, 1, 0, 1])
+plt.xlabel(‘False Positive Rate (FPR)’, fontsize=16)
+plt.ylabel(‘True Positive Rate (TPR)’, fontsize=16)</p>
+<p>plt.figure(figsize=(14, 7))
+plot_roc_curve(false_positive_rate, true_positive_rate)
+plt.show()
+Image for post
+The red line in the middel represents a purely random classifier (e.g a coin flip) and therefore your classifier should be as far away from it as possible. Our Random Forest model seems to do a good job.
+Of course we also have a tradeoff here, because the classifier produces more false positives, the higher the true positive rate is.
+ROC AUC Score
+The ROC AUC Score is the corresponding score to the ROC AUC Curve. It is simply computed by measuring the area under the curve, which is called AUC.
+A classifiers that is 100% correct, would have a ROC AUC Score of 1 and a completely random classiffier would have a score of 0.5.
+from sklearn.metrics import roc_auc_score
+r_a_score = roc_auc_score(Y_train, y_scores)
+print(“ROC-AUC-Score:”, r_a_score)
+ROC_AUC_SCORE: 0.945067587
+Nice ! I think that score is good enough to submit the predictions for the test-set to the Kaggle leaderboard.
+Summary
+We started with the data exploration where we got a feeling for the dataset, checked about missing data and learned which features are important. During this process we used seaborn and matplotlib to do the visualizations. During the data preprocessing part, we computed missing values, converted features into numeric ones, grouped values into categories and created a few new features. Afterwards we started training 8 different machine learning models, picked one of them (random forest) and applied cross validation on it. Then we discussed how random forest works, took a look at the importance it assigns to the different features and tuned it’s performace through optimizing it’s hyperparameter values. Lastly, we looked at it’s confusion matrix and computed the models precision, recall and f-score.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="UnderstandDatacode.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown/edit/master/inst/examples/%s",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "none"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>

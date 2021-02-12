@@ -17,7 +17,7 @@ knitr::include_graphics(here::here("images", "buildingmaterial.png"))
 2. Access data quality 
 3. Set up objects for **data preprocess**
 
-In practice the two initial data assessments can be done together or separately. The purpose of them is to setup objective for **data preprocess** to accomplish. The methods used to understand data can be both Descriptive analysis and Exploratory analysis.
+In practice the two initial data assessments can be done together or separately. The purpose of them is to setup objective for **data preprocess** to accomplish. The methods used to understand data can be both **Descriptive analysis** and **Exploratory analysis**.
 
 ## Load Data 
 
@@ -320,32 +320,32 @@ So we do,
 
 length(data$PassengerId)
 length(unique(data$PassengerId))
-
 ```
 The results shows the both number 1309, which is equal to the total number of records in the dataset. It proves the *PassengerID* has no missing value and duplication. 
 
-### Survived
+### Survived {#survive}
 
-*Survived* is the attribute that its value will be produced by a model for the dataset `test`. It is called **Consequencer** in modeling contrast with other attributes. which are used to produce a prediction, are called **Predictor**.  So, our exam will be conducted only on dataset `train`. Again we can check the numbers whether they can add up or not. As we already mentioned that it makes sense to change the *Servived* from type `chr` into `Factor`. We do,
+*Survived* is the attribute that its value will be produced by a model for the dataset `test`. It is called **Consequencer** or **dependent variable** or **response variable** in modeling contrast with other attributes, which are used to produce a prediction, are called **Predictor**, **independent variable**.  So, our exam will be conducted only on dataset `train`. Again we can check the numbers whether they can add up or not. As we already mentioned that it makes sense to change the *Servived* from type `chr` into `Factor`. We do,
 
 ```{r} 
 # Exam Survived
 data$Survived <- as.factor(data$Survived)
-table(data$Survived)
+table(data$Survived, dnn = "Number of Survived in the Data")
 ```
 The results proved that the *Survived* value has the correct numbers: 
 
-- 418 'NA' values are the *Survived*'s value in the  dataset `test`, and
-- the 549 death and 342 survived, together maded up the total number of dataset `train `, which is 891. 
+- 418 'NA' values are the *Survived*'s value in the test dataset, and
+- the 549 death and 342 survived, together made up the total number of train dataset, which is 891. 
 
-So we know the value of *Survived* in the dataset `train` are correct and has no missing values. It is interesting here to think about the survive rate. How to calculate? 
+So we know the value of *Survived* in the train dataset are correct and has no missing values. It is interesting here to think about the survive rate. 
 
-I will do this,
+How to calculate? 
+
 ```{r}
-# Calculate the survive rate in train data is 38% and the death rate is 61.61%
-prop.table(table(as.factor(train$Survived)))
+# Calculate the survive rate in train data is 38% and the death rate is 62%
+prop.table(table(as.factor(train$Survived), dnn = "Survive and death ratio in the Train"))
 ```
-So we know the survive rate in the dataset `train` is about 61%. This is interesting because it reflects the overall survival rate.
+So we know the survive rate in the train dataset is about 61%. This is interesting because it reflects the overall survival rate.
 
 ### Pclass
 
@@ -357,14 +357,11 @@ Copy the following code into your script.
 # Look into Kaggle's explanation about Pclass: it is a proxy for social class i.e. rich or poor
 # It should be factor and it does not make sense to stay in int.
 data$Pclass <- as.factor(data$Pclass)
-test$Pclass <- as.factor(test$Pclass)
-train$Pclass <- as.factor(train$Pclass)
 
 # Distribution across classes
-table(data$Pclass)
-
+table(data$Pclass, dnn = "Pclass values in the Data")
 ```
-If you want, you can check the total of the three classes which is 1309. It equals to the total number of records in the `data` (total number fo passenger). And there is no other numbers than 1,2 and 3. So we can conclude that there is no missing value and no errors in *Pcalss*.
+If you want, you can check the total of the three classes which is 1309. It equals to the total number of records in the `Data` (total number fo passenger). And there is no other numbers than 1,2 and 3. So we can conclude that there is no missing value and no errors in *Pcalss*.
 
 It will be interesting to see the survival rate for each class,
 ```{r}
@@ -379,7 +376,7 @@ These numbers tell us many things:
 
 3. **The passengers distribution**. Among the three classes, class-3 has the largest passenger numbers (372+119+218) in total, and overtaking other two classes together for both datasets `train` and `test` (372+119) > ((80+97) + (136+87)). 
 
-4. The last column is the pasenger distribution among the three glasses for dataset `test`. This is because its *Survived* value is "NA" (not defined).
+4. The last column is the passenger distribution among the three glasses for the test dataset. This is because its *Survived* value is "NA" (not defined).
 
 We can calculate distributions among the three classes in terms of percentage. 
 
@@ -387,24 +384,24 @@ We can calculate distributions among the three classes in terms of percentage.
 ```{r}
 # Calculate the distribution on Pclass
 # Overall passenger distribution on classes.
-prop.table(table(as.factor(data$Pclass)))
+prop.table(table(as.factor(data$Pclass), dnn = "Pclass percentage in the Data"))
 ```
 That is 24.67% passenger in Class-1, 21.16% passenger is class-2 and 54.16% of passenger in class-3.
 
 2. The passenger's distribution among the three classes given by dataset `train`:
 ```{r}
 # Train data passenger distribution on classes.
-prop.table(table(as.factor(train$Pclass)))
+prop.table(table(as.factor(train$Pclass),dnn = "Pclass percentage in the Train"))
 ```
 The number tells us the distribution of passengers from  dataset `train` is: class-1, 24.24%; class-2, 20.65% and class-3 has 55.1%.
 
-3. The passenger's distribution among the three classes given by dataset `test`:
+3. The passenger's distribution among the three classes in the test dataset:
 
 ```{r}
 # Test data passenger distribution on classes.
-prop.table(table(as.factor(test$Pclass)))
+prop.table(table(as.factor(test$Pclass), dnn = "Pclass percentage in the Test"))
 ```
-Lastly, the passenger distribution from dataset `test` are: 25.6% in class-1, 22.24% in class-2 and 52.15% percent in class-3.
+Lastly, the passenger distribution from test dataset are: 25.6% in class-1, 22.24% in class-2 and 52.15% percent in class-3.
 
 We can see that the distribution of passengers, in terms of percentage, among the three classes are almost identical both in order and in proportion. That is the most passenger are in class-3, then class-1 and finally class-2.
 
@@ -814,7 +811,7 @@ Deathandsurvivepercentage <- prop.table(SurviveOverEmbarkedTable, 2)
 # Plot
 M <- c("c-Cherbourg", "Q-Queenstown", "S-Southampton")
 barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death distribution in percentage %",  names.arg = M, col="steelblue", main="Death distribution", border="black", beside=TRUE)
-barplot(Deathandsurvivepercentage[2:4,2]*100, xlab =(""), ylim=c(0,100), ylab="Death distribution in percentage %",  names.arg = M, col="blue", main="Death distribution", border="black", beside=TRUE)
+barplot(Deathandsurvivepercentage[2:4,2]*100, xlab =(""), ylim=c(0,100), ylab="Servive distribution in percentage %",  names.arg = M, col="blue", main="Servive distribution", border="black", beside=TRUE)
 
 ## Calculate survived RATE distribution based on embarked ports
 # Death-0/survived-1 value distribution (percentage) based on embarked ports
@@ -835,13 +832,13 @@ The findings of each attributes provide tasks and goals for data preprocess step
 
 ## Data Recods Level Assessment
 
-Although we have examined the raw datasets records' numbers in attributes level. We have a good knowledge about the record numbers in each given dataset. It is still necessary to check at the record level. It means if there some records have too many missing attributes' value, for example, although some records have ids and may be names but most of the useful attributes' value are missing.  These records are bed or invalid records, should be removed or solve the missing values. 
+Although we have examined the records' numbers in attributes level. We have a good knowledge about the record numbers in the given datasets. It is still necessary to check at the record level. On one hand, if there are some records that have too many missing value for some attributes, for example, despite the records have ids and names, the useful attributes' value are missing.  These records are bed, not useful or invalid records. They should be removed or the missing values should be filled in order a valid analyse can be conducted. 
 
-On other hand some records have most attributes values are identical. These could be considered as duplicates. depends on the problem to be solved, they could be problematic and need to be dealt with. 
+On other hand, some records have identical values for th emost attributes. These could be considered as duplicates. Depends on the problem to be solved, they could be problematic and need also to be dealt with. 
 
-In our Titanic problem, record level assessment is not an issue. Since we have almost all the records are different. This does not mean we should completely ignore this step and doing the checking.   
+In our Titanic problem, record level assessment is not an issue since almost of the records are different. This does not mean we should completely ignore this step and not doing any record level checking.   
 
-## Summary 4 {-}
+## Summary
 
 All the analyses actions provide demonstrations how to  access the raw data and understand their quantity and data quality. Notice that the understanding data is never a single one-off action. You never fully understood the given data. once the analytical process moving on, you may need to come back to apply some new decomposition on some attributes to explore more. 
 

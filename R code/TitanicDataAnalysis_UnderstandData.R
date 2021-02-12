@@ -154,7 +154,7 @@ ggplot(train, aes(x = Pclass, fill = factor(Survived))) +
   labs(fill = "Survived")
 
 # It sort of proved the survive rate with social class
-# more people perished in the third class
+# more people perished in the third class。 Pclassimportant.
 
 ### Exam Name attribute
 # the original name typed as factor, which we really don't want (shows the uniqueness)
@@ -402,4 +402,9 @@ DeathandsurviveRateforeachport <- prop.table(SurviveOverEmbarkedTable, 1)
 barplot(Deathandsurvivepercentage[2:4,1]*100, xlab =(""), ylim=c(0,100), ylab="Death rate in percentage %",  names.arg = M,  col="red", main="Death rate comparison among mebarked ports", border="black", beside=TRUE)
 
 #End ###########################################################
+
+
+###################################
+## prediction
+##################################
 

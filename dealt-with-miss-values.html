@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.2 Dealt with Miss Values | 05-data-preprocess.utf8</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.2 Dealt with Miss Values | 05-data-preprocess.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.2 Dealt with Miss Values | 05-data-preprocess.utf8" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="general-data-prepartion-tasks.html"/>
+<link rel="next" href="attribute-re-engineering.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Authoring Books with R Markdown</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="data-preparasion.html"><a href="data-preparasion.html"><i class="fa fa-check"></i><b>1</b> Data Preparasion</a><ul>
+<li class="chapter" data-level="1.1" data-path="general-data-prepartion-tasks.html"><a href="general-data-prepartion-tasks.html"><i class="fa fa-check"></i><b>1.1</b> General Data Prepartion Tasks</a></li>
+<li class="chapter" data-level="1.2" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html"><i class="fa fa-check"></i><b>1.2</b> Dealt with Miss Values</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#cabin-attribute"><i class="fa fa-check"></i><b>1.2.1</b> Cabin Attribute</a></li>
+<li class="chapter" data-level="1.2.2" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#age-attribute"><i class="fa fa-check"></i><b>1.2.2</b> Age Attribute</a></li>
+<li class="chapter" data-level="1.2.3" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#fare-attribute"><i class="fa fa-check"></i><b>1.2.3</b> Fare Attribute</a></li>
+<li class="chapter" data-level="1.2.4" data-path="dealt-with-miss-values.html"><a href="dealt-with-miss-values.html#Embarked"><i class="fa fa-check"></i><b>1.2.4</b> Embarked Attribute</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html"><i class="fa fa-check"></i><b>1.3</b> Attribute Re-engineering</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#title-from-name-attribute"><i class="fa fa-check"></i><b>1.3.1</b> Title from Name attribute</a></li>
+<li class="chapter" data-level="1.3.2" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#deck-from-cabin-attribute"><i class="fa fa-check"></i><b>1.3.2</b> Deck from Cabin attribute</a></li>
+<li class="chapter" data-level="1.3.3" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#extract-ticket-class-from-ticket-number"><i class="fa fa-check"></i><b>1.3.3</b> Extract ticket class from ticket number</a></li>
+<li class="chapter" data-level="1.3.4" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#travel-in-groups"><i class="fa fa-check"></i><b>1.3.4</b> Travel in Groups</a></li>
+<li class="chapter" data-level="1.3.5" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#age-in-groups"><i class="fa fa-check"></i><b>1.3.5</b> Age in Groups</a></li>
+<li class="chapter" data-level="1.3.6" data-path="attribute-re-engineering.html"><a href="attribute-re-engineering.html#farepp"><i class="fa fa-check"></i><b>1.3.6</b> Fare per passenger</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="build-re-engineered-dataset.html"><a href="build-re-engineered-dataset.html"><i class="fa fa-check"></i><b>1.4</b> Build Re-engineered Dataset</a></li>
+<li class="chapter" data-level="1.5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>1.5</b> Summary</a></li>
+<li class="chapter" data-level="" data-path="exercises-5.html"><a href="exercises-5.html"><i class="fa fa-check"></i>Exercises 5</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dealt-with-miss-values" class="section level2">
+<h2><span class="header-section-number">1.2</span> Dealt with Miss Values</h2>
+<p>We had a pretty good understanding about the Titanic datasets. We knew there are missing values and some errors. they needs to be resolved first of all. The systematic way to find missing value is write a function to check missing values, like this one,</p>
+<p>Firstly, let us quick recap the datasets we have,</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="dealt-with-miss-values.html#cb2-1"></a><span class="co"># assume we had imported both train and test dataset and we have combined them into on data</span></span>
+<span id="cb2-2"><a href="dealt-with-miss-values.html#cb2-2"></a></span>
+<span id="cb2-3"><a href="dealt-with-miss-values.html#cb2-3"></a>train &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;train.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb2-4"><a href="dealt-with-miss-values.html#cb2-4"></a>test &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;test.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb2-5"><a href="dealt-with-miss-values.html#cb2-5"></a><span class="co"># integrate into one file for checking save to do the dame for both files.</span></span>
+<span id="cb2-6"><a href="dealt-with-miss-values.html#cb2-6"></a>data &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(train, test) <span class="co"># compare with data &lt;- rbind(train, test)</span></span>
+<span id="cb2-7"><a href="dealt-with-miss-values.html#cb2-7"></a></span>
+<span id="cb2-8"><a href="dealt-with-miss-values.html#cb2-8"></a><span class="co"># Check our combined dataset details</span></span>
+<span id="cb2-9"><a href="dealt-with-miss-values.html#cb2-9"></a><span class="kw">glimpse</span>(data) <span class="co"># compare with str(data)</span></span></code></pre></div>
+<pre><code>## Rows: 1,309
+## Columns: 12
+## $ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, ...
+## $ Survived    &lt;int&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0...
+## $ Pclass      &lt;int&gt; 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3...
+## $ Name        &lt;fct&gt; &quot;Braund, Mr. Owen Harris&quot;, &quot;Cumings, Mrs. John Bradley ...
+## $ Sex         &lt;fct&gt; male, female, female, female, male, male, male, male, f...
+## $ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 1...
+## $ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1...
+## $ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0...
+## $ Ticket      &lt;fct&gt; A/5 21171, PC 17599, STON/O2. 3101282, 113803, 373450, ...
+## $ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.86...
+## $ Cabin       &lt;fct&gt; , C85, , C123, , , E46, , , , G6, C103, , , , , , , , ,...
+## $ Embarked    &lt;fct&gt; S, C, S, S, S, Q, S, S, S, C, S, S, S, S, S, S, Q, S, S...</code></pre>
+<p>We can observe that there are 1309 data records with 12 attributes. We can also see the types and values of each attribute.
+We understood the goal of the Titanic problem is to predict given passengers’ survival. So, except the attributes <strong>PassengerID</strong> and the targeted variable <strong>Survived</strong>, there are 10 attributes present in the combined data that are potentially useful. Among of them, two variables <strong>Name</strong> and <strong>Ticket</strong> are less useful intuitively and also confirmed from the previous chapter.</p>
+<p>Let us focus on solve the data missing problem.</p>
+<p>We can define a function missing_vars, which can get proportion of values are missing in each attribute.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="dealt-with-miss-values.html#cb4-1"></a><span class="co"># Define a function to check missing values</span></span>
+<span id="cb4-2"><a href="dealt-with-miss-values.html#cb4-2"></a>missing_vars &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb4-3"><a href="dealt-with-miss-values.html#cb4-3"></a>  var &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-4"><a href="dealt-with-miss-values.html#cb4-4"></a>  missing &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-5"><a href="dealt-with-miss-values.html#cb4-5"></a>  missing_prop &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-6"><a href="dealt-with-miss-values.html#cb4-6"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">names</span>(x))) {</span>
+<span id="cb4-7"><a href="dealt-with-miss-values.html#cb4-7"></a>    var[i] &lt;-<span class="st"> </span><span class="kw">names</span>(x)[i]</span>
+<span id="cb4-8"><a href="dealt-with-miss-values.html#cb4-8"></a>    missing[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">is.na</span>(x[, i])<span class="op">|</span>x[, i] <span class="op">==</span><span class="st">&quot;&quot;</span> )</span>
+<span id="cb4-9"><a href="dealt-with-miss-values.html#cb4-9"></a>    missing_prop[i] &lt;-<span class="st"> </span>missing[i] <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(x)</span>
+<span id="cb4-10"><a href="dealt-with-miss-values.html#cb4-10"></a>  }</span>
+<span id="cb4-11"><a href="dealt-with-miss-values.html#cb4-11"></a>  </span>
+<span id="cb4-12"><a href="dealt-with-miss-values.html#cb4-12"></a>  (missing_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">var =</span> var, <span class="dt">missing =</span> missing, <span class="dt">missing_prop =</span> missing_prop) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-13"><a href="dealt-with-miss-values.html#cb4-13"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(missing_prop)))</span>
+<span id="cb4-14"><a href="dealt-with-miss-values.html#cb4-14"></a>}</span></code></pre></div>
+<p>Apply our function to the combined dataset <code>data</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="dealt-with-miss-values.html#cb5-1"></a><span class="kw">missing_vars</span>(data)</span></code></pre></div>
+<pre><code>##            var missing missing_prop
+## 1        Cabin    1014 0.7746371276
+## 2     Survived     418 0.3193277311
+## 3          Age     263 0.2009167303
+## 4     Embarked       2 0.0015278839
+## 5         Fare       1 0.0007639419
+## 6  PassengerId       0 0.0000000000
+## 7       Pclass       0 0.0000000000
+## 8         Name       0 0.0000000000
+## 9          Sex       0 0.0000000000
+## 10       SibSp       0 0.0000000000
+## 11       Parch       0 0.0000000000
+## 12      Ticket       0 0.0000000000</code></pre>
+<p><em>Survived</em> has 418 missing value that is the <code>test</code> dataset number. Our entire <code>test</code> dataset needs to be filled with that value. It is not an issue.</p>
+<p><em>Cabin</em> and <em>Age</em> have some significant proportion of missing values, whereas Embarked &amp; Fare only has 2 and 1 missing values.</p>
+<p>We will use Cabin and Age as examples to demonstrate the general methods used to deal with missing values.</p>
+<div id="cabin-attribute" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Cabin Attribute</h3>
+<p>Cabin has large number of missing value. Total of 1014 missing values and 687 missing value in the <code>train</code> dataset counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. Facing a attribute that has a large percentage of missing values, in the most analysis, it will be simply dropped. However, if you think carefully, the missing value may have some reasons and that reasons could be a factor which affects passengers’ lived or perished. Therefore, the first thought, which is normally apply to a large number of value missing, is to replace the attribute with another attribute rather than to fill the missing value themselves. In this case, we can create a new attribute called “<em>HasCabinNum</em>” which only records if <em>Cabin</em> values is "" (empty or missing value). It has two values “<code>has</code>” and “<code>hasnot</code>”. This method is very general. It can be used in any attribute that has a large number of missing value.</p>
+<p>Ideally we should replace the attribute <em>cabin</em> with the newly created attribute <em>HasCabinNum</em>. However, we find out that the data samples which has the cabin number, the cabin number may have some sueful information. So, we will keep it in the moment and for later use.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="dealt-with-miss-values.html#cb7-1"></a><span class="co"># add newly created attribute and assign it with new values</span></span>
+<span id="cb7-2"><a href="dealt-with-miss-values.html#cb7-2"></a>data<span class="op">$</span>HasCabinNum &lt;-<span class="st"> </span><span class="kw">ifelse</span>((data<span class="op">$</span>Cabin <span class="op">!=</span><span class="st"> &quot;&quot;</span>), <span class="st">&quot;Has&quot;</span>, <span class="st">&quot;HasNo&quot;</span>)</span></code></pre></div>
+<p>We can examine the relation between our newly created cabin replacement’s <em>HasCabinNum</em> with the attribute <em>Survival</em>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="dealt-with-miss-values.html#cb8-1"></a><span class="co"># Make sure survived is in factor type </span></span>
+<span id="cb8-2"><a href="dealt-with-miss-values.html#cb8-2"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb8-3"><a href="dealt-with-miss-values.html#cb8-3"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb8-4"><a href="dealt-with-miss-values.html#cb8-4"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(HasCabinNum), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb8-5"><a href="dealt-with-miss-values.html#cb8-5"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb8-6"><a href="dealt-with-miss-values.html#cb8-6"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;HasCabinNum&quot;</span>) <span class="op">+</span></span>
+<span id="cb8-7"><a href="dealt-with-miss-values.html#cb8-7"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb8-8"><a href="dealt-with-miss-values.html#cb8-8"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb8-9"><a href="dealt-with-miss-values.html#cb8-9"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Newly created HasCabinNum attribute on Survived&quot;</span>)</span>
+<span id="cb8-10"><a href="dealt-with-miss-values.html#cb8-10"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb8-11"><a href="dealt-with-miss-values.html#cb8-11"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb8-12"><a href="dealt-with-miss-values.html#cb8-12"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb8-13"><a href="dealt-with-miss-values.html#cb8-13"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(HasCabinNum), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb8-14"><a href="dealt-with-miss-values.html#cb8-14"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb8-15"><a href="dealt-with-miss-values.html#cb8-15"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb8-16"><a href="dealt-with-miss-values.html#cb8-16"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb8-17"><a href="dealt-with-miss-values.html#cb8-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;HasCabinNum&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb8-18"><a href="dealt-with-miss-values.html#cb8-18"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Newly created HasCabinNum attribute (Proportion Survived)&quot;</span>)</span>
+<span id="cb8-19"><a href="dealt-with-miss-values.html#cb8-19"></a></span>
+<span id="cb8-20"><a href="dealt-with-miss-values.html#cb8-20"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:cabinPro"></span>
+<img src="05-data-preprocess_files/figure-html/cabinPro-1.svg" alt="Distribution and survival percentage of the newly created HasCabinNum attribute" width="95%" />
+<p class="caption">
+Figure 1.1: Distribution and survival percentage of the newly created HasCabinNum attribute
+</p>
+</div>
+</div>
+<div id="age-attribute" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Age Attribute</h3>
+<p>Now we can tackle the issue of missing values with the age attribute. <em>Age</em> is a typical numerical value. There a number of options for fill the missing values:
+1. Take the mean value to replace missing value
+2. Take a random list of ages maintain the original statistical summary values.
+3. Use a model predict values based on the existing values.</p>
+<p>Let us looking into them one by one, Be aware of this if you have multiple options to deal with one attribute, you cannot simple manipulate on the original attribute. If you do, the value of the attribute will be altered, so the second option will be never executed since the missing value has been already eliminated.</p>
+<ol style="list-style-type: decimal">
+<li>Take the mean value to replace missing value. It is the simplest way to impurate the missing value.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="dealt-with-miss-values.html#cb9-1"></a><span class="co"># replace missing value in Age with its average</span></span>
+<span id="cb9-2"><a href="dealt-with-miss-values.html#cb9-2"></a>ageEverage &lt;-<span class="st"> </span><span class="kw">summarise</span>(data, <span class="dt">Average =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb9-3"><a href="dealt-with-miss-values.html#cb9-3"></a><span class="co"># create a new attribute Age_RE1 and assign it with new values</span></span>
+<span id="cb9-4"><a href="dealt-with-miss-values.html#cb9-4"></a>data<span class="op">$</span>Age_RE1 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(data<span class="op">$</span>Age), <span class="kw">as.numeric</span>(ageEverage), <span class="kw">as.numeric</span>(data<span class="op">$</span>Age))</span>
+<span id="cb9-5"><a href="dealt-with-miss-values.html#cb9-5"></a><span class="co"># plot newly altered age attribute </span></span>
+<span id="cb9-6"><a href="dealt-with-miss-values.html#cb9-6"></a><span class="co"># Make sure survived is in factor type </span></span>
+<span id="cb9-7"><a href="dealt-with-miss-values.html#cb9-7"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb9-8"><a href="dealt-with-miss-values.html#cb9-8"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb9-9"><a href="dealt-with-miss-values.html#cb9-9"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE1), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb9-10"><a href="dealt-with-miss-values.html#cb9-10"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb9-11"><a href="dealt-with-miss-values.html#cb9-11"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Age_RE1&quot;</span>) <span class="op">+</span></span>
+<span id="cb9-12"><a href="dealt-with-miss-values.html#cb9-12"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb9-13"><a href="dealt-with-miss-values.html#cb9-13"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb9-14"><a href="dealt-with-miss-values.html#cb9-14"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived value on Age_RE1&quot;</span>)</span>
+<span id="cb9-15"><a href="dealt-with-miss-values.html#cb9-15"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb9-16"><a href="dealt-with-miss-values.html#cb9-16"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb9-17"><a href="dealt-with-miss-values.html#cb9-17"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb9-18"><a href="dealt-with-miss-values.html#cb9-18"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE1), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb9-19"><a href="dealt-with-miss-values.html#cb9-19"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb9-20"><a href="dealt-with-miss-values.html#cb9-20"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb9-21"><a href="dealt-with-miss-values.html#cb9-21"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb9-22"><a href="dealt-with-miss-values.html#cb9-22"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age_RE1&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb9-23"><a href="dealt-with-miss-values.html#cb9-23"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived percentage on Age_RE1&quot;</span>)</span>
+<span id="cb9-24"><a href="dealt-with-miss-values.html#cb9-24"></a></span>
+<span id="cb9-25"><a href="dealt-with-miss-values.html#cb9-25"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:agepro"></span>
+<img src="05-data-preprocess_files/figure-html/agepro-1.svg" alt="Distribution and survival percentage on the Age with missing value filled" width="95%" />
+<p class="caption">
+Figure 1.2: Distribution and survival percentage on the Age with missing value filled
+</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Take a random number range between <code>min</code> and <code>max</code> age, and keep the mean and standard deviation unchanged.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="dealt-with-miss-values.html#cb10-1"></a><span class="co"># calculate the non-NA mean and std</span></span>
+<span id="cb10-2"><a href="dealt-with-miss-values.html#cb10-2"></a>mean &lt;-<span class="st"> </span><span class="kw">mean</span>(data[[<span class="st">&quot;Age&quot;</span>]], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># take train mean</span></span>
+<span id="cb10-3"><a href="dealt-with-miss-values.html#cb10-3"></a>std &lt;-<span class="st"> </span><span class="kw">sd</span>(data[[<span class="st">&quot;Age&quot;</span>]], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># take test std</span></span>
+<span id="cb10-4"><a href="dealt-with-miss-values.html#cb10-4"></a><span class="co"># replace NA with a list that maintian the mean and std</span></span>
+<span id="cb10-5"><a href="dealt-with-miss-values.html#cb10-5"></a>temp_rnum &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">sum</span>(<span class="kw">is.na</span>(data<span class="op">$</span>Age)), <span class="dt">mean=</span>mean, <span class="dt">sd=</span>std)</span>
+<span id="cb10-6"><a href="dealt-with-miss-values.html#cb10-6"></a><span class="co"># add new attribute Age_RE2</span></span>
+<span id="cb10-7"><a href="dealt-with-miss-values.html#cb10-7"></a>data<span class="op">$</span>Age_RE2 &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(data<span class="op">$</span>Age), <span class="kw">as.numeric</span>(temp_rnum), <span class="kw">as.numeric</span>(data<span class="op">$</span>Age))</span>
+<span id="cb10-8"><a href="dealt-with-miss-values.html#cb10-8"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE2)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  -24.95   21.00   28.50   29.78   38.90   80.00</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="dealt-with-miss-values.html#cb12-1"></a><span class="co"># There are possible negative values too, replace them with positive values</span></span>
+<span id="cb12-2"><a href="dealt-with-miss-values.html#cb12-2"></a>data<span class="op">$</span>Age_RE2[(data<span class="op">$</span>Age_RE2)<span class="op">&lt;=</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="kw">sample</span>(data<span class="op">$</span>Age[data<span class="op">$</span>Age<span class="op">&gt;</span><span class="dv">0</span>], <span class="kw">length</span>(data<span class="op">$</span>Age_RE2[(data<span class="op">$</span>Age_RE2)<span class="op">&lt;=</span><span class="dv">0</span>]), <span class="dt">replace=</span>F)</span>
+<span id="cb12-3"><a href="dealt-with-miss-values.html#cb12-3"></a><span class="co"># check</span></span>
+<span id="cb12-4"><a href="dealt-with-miss-values.html#cb12-4"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE2)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.17   21.00   28.78   30.03   39.00   80.00</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="dealt-with-miss-values.html#cb14-1"></a><span class="co"># plot newly altered age attribute </span></span>
+<span id="cb14-2"><a href="dealt-with-miss-values.html#cb14-2"></a><span class="co"># Make sure survived is in factor type </span></span>
+<span id="cb14-3"><a href="dealt-with-miss-values.html#cb14-3"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb14-4"><a href="dealt-with-miss-values.html#cb14-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb14-5"><a href="dealt-with-miss-values.html#cb14-5"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE2), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb14-6"><a href="dealt-with-miss-values.html#cb14-6"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb14-7"><a href="dealt-with-miss-values.html#cb14-7"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Age_RE2&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-8"><a href="dealt-with-miss-values.html#cb14-8"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-9"><a href="dealt-with-miss-values.html#cb14-9"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb14-10"><a href="dealt-with-miss-values.html#cb14-10"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived value on Age_RE2 attribute&quot;</span>)</span>
+<span id="cb14-11"><a href="dealt-with-miss-values.html#cb14-11"></a></span>
+<span id="cb14-12"><a href="dealt-with-miss-values.html#cb14-12"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb14-13"><a href="dealt-with-miss-values.html#cb14-13"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb14-14"><a href="dealt-with-miss-values.html#cb14-14"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb14-15"><a href="dealt-with-miss-values.html#cb14-15"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE2), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb14-16"><a href="dealt-with-miss-values.html#cb14-16"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb14-17"><a href="dealt-with-miss-values.html#cb14-17"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb14-18"><a href="dealt-with-miss-values.html#cb14-18"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb14-19"><a href="dealt-with-miss-values.html#cb14-19"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age_RE2&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb14-20"><a href="dealt-with-miss-values.html#cb14-20"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived percentage on Age_RE2 attribute&quot;</span>)</span>
+<span id="cb14-21"><a href="dealt-with-miss-values.html#cb14-21"></a></span>
+<span id="cb14-22"><a href="dealt-with-miss-values.html#cb14-22"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:AgePro2"></span>
+<img src="05-data-preprocess_files/figure-html/AgePro2-1.svg" alt="Distribution and survival percentage on the Age with missing value filled with distribution shape maintained" width="95%" />
+<p class="caption">
+Figure 1.3: Distribution and survival percentage on the Age with missing value filled with distribution shape maintained
+</p>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>Using machine generate model to produce new values based on other exiting values.<br />
+Among many prediction models (next chapter), <em>decision tree</em> is the simplest. It can split data samples into sub sets based on many test conditions (called branches), until there is not test conditions to test or there is no sample left untested<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.<br />
+To demonstrate we can use a prediction model to fill the missing values, here we will only use a simple decision tree without any further calibration. Since <em>Age</em> is a continuous variable we want to use the method=“anova”<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> for our decision tree. So let us build a decision tree on the subset of the data with the age values available, and then replace those that are missing,</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="dealt-with-miss-values.html#cb15-1"></a><span class="co"># confirm Age missing values</span></span>
+<span id="cb15-2"><a href="dealt-with-miss-values.html#cb15-2"></a>data<span class="op">$</span>Age_RE3 &lt;-<span class="st"> </span>data<span class="op">$</span>Age</span>
+<span id="cb15-3"><a href="dealt-with-miss-values.html#cb15-3"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE3)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##    0.17   21.00   28.00   29.88   39.00   80.00     263</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="dealt-with-miss-values.html#cb17-1"></a><span class="co"># Construct a decision tree with selected attributes and ANOVA method</span></span>
+<span id="cb17-2"><a href="dealt-with-miss-values.html#cb17-2"></a>Agefit &lt;-<span class="st"> </span><span class="kw">rpart</span>(Age_RE3 <span class="op">~</span><span class="st"> </span>Survived <span class="op">+</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>SibSp <span class="op">+</span><span class="st"> </span>Parch <span class="op">+</span><span class="st"> </span>Fare <span class="op">+</span><span class="st"> </span>Embarked,</span>
+<span id="cb17-3"><a href="dealt-with-miss-values.html#cb17-3"></a>                  <span class="dt">data=</span>data[<span class="op">!</span><span class="kw">is.na</span>(data<span class="op">$</span>Age_RE3),], </span>
+<span id="cb17-4"><a href="dealt-with-miss-values.html#cb17-4"></a>                  <span class="dt">method=</span><span class="st">&quot;anova&quot;</span>)</span>
+<span id="cb17-5"><a href="dealt-with-miss-values.html#cb17-5"></a><span class="co">#Fill AGE missing values with prediction made by decision tree prediction</span></span>
+<span id="cb17-6"><a href="dealt-with-miss-values.html#cb17-6"></a>data<span class="op">$</span>Age_RE3[<span class="kw">is.na</span>(data<span class="op">$</span>Age_RE3)] &lt;-<span class="st"> </span><span class="kw">predict</span>(Agefit, data[<span class="kw">is.na</span>(data<span class="op">$</span>Age_RE3),])</span>
+<span id="cb17-7"><a href="dealt-with-miss-values.html#cb17-7"></a><span class="co">#confirm the missing values have been filled</span></span>
+<span id="cb17-8"><a href="dealt-with-miss-values.html#cb17-8"></a><span class="kw">summary</span>(data<span class="op">$</span>Age_RE3)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.17   22.00   27.43   29.63   37.00   80.00</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="dealt-with-miss-values.html#cb19-1"></a>p1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="dealt-with-miss-values.html#cb19-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb19-3"><a href="dealt-with-miss-values.html#cb19-3"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE3), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span></span>
+<span id="cb19-4"><a href="dealt-with-miss-values.html#cb19-4"></a><span class="st">   </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb19-5"><a href="dealt-with-miss-values.html#cb19-5"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Age_RE3&quot;</span>) <span class="op">+</span></span>
+<span id="cb19-6"><a href="dealt-with-miss-values.html#cb19-6"></a><span class="st">   </span><span class="kw">ylab</span>(<span class="st">&quot;Total Count&quot;</span>) <span class="op">+</span></span>
+<span id="cb19-7"><a href="dealt-with-miss-values.html#cb19-7"></a><span class="st">   </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">&quot;Survived&quot;</span>)<span class="op">+</span></span>
+<span id="cb19-8"><a href="dealt-with-miss-values.html#cb19-8"></a><span class="st">   </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived value on Age_RE3 attribute&quot;</span>)</span>
+<span id="cb19-9"><a href="dealt-with-miss-values.html#cb19-9"></a></span>
+<span id="cb19-10"><a href="dealt-with-miss-values.html#cb19-10"></a><span class="co"># show survive percentage on HasCabinNum </span></span>
+<span id="cb19-11"><a href="dealt-with-miss-values.html#cb19-11"></a>p2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb19-12"><a href="dealt-with-miss-values.html#cb19-12"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Survived)) <span class="op">%&gt;%</span></span>
+<span id="cb19-13"><a href="dealt-with-miss-values.html#cb19-13"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(Age_RE3), <span class="dt">fill =</span> <span class="kw">factor</span>(Survived))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb19-14"><a href="dealt-with-miss-values.html#cb19-14"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb19-15"><a href="dealt-with-miss-values.html#cb19-15"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)) <span class="op">+</span></span>
+<span id="cb19-16"><a href="dealt-with-miss-values.html#cb19-16"></a><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Survived&quot;</span>) <span class="op">+</span></span>
+<span id="cb19-17"><a href="dealt-with-miss-values.html#cb19-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age_RE3&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percentage of Survived&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb19-18"><a href="dealt-with-miss-values.html#cb19-18"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Survived percentage on Age_RE3 attribute&quot;</span>)</span>
+<span id="cb19-19"><a href="dealt-with-miss-values.html#cb19-19"></a></span>
+<span id="cb19-20"><a href="dealt-with-miss-values.html#cb19-20"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="05-data-preprocess_files/figure-html/unnamed-chunk-3-1.svg" width="672" />
+Above three methods can all fill the missing values. Each filled with different values. Depends on the applications you can choose to use any of them. For our prediction problem, I would use the machine predicted since we are doing predicting anyway. So I will tied data with replacing the original Age with Age_RE3 and removal of the other two extra age attributes.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="dealt-with-miss-values.html#cb20-1"></a>data<span class="op">$</span>Age &lt;-<span class="st"> </span>data<span class="op">$</span>Age_RE3</span>
+<span id="cb20-2"><a href="dealt-with-miss-values.html#cb20-2"></a>data &lt;-<span class="st"> </span><span class="kw">subset</span>(data, <span class="dt">select =</span> <span class="op">-</span><span class="kw">c</span>(Age_RE1, Age_RE2, Age_RE3))</span></code></pre></div>
+</div>
+<div id="fare-attribute" class="section level3">
+<h3><span class="header-section-number">1.2.3</span> Fare Attribute</h3>
+<p>Since there was one missing value in <em>Fare</em>, we can also see that this person traveled alone, so I can’t impute, The best solution is simply replacing it with the mean or median value, or even other values like median in the same class or median from the same embarked port, or age group etc.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="dealt-with-miss-values.html#cb21-1"></a>data[<span class="kw">is.na</span>(data<span class="op">$</span>Fare), ]</span></code></pre></div>
+<pre><code>##      PassengerId Survived Pclass               Name  Sex  Age SibSp Parch
+## 1044        1044       NA      3 Storey, Mr. Thomas male 60.5     0     0
+##      Ticket Fare Cabin Embarked HasCabinNum
+## 1044   3701   NA              S       HasNo</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="dealt-with-miss-values.html#cb23-1"></a>data<span class="op">$</span>Fare[<span class="kw">is.na</span>(data<span class="op">$</span>Fare)] &lt;-<span class="st"> </span><span class="kw">median</span>(data<span class="op">$</span>Fare, <span class="dt">na.rm =</span> T)</span></code></pre></div>
+</div>
+<div id="Embarked" class="section level3">
+<h3><span class="header-section-number">1.2.4</span> Embarked Attribute</h3>
+<p><em>Embark</em> has two missing values. There are two methods to make up these two values: take the mode value, which is the most value at present; or the most likelihood value. The mode value is <code>S</code> (Southampton), the fact that 70% of passengers embarked from ‘S’.</p>
+<p>The most likelihood value needs some analysis. Generally, the embarked port reflects a passenger’s journey. It is associated with the fare of the ticket. So we could compare the fare of the ticket to see it most likely fit which part of journey. However we have noticed that the fare is the original data may provide faulty information since it can be a shared ticket. The fare is also shared with some one. If that is the case we should consider the partner’s Embarked port as its most appropriate value.</p>
+<p>So we take two steps:
+1. find out the passenger has a shared ticket or not. If the ticket is shared than find the travel companion’s embarked port and take that as the passenger’s embarked port;
+2. If the ticket is not shared or shared partner’s embarked port is also missing, find out the ticket price per person and compare with other ticket’s price per person to allocate the embarked port.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="dealt-with-miss-values.html#cb24-1"></a><span class="co"># list info of the missing records to figure out the fare and the ticket?</span></span>
+<span id="cb24-2"><a href="dealt-with-miss-values.html#cb24-2"></a>data[(data<span class="op">$</span>Embarked<span class="op">==</span><span class="st">&quot;&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;Embarked&quot;</span>, <span class="st">&quot;PassengerId&quot;</span>,  <span class="st">&quot;Fare&quot;</span>, <span class="st">&quot;Ticket&quot;</span>)]</span></code></pre></div>
+<pre><code>##     Embarked PassengerId Fare Ticket
+## 62                    62   80 113572
+## 830                  830   80 113572</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="dealt-with-miss-values.html#cb26-1"></a><span class="co"># we want find out if the fare is a single ticket or a group ticket.</span></span></code></pre></div>
+<p>we can see the two miss records share the same ticket number and the fare. The situation because extremely simple. We don’t need to consider other possibilities. The two passenger must travel together. There i sno possibility of any other reference can be used to figure out the missing port.</p>
+<p>For safety, let us check if there are other passenger share the same ticket number?</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="dealt-with-miss-values.html#cb27-1"></a><span class="co"># we need to find out is there other passenger share the ticket?</span></span>
+<span id="cb27-2"><a href="dealt-with-miss-values.html#cb27-2"></a>data[(data<span class="op">$</span>Ticket<span class="op">==</span><span class="st">&quot;113572&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;Ticket&quot;</span>, <span class="st">&quot;PassengerId&quot;</span>, <span class="st">&quot;Embarked&quot;</span>, <span class="st">&quot;Fare&quot;</span>)]</span></code></pre></div>
+<pre><code>##     Ticket PassengerId Embarked Fare
+## 62  113572          62            80
+## 830 113572         830            80</code></pre>
+<p>The answer is “No”. It tells us only the two missing records share the ticket number. So we only need to find out the price (per person) to compare with other price (per person) to allocate the missing embarked port. The logic is the same journey should bear the some ticket price. To calculate the ticket price (per person), we create an attribute <em>Fare_pp</em>. It is the ticket price divided by the number of the passenger who share the same ticket. That is the concept of the group ticket. It can also be useful to single out the “group travel” vs “travel alone”.</p>
+<p>As matter of fact the raw data sample already has this concept such as <em>Sibsp</em> and <em>Parch</em>. We don’t know if the <em>Sibsp</em> and <em>Parch</em> are sharing the same tickets number since the attributes are only numbers. We can imagine the people travel in group may not be relatives and they could be simple friends or colleagues. Anyway, in case of the group travel it is useful to know the group size. So we created another new attributes <em>Friend_size</em> to record the number of passengers who share the same ticket number ie. “travel in group”.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="dealt-with-miss-values.html#cb29-1"></a><span class="co"># calculate fare_PP per person</span></span>
+<span id="cb29-2"><a href="dealt-with-miss-values.html#cb29-2"></a>fare_pp &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb29-3"><a href="dealt-with-miss-values.html#cb29-3"></a><span class="st">  </span><span class="kw">group_by</span>(Ticket, Fare) <span class="op">%&gt;%</span></span>
+<span id="cb29-4"><a href="dealt-with-miss-values.html#cb29-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize</span>(<span class="dt">Friend_size =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb29-5"><a href="dealt-with-miss-values.html#cb29-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Fare_pp =</span> Fare <span class="op">/</span><span class="st"> </span>Friend_size)</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;Ticket&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="dealt-with-miss-values.html#cb31-1"></a>data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data, fare_pp, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;Ticket&quot;</span>, <span class="st">&quot;Fare&quot;</span>))</span>
+<span id="cb31-2"><a href="dealt-with-miss-values.html#cb31-2"></a>data <span class="op">%&gt;%</span></span>
+<span id="cb31-3"><a href="dealt-with-miss-values.html#cb31-3"></a><span class="st">  </span><span class="kw">filter</span>((Embarked <span class="op">!=</span><span class="st"> &quot;&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb31-4"><a href="dealt-with-miss-values.html#cb31-4"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Embarked, <span class="dt">y =</span> Fare_pp)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb31-5"><a href="dealt-with-miss-values.html#cb31-5"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb31-6"><a href="dealt-with-miss-values.html#cb31-6"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">40</span>, <span class="dt">col =</span> <span class="st">&quot;deepskyblue4&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:embarkfarepp"></span>
+<img src="05-data-preprocess_files/figure-html/embarkfarepp-1.svg" alt="Possible embarked port by value of Fare per person" width="95%" />
+<p class="caption">
+Figure 1.4: Possible embarked port by value of Fare per person
+</p>
+</div>
+<p>From above plot, we can see that price 40 (per person) is an outlier in embarked group <code>S</code> and <code>Q</code>. However, if they embarked from ‘C’ the price is only just falls into the upper quartile. So, we can reasonably the pare are embarked from “C”, so we want assign <code>C</code> to the embarked missing value.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="dealt-with-miss-values.html#cb32-1"></a>data<span class="op">$</span>Embarked[(data<span class="op">$</span>Embarked)<span class="op">==</span><span class="st">&quot;&quot;</span>] &lt;-<span class="st"> &quot;C&quot;</span></span></code></pre></div>
+<p>Now we have dealt with all the missing values. WE could simple run the same code again to confirm the missing values have been fulfilled.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="dealt-with-miss-values.html#cb33-1"></a><span class="kw">missing_vars</span>(data)</span></code></pre></div>
+<pre><code>##            var missing missing_prop
+## 1        Cabin    1014    0.7746371
+## 2     Survived     418    0.3193277
+## 3  PassengerId       0    0.0000000
+## 4       Pclass       0    0.0000000
+## 5         Name       0    0.0000000
+## 6          Sex       0    0.0000000
+## 7          Age       0    0.0000000
+## 8        SibSp       0    0.0000000
+## 9        Parch       0    0.0000000
+## 10      Ticket       0    0.0000000
+## 11        Fare       0    0.0000000
+## 12    Embarked       0    0.0000000
+## 13 HasCabinNum       0    0.0000000
+## 14 Friend_size       0    0.0000000
+## 15     Fare_pp       0    0.0000000</code></pre>
+<p>In summary, we have dealt with the 4 discovered missing values. Different approaches and methods are adopted. some of them are simple value fulfillment like replacement with mean/median/mode values, others has more complicated process involved deeper dill-down analysis or even predictions. Depends the applications, appropriate methods may need multiple trails and exploration.</p>
+<p>However we have discovered one interesting thing that the fare could be shared among multiple passengers (not only the same fare but also the same ticket numbers) see previous section. It appeared to be the price of a group ticket. It creates confused information on the fare. So it may be a good idea to re-engineer it into another more useful attribute like <em>fare_PP</em> (Fare per person), see next section <a href="attribute-re-engineering.html#farepp">1.3.6</a>.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>detailed decision tree and prediction model will be covered in the next chapter<a href="dealt-with-miss-values.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>ANOVA, stands for “Analysis of variance”, is a statistical models used to analyze the differences among group means in a sample. Decision trees can take many different ways to partition data samples such as <em>Entropy</em>, <em>Gini Index</em>, <em>Classification error</em> and <em>ANOVA</em>. <a href="dealt-with-miss-values.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="general-data-prepartion-tasks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="attribute-re-engineering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown/edit/master/inst/examples/%s",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "none"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

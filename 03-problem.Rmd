@@ -9,17 +9,16 @@ knitr::include_graphics(here::here("images", "Titanic.jpg"))
 
 ```
 
->
+Most of Data Science project initiated by business organizations and having specific objectives. The list of the objective can be endless ranging from finding out problems, abstract patterns and predict future. It is essential to have fully understood problem and well defined objectives for a successful data science project. In this book, I will choose the famous "Titanic problem".   
 
 The sinking of the RMS Titanic occurred on the night of 14 April 1912 in the North Atlantic Ocean, four days into the ship's maiden voyage from Southampton, UK to New York City, USA. The largest passenger liner in service at the time, Titanic had an estimated 2,224 people on board when she struck an iceberg at around 23:40 (ship's time) on Sunday, 14 April 1912. Her sinking two hours and forty minutes later at 02:20 (05:18 GMT) on Monday, 15 April resulted in the deaths of more than 1,500 people, which made it one of the deadliest peacetime maritime disasters in history.
 
 Later, in 1997 American file director James Cameron turned this disastrous and tragic event into an epic romance film. The film star's Leonardo DiCaprio and Kate Winslet outstanding performance in the file makes it a best selling movie in the year. 
 
-Perhaps people are touched not only by the love story but also by the humanity norms in the life and death situation that is famous - Lady and children first. 
+Perhaps people are touched not only by the love story but also by the humanity norms in the life and death situation that is famous - Lady and children first.
 
->
 
-## Kaggle Competion
+## Kaggle Competion {#Competion}
 
 Kaggle (https://www.kaggle.com/), a subsidiary of Google LLC, is the world's largest data science community with powerful tools and resources to help you achieve your data science goals. Kaggle was founded in 2010 with the idea that data scientists need a place to come together and collaborate on projects, learning new techniques and share each others experience. This has transformed into a network with more than 1,000,000 registered users, and has created a safe place for data science learning, sharing, and competition.  
 
@@ -31,7 +30,7 @@ knitr::include_graphics(here::here("images", "Kagglecomp.png"))
 
 ```
 
-Generally, Each competition has a host, and each host has to prepare and provide data. When providing data, the host has the opportunity to give additional information such as a description, evaluation method, timeline, and prize for winning. Although this may not be an ideal real world data problem, which data scientist may face in the business. But it provides a good starting point for learners. In a real world, you may need to start from understand the business and find data sources by your self. Although competition host has provided data. You cannot assume the data provided are clean data and ready for analysis. Cleaning and preprocess data are part of the competition. Therefore, any solution can be tested to see how good a participant is with the whole process of data science project.
+Generally, each competition has a host, and each host has to prepare and provide data. When providing data, the host has the opportunity to give additional information such as a description, evaluation method, timeline, and prize for winning. Although this may not be an ideal real world data problem, which data scientist may face in the business. But it provides a good starting point for learners. In a real world, you may need to start from understand the business and find data sources by your self. Although competition host has provided data. You cannot assume the data provided are clean data and ready for analysis. Cleaning and preprocess data are part of the competition. Therefore, any solution can be tested to see how good a participant is with the whole process of data science project.
 
 ## Titianic at Kaggel
 
@@ -50,7 +49,7 @@ We take Titanic as an example through this tutorial because of the following rea
 3. It is well studied, so there are plenty of alternative training materials available for your reference. 
 4. Lastly, the problem itself is interesting one that has a characteristic of only has a better solution and no best solution. So people are still working in it and uses the latest technologies. 
 
-## The Titanic problem
+## The Titanic Problem
 
 The objective of the Titanic problem defined on the Kaggle website as stated in the following:
 
@@ -62,7 +61,7 @@ While there was some element of luck involved in surviving, it seems some groups
 
 In this challenge, we ask you to build a predictive model that answers the question: “what sorts of people were more likely to survive?” using passenger data (i.e. name, age, gender, socio-economic class, etc/)."
 
-### The challenge {-}
+### The Challenge {-}
 The competition is simple: we want you to **use the Titanic passenger data** (name, age, price of ticket, etc) to try to **predict who will survive and who will die**.
 
 The requirement is to predict passengers' **survive**. Like many other real data science problems, [Prediction](#predictive) is to build a model which takes input data and produce an output. A prediction model is a mathematical formula that takes input from historical facts reflecting past event and produce a output that to make predictions about future or otherwise unknown events. A simple way to understand model is to think a model in the following three ways:
@@ -73,7 +72,7 @@ The requirement is to predict passengers' **survive**. Like many other real data
 
 Any model fundamentally expresses relationships between inputs and outputs. So as part of understanding the problem, We could interpret that the Kaggle Titanic challenge is to find creditable relationships between input data and out put data (which is survive or not). Once the relationship is found, we can express using either a math formula, a set of rules or a Neural Network model.
 
-### The data {-}
+### The Data {-}
 
 Kaggle competition usually provides competition data. There is a "Data" tab on any competition site. Click on the Data tab at the top of the competition page, you will find the raw data provided and most of time there are brief explanation of the data attributes^[We have used Data Science terminology in here. Data represent  objects in natural world. Object's properties are represented by attributes. That is a data record has a number of attributes representing a natural object with a number of properties. records is also called observations or samples in statistics, property is also called variables, parameters or dimensions] too.  
 
@@ -89,7 +88,7 @@ The test set should be used to see how well your model performs on unseen data. 
 
 The data sets has also include gender_submission.csv, a set of predictions that assume all and only female passengers survive, as an example of what a submission file should look like.
 
-### Submission {-}
+### The Submission {-}
 
 Submission at the Titanic competition is equivalent to the requirements on the final report of any data science project. that is one of the questions you need to understand in the beginning of the project. 
 
@@ -111,11 +110,11 @@ Make sure your submission should have:
 1. "PassengerId" column containing the IDs of each passenger from test.csv.
 2. "Survived" column (that you will create!) with a "1" for the rows where you think the passenger survived, and a "0" where you predict that the passenger died.
 
+## Summary and Reflection
 
+The purpose of this book is to provide a hand on practical exercise in doing data science project. Clearly, we cannot cover the complete available methods, models and algorithms for a data science project. The most important thing is to understand the process of doing a data science project. The first step, as indicated by the 6-step process in section \@ref(process), is "understand the problem". 
 
-## Reflection
-
-The purpose of this tutorial is to understand the process of data science project. The first step, as indicated by the 6-step process in section \@ref(process), is "understand the problem". Real world problem is far more complicated than this well defined problem. Mostly  business organizations don't know the the exact problem (that is part of reason why they want data analysis or business analysis) or they know the problem (in general) but the problem can not br expressed explicitly or in terms of data. 
+We have choose to use Titanic problem to demonstrate the whole data analytical process. However, real world problem is far more complicated than this well defined problem. Most business organizations may not know the exact problem (that is part of reason why they want do data analysis or business analysis) or they know the problem (in general) but the problem can not be expressed explicitly. 
 
 I have met a situation that a business organization has created a data center and collected all their business operational data. The boss asked to analyze these data and find:
 1. Is there are problems? 
@@ -128,7 +127,7 @@ For the example, the first problem in the above list needs to know what is the n
 
 Understand problem is actually more complicated in real world. Until you have completely understood it and turned it into a list of analytical problems you can move to next step.
 
-With the Titanic problem, combining the story and the requirements on the Kaggle web site, I would consider these:
+With the Titanic problem, combining the story and the requirements on the Kaggle website, I would consider these:
 
 
 - On April 14 and 15, 1912, during her maiden voyage, the Titanic sank after colliding with an iceberg, killing 1502 out of 2224 passengers and crew. The overall  survival rate is 32%.
@@ -137,12 +136,14 @@ With the Titanic problem, combining the story and the requirements on the Kaggle
 - The story tells us that when they were get on board the lifeboats, they applied a policy of "women and children first" and also "the ship crew are the last".
 - Sometimes the family was boarding the life boat together and some of the family members were swimming together too. 
 
-Those thoughts form some kind of assumptions in mind. They will guide later data explorations. 
+Those thoughts form some kinds of assumptions in mind. They will guide more detiled data explorations later. 
 
 
 
 ## Exercises 3 {-}
 
-1. Go to Kaggle Titanic web site, explore the challenge and data provided.
-2. Based on what you know about Titanic story, who you think can survive? can you describe the people you believe can survive in terms of age, sex, cabin. 
+1. Go to Kaggle web site, explore the challenge and data provided for Titantic problem.
+2. Based on what you know about Titanic story, who you think can survive? can you describe the people you believe can survive in terms of age, sex, cabin, title, social status?
+3. Generate 3 assumptions of the Titanic problem, thinking of how could you possibly prove or disprove them.
+4. Looking into data given by the Titanic competition, waht is your impression of the data?
 

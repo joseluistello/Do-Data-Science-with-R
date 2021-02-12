@@ -1,4 +1,42 @@
+--- 
+title: "Do Data Science in 10 Hours"
+author: "Gangmin Li"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is my first book writtn using the bookdown package to write a book. The output format for this book is bookdown::gitbook."
+---
+
 # Preface {-}
+
+
+```{r fig.align = 'center', out.width = "60%", echo=FALSE}
+
+knitr::include_graphics(here::here("images", "hotstove.jpg"))
+
+```
+
+
+``` 
+
+"Dont't touch it, It's hot!",
+
+...
+
+
+You now know it is hot. don't you?
+
+How?
+
+Because, you'v touched it!
+
+```
+
 
 ## What is this book? Why to read it?
 This book is originated from my Data Science course. It was in the lab sessions, where students practice different steps in the workflow of Data Science projects. Students enjoyed the detailed practices using different methods and different algorithms to solve analytical problems. To my surprise, we only find out later, that the student failed to grasp the real meaning of doing data science, which is not to provide an absolutely working solution to a problem, rather, an experimental interpretation of data at hand. In other words, you are just telling other propel what the data is telling you. You are not using data to solve problems that data has not provide any solution to you! They appeared also lost the track of doing a data science project. stuck at circles between two steps and failed to move foreword. 

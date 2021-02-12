@@ -1,5 +1,5 @@
 ---
-title: "Setup and famililar with your working environment"
+title: "Get Your Tools Ready"
 author: "Gangmin Li"
 date: "9/25/2020"
 output: html_document
@@ -368,7 +368,7 @@ Create a first R program called ``DSPR1``,
 
 ```
 
-Okay. Save your file and move to next Tutorial.
+Okay. Save your file and move to next Chapter.
 
 ## Exercise 2 {-}
 

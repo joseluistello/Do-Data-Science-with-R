@@ -1,0 +1,138 @@
+---
+title: "attribute-selection"
+author: "Gangmin Li"
+date: "1/27/2021"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+
+## Attributes Selection
+
+Attributes selection is a tricky task. Many factors can affect the selection, such as the final model's accuracy, the computation cost and the algorithm used, etc. Attributes selection generally is an iterative "try and see" process. 
+
+For the most problem you don't necessarily need the "whole house" of the attributes. Instead, you only select appropriate numbers of attributes. This is because some of the attributes has the same information (we call them correlated) or each attribute has different contribution to the problem (this will be more clearer when we talk about classification and prediction later).  
+
+It is definitely not correct that the more attributes you choose to use, the better solution you can have. How to decide the number of attributes to use and which attributes to use is the tough question to answer, but the general rules are:
+
+1. Correlation Analysis. Analysis the correlation among the attributes, and ordering them based the correlation of attributes with the dependent attribute. Select appropriate number of the attributes from the highest value towards the lowest value of correlation. 
+
+2. Principal component analysis (PCA). PCA is a dimensionality reduction method by projecting each data point onto only the first few principal components to obtain lower-dimensional data while preserving as much of the data's variation as possible. PCA only works on numerical variables.
+
+3. Possibly factor analysis (FA). Factor analysis is a statistical method used to describe variability among observed, correlated variables in terms of a potentially lower number of unobserved variables called factors. For example, it is possible that variations in six observed variables mainly reflect the variations in two unobserved (underlying) variables.
+
+There are other methods too:
+
+**MCA**: multiple correspondence analysis: only applys to categorical variables
+
+**FAMD**: factor analysis of mixed data: applys to both numerical and categorical variables
+
+**CA**: correspondence analysis: only two variables (contingency table)
+
+**MFA**: multiple factor analysis: when you have variables set by group
+
+These methods are all based on the PCA. In this section we will demonstrate these methods to analysis the prediction power of each attributes and find out the correlation among them. In case less attriibutes can be used to achieve the same model's performence.
+
+### Attributes Correlation Analysis
+
+Let us consider the correlation among our re-engineered attributes. 
+
+```{r}
+train <- read.csv("train.csv", header = TRUE)
+test <- read.csv("test.csv", header = TRUE)
+RE_data <- read.csv("RE_data.csv", header = TRUE)
+
+
+library(dplyr)# data manipulation
+library(tidyverse)
+# load data
+glimpse(RE_data)
+summary(RE_data)
+```
+Let us briefly assess the correlation among our newly re-engineered attributes. A quick correlation plot of the numeric attributes to get an idea of how they might relate to one another. You can see that we have dropped two `chr` attributes: *Title* and *Deck*. We could include them if we convert the character value in to numbers. For example, title could be converted into 1-6 numbers as 1 represents `Mr`, 2 represents `Mrs` and so on. 
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Correlation among numerical attributes"}
+library(caret) # tuning & cross-validation
+library(gridExtra) # visualizations
+library(tictoc) # timing models
+
+RE_data$Survived <- as.numeric(RE_data$Survived)
+RE_data$Pclass <- as.numeric(RE_data$Pclass)
+# RE_data$Title <- as.numeric(RE_data$Title)
+RE_data$Sex <- as.numeric(RE_data$Sex)
+RE_data$Age_group <- as.numeric(RE_data$Age_group)
+RE_data$Ticket_class <- as.numeric(RE_data$Ticket_class)
+# RE_data$Deck <- as.numeric(RE_data$Deck)
+# RE_data$HasCabinNum <- as.numeric(RE_data$HasCabinNum)
+RE_data$Embarked <- as.numeric(RE_data$Embarked)
+RE_data %>%
+  select(Survived, Pclass, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Embarked) %>% cor(use="pairwise.complete.obs") %>%
+  corrplot::corrplot.mixed(upper = "circle", tl.col = "black")
+```
+The plot shows not only the correlation between other attributes, which can potentially be used as predictors, with the dependent attribute *Survived*, but also the correction among potential predictors. In terms of correlation with *Survived*, *Sex* has the largest value but in negative `-0.54`, the next is *Pclass* with -0.34. So if we can only have two predictors for survive, the forst two we should use are *sex* and *Pclass*. The largest correlation value is between *Pclass* and *Farepp* with -0.77, which is even more than the value between *Survived* and *Sex*. One thing it tells us is that if we have *Pclass* in our model, we may not need to use *Farepp* since they are effectively tell us the same thing. In the same time, They illustrated and approved one thing that we have suspected in the beginning that is the social class of a passenger. This social class can be interpreted as the richer people, who paid more money on a ticket, has a better cabin. This also told us that if we want reduce the attributes number in a model we can choose one among the three *Pcalss*, *Farepp* and *Ticket_class*. 
+
+We know that we only a few attributes in this example. The important point is that Correlation analysis is very useful. It can be used to reduce the number of attributes and has no or less information loss. 
+
+### PCA Analysis
+
+PCA and Factor analysis are most commonly used methods in dimension reduction. In a general data science project, it is possible that a given dataset can has tens or hundreds of features (attributes). For example in the text analysis, if we count words appearance in a document, we could easily have hundreds even thousands of dimensions. If we want reduce the dimension into a manageable numbers, PCA can be very useful. Particularly in visualization, human are not good with anything over three dimensions. 
+
+PCA uses *Eigenvalues* and *Eigenvectors*^[In linear algebra, an Eigenvector or characteristic vector of a linear transformation is a nonzero vector that changes by a scalar factor when that linear transformation is applied to it.] to reserve the original data information and variation as much as possible. Therefore PCA is simple to calculate the given data's Eigenvectors. 
+
+PCA normally has the following steps:
+
+1. Calculate the Covariance Matrix^[Covariance matrix is a square matrix giving the covariance between each pair of elements of a given random vector.] of the given dataset.
+2. Calculate the Eigenvalues and Eigenvectors of the resulting Covariance Matrix.
+3. The resulting Eigenvector that correspond to the largest Eigenvalue can then be used to reconstruct a large fraction of the variance of the original dataset.
+
+In R, we have a function called `prcomp()`. It takes numerical values. So for demonstration we only use the same 8 attributes we have used in our correlation analysis. Let us take the first 
+
+```{r}
+# RE_data %>%
+#   select(Survived, Pclass, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Embarked) %>%
+# RE_data[1:891, ]
+summary(RE_data[1:891,c(2:3,5:9,12)])
+data.pca <- prcomp(RE_data[1:891,c(2:3,5:9,12)], center = TRUE, scale = TRUE)
+summary(data.pca)
+```
+We have obtained 8 principal components, which named as PC1 to PC8. Each of these explains a percentage of the total variation in the dataset. That is to say, PC1 explains 29% of the total variance, which means that nearly one-thirds of the information in the dataset (8 variables) can be encapsulated by just that one principal component. PC2 explains 20% of the variance. So, by knowing the position of a sample in relation to just PC1 and PC2, you can get a very accurate view on where it stands in relation to other samples, as just PC1 and PC2 can explain 49% almost half of the variance.
+
+Let's call str() to have a look at the PCA object.
+
+```{r}
+str(data.pca)
+```
+I won't describe the results in detail, but the PCA object contains the following information:
+
+- The center point (`$center`), scaling (`$scale`), standard deviation(`sdev`) of each principal component
+- The relationship (correlation or anti-correlation, etc) between the initial variables and the principal components (`$rotation`)
+- The values of each sample in terms of the principal components (`$x`)
+
+Let us plot PCA, we need to use **biplot**, which includes both the position of each sample in terms of PC1 and PC2 and also will show how the initial variables map onto this. We need ggbiplot package, which offers a user-friendly and pretty function to plot biplots. A biplot is a type of plot that will allow you to visualize how the samples relate to one another in our PCA (which samples are similar and which are different) and will simultaneously reveal how each variable contributes to each principal component.
+```{r PCA, echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "The 1st and the 2nd PCs ploted with ggplot_pca"}
+#install.packages("devtools")
+#install.packages("remotes")
+#remotes::install_github("vqv/ggbiplot")
+# 
+#Library(devtools)
+#install_github("vqv/ggbiplot")
+# 
+#library(ggbiplot)
+library(AMR)
+#AMR::ggplot_pca(data.pca)
+ggplot_pca(data.pca)
+#biplot(data.pca)
+```
+The axes are seen as arrows originating from the center point. Here, you see that the variables *Fare_pp*, *Age_group* and *Survived* contribute to PC1, with higher values in those variables moving the records to the right on this plot. This lets you see how the data points relate to the axes. 
+
+We also have other principal components available although they may have less weights in comparison with the first two. Each of other components map differently to the original variables. We can also plot these other components, for example PC3 and PC4. If you look into the PC3 and PC4, they are *Sex* and *Age_group*. You may wondering what do they do with our prediction. Well, it can show at least the contribution between them with the dependent variable *Survived*, in addition, it can also show the covariance of the both with other variables.  
+```{r PCA2, echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "The 3rd and the 4th PC ploted with ggplot_pca"}
+ggplot_pca(data.pca, ellipse=TRUE, choices=c(3,4))
+```
+This Plot shows that original attributes *Ticket_class*, *Sex*, *Fare_PP* and *Group_size* contribute to PC3, which is *Sex*, in a negative way. It means that with lower values in those variables, the records will move to the left on this plot.
+
+The relationship between original attributes with the newly created Principle Components also indicates the relationship between original attributes and correlation among them. 
+
+PCA and other methods such as Factor analysis and SVD (Singular Value Decomposition) are the general dimension deduction methods. User are encouraged to review and make use of them. 
