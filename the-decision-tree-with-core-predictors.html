@@ -166,49 +166,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="the-decision-tree-with-core-predictors" class="section level2">
 <h2><span class="header-section-number">1.3</span> The Decision Tree with Core Predictors</h2>
-<p>We have identified the correlation between response variable <em>Survived</em> and other attributes in the previous Chapter. Let us try to improve the basic <em>Sex</em> model by introduce more predictors. Let us consider the three most correlated attributes.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="the-decision-tree-with-core-predictors.html#cb25-1"></a><span class="co"># The full-house classifier apart from name and ticket </span></span>
-<span id="cb25-2"><a href="the-decision-tree-with-core-predictors.html#cb25-2"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb25-3"><a href="the-decision-tree-with-core-predictors.html#cb25-3"></a>model2 &lt;-<span class="st"> </span><span class="kw">rpart</span>(Survived <span class="op">~</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>Deck <span class="op">+</span><span class="st"> </span>Fare_pp <span class="op">+</span><span class="st"> </span>Age_group, <span class="dt">data =</span> train, <span class="dt">method=</span><span class="st">&quot;class&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="the-decision-tree-with-core-predictors.html#cb26-1"></a><span class="co"># assess the accuracy with train data</span></span>
-<span id="cb26-2"><a href="the-decision-tree-with-core-predictors.html#cb26-2"></a>Predict_model2_train &lt;-<span class="st"> </span><span class="kw">predict</span>(model2, train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb26-3"><a href="the-decision-tree-with-core-predictors.html#cb26-3"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(Predict_model2_train), <span class="kw">as.factor</span>(train<span class="op">$</span>Survived))</span>
-<span id="cb26-4"><a href="the-decision-tree-with-core-predictors.html#cb26-4"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<p>We have identified the correlation between dependent variable <em>Survived</em> and other attributes in the previous Chapter. Let us try to improve the basic <em>Sex</em> model by introduce more predictors. From the previous chapter we know that the five most predictive attributes are: <em>Sex</em>, <em>Pclass</em>, <em>HasCabinNum</em>, <em>Deck</em> and <em>Fare_PP</em>. Let us see if they can produce a good model.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="the-decision-tree-with-core-predictors.html#cb20-1"></a><span class="co"># A tree model with the top five attributes </span></span>
+<span id="cb20-2"><a href="the-decision-tree-with-core-predictors.html#cb20-2"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb20-3"><a href="the-decision-tree-with-core-predictors.html#cb20-3"></a>model2 &lt;-<span class="st"> </span><span class="kw">rpart</span>(Survived <span class="op">~</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>HasCabinNum <span class="op">+</span><span class="st"> </span>Deck <span class="op">+</span><span class="st"> </span>Fare_pp, <span class="dt">data =</span> train, <span class="dt">method=</span><span class="st">&quot;class&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="the-decision-tree-with-core-predictors.html#cb21-1"></a><span class="co"># Assess model&#39;s accuracy with train data</span></span>
+<span id="cb21-2"><a href="the-decision-tree-with-core-predictors.html#cb21-2"></a>Predict_model2_train &lt;-<span class="st"> </span><span class="kw">predict</span>(model2, train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb21-3"><a href="the-decision-tree-with-core-predictors.html#cb21-3"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(Predict_model2_train), <span class="kw">as.factor</span>(train<span class="op">$</span>Survived))</span>
+<span id="cb21-4"><a href="the-decision-tree-with-core-predictors.html#cb21-4"></a>conMat<span class="op">$</span>table</span></code></pre></div>
 <pre><code>##           Reference
 ## Prediction   0   1
-##          0 526 140
-##          1  23 202</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="the-decision-tree-with-core-predictors.html#cb28-1"></a><span class="co">#conMat$overall</span></span>
-<span id="cb28-2"><a href="the-decision-tree-with-core-predictors.html#cb28-2"></a>predict2_train_accuracy &lt;-<span class="st"> </span>conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]</span>
-<span id="cb28-3"><a href="the-decision-tree-with-core-predictors.html#cb28-3"></a>predict2_train_accuracy</span></code></pre></div>
-<pre><code>##  Accuracy 
-## 0.8170595</code></pre>
-<p>Our assessment on model2’s accuracy is make a prediction on train data and compare the predicted value with the original value. It shows our model2’s accuracy is 79%. This is great! Let us use this model to make a prediction on test dataset.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="the-decision-tree-with-core-predictors.html#cb30-1"></a>Prediction2 &lt;-<span class="st"> </span><span class="kw">predict</span>(model2, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb30-2"><a href="the-decision-tree-with-core-predictors.html#cb30-2"></a>submit2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> Prediction2)</span>
-<span id="cb30-3"><a href="the-decision-tree-with-core-predictors.html#cb30-3"></a><span class="kw">write.csv</span>(submit2, <span class="dt">file =</span> <span class="st">&quot;Tree_model2.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+##          0 524 140
+##          1  25 202</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="the-decision-tree-with-core-predictors.html#cb23-1"></a><span class="co">#conMat$overall</span></span>
+<span id="cb23-2"><a href="the-decision-tree-with-core-predictors.html#cb23-2"></a>predict2_train_accuracy &lt;-<span class="st"> </span>conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]</span>
+<span id="cb23-3"><a href="the-decision-tree-with-core-predictors.html#cb23-3"></a>predict2_train_accuracy</span></code></pre></div>
+<pre><code>## Accuracy 
+##   0.8148</code></pre>
+<p>Our assessment on model2’s accuracy is make a prediction on train data and compare the predicted value with the original value. It shows our model2’s accuracy is 81%. This is great! Let us use this model to make a prediction on test dataset.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="the-decision-tree-with-core-predictors.html#cb25-1"></a>Prediction2 &lt;-<span class="st"> </span><span class="kw">predict</span>(model2, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb25-2"><a href="the-decision-tree-with-core-predictors.html#cb25-2"></a>submit2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> Prediction2)</span>
+<span id="cb25-3"><a href="the-decision-tree-with-core-predictors.html#cb25-3"></a><span class="kw">write.csv</span>(submit2, <span class="dt">file =</span> <span class="st">&quot;Tree_model2.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p>We have produced our second prediction. We can also submit our result to Kaggle website for the second evaluation.</p>
-<p>This time, we can see the score has been increased to 0.76555. The accuracy on the test dataset has not been improved.</p>
+<p>This time, we can see the score is still <strong>0.76555</strong>. The accuracy on the test dataset has not been improved.</p>
 <p>Let us examine our classifier again by plot it in a graph.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="the-decision-tree-with-core-predictors.html#cb31-1"></a><span class="co"># plot our full house classifier </span></span>
-<span id="cb31-2"><a href="the-decision-tree-with-core-predictors.html#cb31-2"></a><span class="kw">prp</span>(model2, <span class="dt">type =</span> <span class="dv">0</span>, <span class="dt">extra =</span> <span class="dv">1</span>, <span class="dt">under =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb31-3"><a href="the-decision-tree-with-core-predictors.html#cb31-3"></a><span class="co"># plot our full house classifier </span></span>
-<span id="cb31-4"><a href="the-decision-tree-with-core-predictors.html#cb31-4"></a><span class="kw">fancyRpartPlot</span>(model2)</span></code></pre></div>
-<div class="figure"><span id="fig:tree2"></span>
-<img src="07-decision-tree_files/figure-html/tree2-1.svg" alt="Decision trees with multiple original predictors." width="50%" /><img src="07-decision-tree_files/figure-html/tree2-2.svg" alt="Decision trees with multiple original predictors." width="50%" />
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="the-decision-tree-with-core-predictors.html#cb26-1"></a><span class="co"># plot our full house classifier </span></span>
+<span id="cb26-2"><a href="the-decision-tree-with-core-predictors.html#cb26-2"></a><span class="kw">prp</span>(model2, <span class="dt">type =</span> <span class="dv">0</span>, <span class="dt">extra =</span> <span class="dv">1</span>, <span class="dt">under =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb26-3"><a href="the-decision-tree-with-core-predictors.html#cb26-3"></a><span class="co"># plot our full house classifier </span></span>
+<span id="cb26-4"><a href="the-decision-tree-with-core-predictors.html#cb26-4"></a><span class="kw">fancyRpartPlot</span>(model2)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:tree2"></span>
+<img src="07-decision-tree_files/figure-html/tree2-1.svg" alt="Decision trees with core predictors." width="50%" /><img src="07-decision-tree_files/figure-html/tree2-2.svg" alt="Decision trees with core predictors." width="50%" />
 <p class="caption">
-Figure 1.5: Decision trees with multiple original predictors.
+Figure 1.6: Decision trees with core predictors.
 </p>
 </div>
-<p>The above decision tree appeared much complicated than the first one and it goes a lot deeper than what we saw last time. Note that the both trees are binary trees (have two branches). For test conditions that more than two possible answers have been changed to a binary by auto add a split with them. For example, age are numbers and have 10s of possibilities, our model simply split it by a test condition <code>"Age &gt;= 6.5"</code>. Conditions have been automatically set for others attributes as well such as <code>"Pclass &gt;= 2.5"</code>, <code>"SibSp&gt;=2.5"</code>, and <code>"Fare &gt;= 18"</code>, etc.</p>
-<p>This conditions are not ideal, they can be changed if you know how to optimize decision tree. For the moment it looks very promising that resonates with the famous naval law that “women and kids first” is visible in our model.</p>
-<p>If you want look into the difference between our two predictions, you can do,</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="the-decision-tree-with-core-predictors.html#cb32-1"></a><span class="co"># build a comparison data frame to record each prediction results</span></span>
-<span id="cb32-2"><a href="the-decision-tree-with-core-predictors.html#cb32-2"></a>Tree_compare &lt;-<span class="st"> </span><span class="kw">data.frame</span>(test<span class="op">$</span>PassengerId, <span class="dt">predict1=</span>Prediction1, <span class="dt">predict2=</span>Prediction2)</span>
-<span id="cb32-3"><a href="the-decision-tree-with-core-predictors.html#cb32-3"></a><span class="co"># Find differences</span></span>
-<span id="cb32-4"><a href="the-decision-tree-with-core-predictors.html#cb32-4"></a>dif &lt;-<span class="st"> </span>Tree_compare[Tree_compare[<span class="dv">2</span>]<span class="op">!=</span>Tree_compare[<span class="dv">3</span>], ]</span>
-<span id="cb32-5"><a href="the-decision-tree-with-core-predictors.html#cb32-5"></a><span class="co">#show dif</span></span>
-<span id="cb32-6"><a href="the-decision-tree-with-core-predictors.html#cb32-6"></a>dif</span></code></pre></div>
+<p>The above decision tree appeared much complicated than the first one and it goes a lot deeper than what we saw with the decision tree only test on sex. Note that the both trees are binary trees (have two branches). For test conditions that more than two possible answers have been changed to a binary by auto add a split with them. For example, predictor <code>Fare_pp</code> takes real numbers and has many possibilities, our model simply split it by a test conditions <code>"Fare_pp &gt;= 8"</code> and “Fare_pp &lt; 7.2”. Conditions have been automatically set for others attributes as well such as <code>"Pclass &gt;= 2.5"</code>. These auto generated test conditions are not ideal, they can be changed if you know how to optimize decision tree. For the moment, we will take the default settings.</p>
+<p>We can also look into the difference between our two prediction models,</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="the-decision-tree-with-core-predictors.html#cb27-1"></a><span class="co"># build a comparison data frame to record each prediction results</span></span>
+<span id="cb27-2"><a href="the-decision-tree-with-core-predictors.html#cb27-2"></a>Tree_compare &lt;-<span class="st"> </span><span class="kw">data.frame</span>(test<span class="op">$</span>PassengerId, <span class="dt">predict1=</span>Prediction1, <span class="dt">predict2=</span>Prediction2)</span>
+<span id="cb27-3"><a href="the-decision-tree-with-core-predictors.html#cb27-3"></a><span class="co"># Find differences</span></span>
+<span id="cb27-4"><a href="the-decision-tree-with-core-predictors.html#cb27-4"></a>dif &lt;-<span class="st"> </span>Tree_compare[Tree_compare[<span class="dv">2</span>]<span class="op">!=</span>Tree_compare[<span class="dv">3</span>], ]</span>
+<span id="cb27-5"><a href="the-decision-tree-with-core-predictors.html#cb27-5"></a><span class="co">#show dif</span></span>
+<span id="cb27-6"><a href="the-decision-tree-with-core-predictors.html#cb27-6"></a>dif</span></code></pre></div>
 <pre><code>##      test.PassengerId predict1 predict2
 ## 893               893        1        0
 ## 896               896        1        0
@@ -247,7 +246,7 @@ Figure 1.5: Decision trees with multiple original predictors.
 ## 1268             1268        1        0
 ## 1275             1275        1        0
 ## 1301             1301        1        0</code></pre>
-<p>We can see the second classifier have produced 34 different predictions in comparison with the first classifier. That is a great improvement.</p>
+<p>We can see the second classifier have produced 37 different predictions in comparison with the first classifier. That is a great improvement.</p>
 </div>
             </section>
 

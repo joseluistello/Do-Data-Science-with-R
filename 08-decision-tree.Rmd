@@ -6,7 +6,18 @@ output:
 
 # Prediction with Decision Trees
 
-A decision tree is the most commonly used classification model, which in a flowchart-like tree structure. In a decision tree, each internal node (non-leaf node) denotes a test on an attribute, each branch represents an outcome of the test, and each leaf node (or terminal node) holds a class label. The topmost node in a tree is the root node. A typical decision tree is shown in Figure \@ref(fig:decisiontree). 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE,warning = FALSE)
+```
+
+```{r prediction1， out.width = "60%", fig.align ="center", echo =FALSE}
+knitr::include_graphics(here::here("images", "tree.png"))
+
+```
+
+Model building is the main task of any data science project after understood data, processed some attributes and analyzed the attributes' correlations and the individual's prediction power. AS described in the Chapter 5, there are many ways to build a prediction model. This Chapter we will demonstrate the most simple model - **Decision tree**.  
+
+A decision tree is a commonly used classification model, which in a flowchart-like tree structure. In a decision tree, each internal node (non-leaf node) denotes a test on an attribute, each branch represents an outcome of the test, and each leaf node (or terminal node) holds a class label. The topmost node in a tree is the root node. A typical decision tree is shown in Figure \@ref(fig:decisiontree). 
 
 
 ```{r decisiontree, fig.cap ="An example of decision tree", out.width = "50%", fig.align ="center", echo =FALSE}
@@ -17,7 +28,7 @@ It represents the concept buys_computer, that is, it predicts whether a customer
 
 Decision tree is built by a process called tree **induction**, which is the learning or constructing of decision trees from a class-labeled training dataset. Once a decision tree has been constructed, it can be used to classify a test dataset, which is also called **deduction**. 
 
-The deduction process is Starting from the root node of a decision tree, we apply the test condition to a record or data sample and follow the appropriate branch based on the outcome of the test. This will lead us either to another internal node, for which a new test condition is applied, or to a leaf node. The class label associated with the leaf node is then assigned to the record or the data sample. For example, to predict a new data input with `'age=senior'` and `'credit_rating=excellent'`, traverse starting from the root goes to the most right side along the decision tree and reaches to a leaf `yes`, which is indicated by the dot line in the figure \@ref(ref:decisiontree). 
+The deduction process is Starting from the root node of a decision tree, we apply the test condition to a record or data sample and follow the appropriate branch based on the outcome of the test. This will lead us either to another internal node, for which a new test condition is applied, or to a leaf node. The class label associated with the leaf node is then assigned to the record or the data sample. For example, to predict a new data input with `'age=senior'` and `'credit_rating=excellent'`, traverse starting from the root goes to the most right side along the decision tree and reaches to a leaf `yes`, which is indicated by the dot line in the figure \@ref(fig:decisiontree). 
 
 Build a decision tree classifier needs to make two decisions:
 
@@ -68,7 +79,7 @@ knitr::include_graphics(here::here("images", "age1.png"))
 
 knitr::include_graphics(here::here("images", "age2.png"))
 ```
-3. Continuous Attributes. For continuous attributes, the test condition can be constructed as a comparison test $(A<v)$ or $(A≥v)$ with binary outcomes, or a range query with outcomes of the form $v_i≤A<v_{i+1}$, For $i=1,…,k$. The difference between these approaches is shown in Figure 11.34. For the binary case, the decision tree algorithm must consider all possible split positions v, and it selects the one that produces the best partition. For the multiway split, the algorithm must consider all possible ranges of continuous values. 
+3. Continuous Attributes. For continuous attributes, the test condition can be constructed as a comparison test $(A<v)$ or $(A≥v)$ with binary outcomes, or a range query with outcomes of the form $v_i≤A<v_{i+1}$, For $i=1,…,k$. The difference between these approaches is shown in Figure \@ref(fig:fare). For the binary case, the decision tree algorithm must consider all possible split positions v, and it selects the one that produces the best partition. For the multiway split, the algorithm must consider all possible ranges of continuous values. 
 
 ```{r fare, fig.cap ="Test condition for continuous attributes.", out.width = "100%",  fig.align ="center", echo =FALSE}
 
@@ -122,14 +133,15 @@ We need a number of libraries to make our code works.
 
 
 ```{r}
+#load rpart the library which support decision tree 
 library(rpart)
-# build our first model. we only use Sex attribute, check help on rpart, 
-# this model only takes Sex as predictor and Survived as the consequencer
+# Build our first model. we only use Sex attribute, check help on rpart, This model only takes Sex as predictor and Survived as the consequencer
+# load our re-engineered data set and seperate train and test datasets
 RE_data <- read.csv("RE_data.csv", header = TRUE)
 train <- RE_data[1:891, ]
 test <- RE_data[892:1309, ]
-model1 <- rpart(Survived ~ Sex, data = train,
-              method="class")
+#build a decision tree model use rpart. 
+model1 <- rpart(Survived ~ Sex, data = train, method="class")
 ```
 
 Simple! isn't it? There are only three lines of code. you can see we have the first two lines to build two variables 'train' and 'test' to hold our training dataset and testing dataset. The model is simple a function invocation, the function is called 'rpart'.
@@ -141,12 +153,16 @@ For Kaggle competition, you can produce predictions on the test dataset provided
 In practice, people would not build a prediction model and use it to produce a prediction on the test dataset blandly to finish the job. We want know how our model is performing before use it to do prediction on the test dataset. One way to get to know about the model's performance is to make a prediction on the training dataset or part of it. So we can compare the model's prediction with the original value.     
 
 ```{r}
+#library caret is a comprehensive library support all sorts of model analysis
 library(caret)
-# assess the accuracy with train data
+options(digits=4)
+# assess the model's accuracy with train dataset by make a prediction on the train data. 
 Predict_model1_train <- predict(model1, train, type = "class")
+#build a confusion matrix to make comparison
 conMat <- confusionMatrix(as.factor(Predict_model1_train), as.factor(train$Survived))
+#show confusion matrix 
 conMat$table
-#conMat$overall
+#show percentage of same values - accuracy
 predict_train_accuracy <- conMat$overall["Accuracy"]
 predict_train_accuracy
 ```
@@ -162,21 +178,18 @@ Our prediction is produced. Let us submit to Kaggle for an evaluation. We need t
 # produce a submit with Kaggle required format that is only two attributes: PassengerId and Survived
 submit1 <- data.frame(PassengerId = test$PassengerId, Survived = Prediction1)
 # Write it into a file "Tree_Model1.CSV"
-#write.csv(submit1, file = "Tree_Model1.CSV", row.names = FALSE)
+write.csv(submit1, file = "Tree_Model1.CSV", row.names = FALSE)
 ```
-Once we submit this result to Kaggle. Kaggle will evaluate our results and provide a feedback. That is a good way to know how good the model performed for unknown data. The Kaggle feedback tells us that we have scored 0.76555. It means our prediction has **76.555%** accuracy. 
+Once we submit this result to Kaggle. Kaggle will evaluate our results and provide a feedback score. That is a good way to know how good the model performed for unknown data. The Kaggle feedback tells us that we have scored **0.76555**. It means our prediction's accuracy is **76.555%**. This accuracy is lower than the accuracy we have assessed with the training dataset, which was **78.68%**.
 
-It prediction accuracy is lower than the accuracy we have assessed on the training dataset, which was 78.68%.
-
-Let us look a bit more into on our prediction model. We check our prediction's death and survive ratio to compare with ratio on the train dataset.  
+Let us look a bit more into our prediction model's performance. We check our prediction's death and survive ratio on the test dataset and compare with the same ratio on the train dataset.  
 
 ```{r}
 # Inspect prediction
 summary(submit1$Survived)
-prop.table(table(submit1$Survived))
+prop.table(table(submit1$Survived, dnn="Test survive percentage"))
 #train survive ratio
-#prop.table(table(as.factor(train$Survived)))
-
+prop.table(table(as.factor(train$Survived), dnn="Train survive percentage"))
 ```
 The result shows that among total of 418 passenger in the test dataset, 266 passenger predicted perished (with survived value 0), which counts as 64% and 152 passenger predicted to be survived (with survived value 1) and which count as 36%. This is not too far from the radio on the training dataset, which was 62% survived and 38% perished see \@ref(survive).   
 
@@ -186,22 +199,22 @@ We know that our model only had one test condition which is *Sex*. From the trai
 # add Sex back to the submit and form a new data frame called compare
 compare <- data.frame(submit1[1], Sex = test$Sex, submit1[2])
 # Check train sex and Survived ratios
-prop.table(table(train$Sex, train$Survived), 1)
+prop.table(table(train$Sex, train$Survived), margin = 1)
 # Check predicted sex radio
-prop.table(table(compare$Sex))
+prop.table(table(compare$Sex, dnn="Gender ratio in Test"))
 #check predicted Survive and Sex radio
-prop.table(table(compare$Sex, compare$Survived), 1)
+prop.table(table(compare$Sex, compare$Survived), margin = 1)
 ```
-It is clear that our model is too simple: it predict any male will be perished and every female will be survived! This is approved by the male and female ratio in the test dataset is identical to the death ratio in our prediction result. 
+It is clear that our model is too simple: it predicts any male will be perished and every female will be survived! This is approved by the gender (male and female) ratio in the test dataset is identical to the death ratio in our prediction result. 
 
-Further, our predicted results' survival ratio on sex is male 0% and female is 100%. It make sense, isn't it? since our model was trained using training dataset. The gender survive ratio were male only 18.89 and the death rate was 81%. Similarly, Female survival rate was 74.2 percent and death only has 25.79 percent. 
+Further, our predicted results' survival ratio on sex is  0% male and 100% female. It makes sense, doesn't it? Since our model was trained using the train dataset. The survive ratio based on gender were as: only 19% male survived and 81% of male perished. Similarly, Female survival rate was 74% survived and only 26% was perished. 
 
-Any prediction model will have to go for majority. But, you are not satisfied with this model, aren't you? You will not happy with the model only looking into sex of given dataset and predict a passenger's fate with gender! 
+Any prediction model will have to go for majority. But, we cannot be satisfied with this simple model that only looking into sex of given dataset and predict a passenger's fate with sex! 
 
-This is only the starting, we can improve on it. R has provided many useful library for classification, we can make use of them and improve our classifier. The first thing is that we want see our model (tree) and have a sense of the results produced, rather than simple call a function and produce a result. R has a lot of functions to help too.  
-Plot is a visual tool we can use to visual our model.
+This is only the starting, we can improve on it later. But before we do, let us have a close look into our model (the tree structure) and have a sense of the results it produced. R has a lot of functions to help. Plot is a visual tool we can use to visual our model.
 
-```{r, echo = FALSE, warning=FALSE, message=FALSE}
+```{r tree1, fig.cap ="The decision tree only has *Sex* test condition.", echo = FALSE, warning=FALSE, message=FALSE, fig.align ="center"}
+
 # load some useful libraries
 library(rattle)
 library(rpart.plot)
@@ -215,15 +228,15 @@ This graph is pretty and informative. The first box top number is the voting (ei
 
 ## The Decision Tree with Core Predictors 
 
-We have identified the correlation between response variable *Survived* and other attributes in the previous Chapter. Let us try to improve the basic *Sex* model by introduce more predictors. Let us consider the three most correlated attributes.
+We have identified the correlation between dependent variable *Survived* and other attributes in the previous Chapter. Let us try to improve the basic *Sex* model by introduce more predictors. From the previous chapter we know that the five most predictive attributes are: *Sex*, *Pclass*, *HasCabinNum*, *Deck* and *Fare_PP*. Let us see if they can produce a good model. 
 
 ```{r}
-# The full-house classifier apart from name and ticket 
+# A tree model with the top five attributes 
 set.seed(1234)
-model2 <- rpart(Survived ~ Pclass + Sex + Deck + Fare_pp + Age_group, data = train, method="class")
+model2 <- rpart(Survived ~ Sex + Pclass + HasCabinNum + Deck + Fare_pp, data = train, method="class")
 ```
 ```{r}
-# assess the accuracy with train data
+# Assess model's accuracy with train data
 Predict_model2_train <- predict(model2, train, type = "class")
 conMat <- confusionMatrix(as.factor(Predict_model2_train), as.factor(train$Survived))
 conMat$table
@@ -231,7 +244,7 @@ conMat$table
 predict2_train_accuracy <- conMat$overall["Accuracy"]
 predict2_train_accuracy
 ```
-Our assessment on model2's accuracy is make a prediction on train data and compare the predicted value with the original value. It shows our model2's accuracy is 79%. This is great! Let us use this model to make a prediction on test dataset. 
+Our assessment on model2's accuracy is make a prediction on train data and compare the predicted value with the original value. It shows our model2's accuracy is 81%. This is great! Let us use this model to make a prediction on test dataset. 
 
 ``` {r}
 Prediction2 <- predict(model2, test, type = "class")
@@ -241,22 +254,20 @@ write.csv(submit2, file = "Tree_model2.CSV", row.names = FALSE)
 
 We have produced our second prediction. We can also submit our result to Kaggle website for the second evaluation. 
 
-This time, we can see the score has been increased to 0.76555. The accuracy on the test dataset has not been improved. 
+This time, we can see the score is still **0.76555**. The accuracy on the test dataset has not been improved. 
 
 Let us examine our classifier again by plot it in a graph.
 
-```{r tree2, out.width='50%', fig.show='hold', fig.cap='Decision trees with multiple original predictors.'}
+```{r tree2, out.width='50%', fig.show='hold', fig.cap='Decision trees with core predictors.', fig.align ="center"}
 # plot our full house classifier 
 prp(model2, type = 0, extra = 1, under = TRUE)
 # plot our full house classifier 
 fancyRpartPlot(model2)
 ```
 
-The above decision tree appeared much complicated than the first one and it goes a lot deeper than what we saw last time. Note that the both trees are binary trees (have two branches). For test conditions that more than two possible answers have been changed to a binary by auto add a split with them. For example, age are numbers and have 10s of possibilities, our model simply split it by a test condition `"Age >= 6.5"`. Conditions have been automatically set for others attributes as well such as `"Pclass >= 2.5"`, `"SibSp>=2.5"`, and `"Fare >= 18"`, etc. 
+The above decision tree appeared much complicated than the first one and it goes a lot deeper than what we saw with the decision tree only test on sex. Note that the both trees are binary trees (have two branches). For test conditions that more than two possible answers have been changed to a binary by auto add a split with them. For example, predictor `Fare_pp` takes real numbers and has many possibilities, our model simply split it by a test conditions `"Fare_pp >= 8"` and "Fare_pp < 7.2". Conditions have been automatically set for others attributes as well such as `"Pclass >= 2.5"`. These auto generated test conditions are not ideal, they can be changed if you know how to optimize decision tree. For the moment, we will take the default settings. 
 
-This conditions are not ideal, they can be changed if you know how to optimize decision tree. For the moment it looks very promising that resonates with the famous naval law that "women and kids first" is visible in our model. 
-
-If you want look into the difference between our two predictions, you can do,
+We can also look into the difference between our two prediction models,
 
 ```{r}
 # build a comparison data frame to record each prediction results
@@ -266,14 +277,14 @@ dif <- Tree_compare[Tree_compare[2]!=Tree_compare[3], ]
 #show dif
 dif
 ```
-We can see the second classifier have produced 34 different predictions in comparison with the first classifier. That is a great improvement. 
+We can see the second classifier have produced 37 different predictions in comparison with the first classifier. That is a great improvement. 
 
 ## The Decision Tree with More Predictors
 
-Let us see if we can improve on this with more predictors from the correlation analysis and PCA analyses results. We use five most related attributes: *Sex*, *Pclass*, *HasCabinNum*, *Deck* and *Fare_pp*.
+We have seen that our 5 key predictor decision tree model has improved on the sex only prediction model. However, we know that our re-engineered data has more dimensions that contains useful information. Let us see if we can improve decision tree model with more predictors in addition to the correlation analysis and PCA analyses results. This time We add travel in groups, Age_group, embarked port and the title attributes: *Sex*, *Pclass*, *HasCabinNum*, *Deck* and *Fare_pp*.
 
 ```{r}
-model3 <- rpart(Survived ~ Sex + Fare_pp + Pclass + HasCabinNum + Deck + Group_size,
+model3 <- rpart(Survived ~ Sex + Fare_pp + Pclass + Title + Age_group + Group_size + Ticket_class  + Embarked,
               data=train,
               method="class")
 
@@ -285,7 +296,7 @@ conMat$table
 predict3_train_accuracy <- conMat$overall["Accuracy"]
 predict3_train_accuracy
 ```
-Our assessment on model3's accuracy on the train data shows model3's accuracy is 81%. It has increased a bit from the model2, which was 79%. Let us use this model to make another prediction on the test dataset and see if the accuracy on the test dataset is also increased. 
+Our assessment about the model3's accuracy on the train data shows the accuracy has increased to 85%. It is a big increase from 82% of model2. Let us use this model to make another prediction on the test dataset and see if the accuracy on the test dataset is also increased. 
 
 ``` {r}
 Prediction3 <- predict(model3, test, type = "class")
@@ -293,16 +304,16 @@ submit3<- data.frame(PassengerId = test$PassengerId, Survived = Prediction3)
 write.csv(submit3, file = "tree_model3.CSV", row.names = FALSE)
 ```
 
-After submit to Kaggle the feedback was **0.75837**. Despite the accuracy on train dataset has been decreased almost 4.5%, There is a little improvement on the test dataset. Let us look into the difference between the last two predictions, 
+After submit to Kaggle the feedback was **0.77033**. This is a big improvement on the test dataset. Let us look into the difference between the last two predictions, 
 
-```{r multi-trees, out.width='50%', fig.show='hold', fig.cap='Decision trees.'}
+```{r multi-trees, out.width='50%', fig.show='hold', fig.cap='Decision trees with more predictors.', fig.align ="center"}
 # plot our full house classifier 
 prp(model3, type = 0, extra = 1, under = TRUE)
 # plot our full house classifier 
 fancyRpartPlot(model3)
 ```
 
-We do the same to understand what went wrong.
+Again, let us look into the difference between predicted value on the test dataset.
 
 ```{r}
 # build a comparison data frame to record each prediction results
@@ -312,9 +323,7 @@ dif <- compare[compare[2] != compare[3], ]
 #show dif
 dif
 ```
-There are 37 differences. 
-
-Now let us use our re-engineered train dataset to train our classifier to see how could we improve our prediction results.
+There are 35 differences. 
 
 ## The Decision Tree with Full Predictors
 
@@ -322,8 +331,8 @@ Let us use all the attributes:
 
 ```{r}
 # The full-house classifier apart from name and ticket
-
-model4 <- rpart(Survived ~ Pclass+Sex+Embarked+HasCabinNum+Friend_size+Fare_pp+Title+Deck+Ticket_class+Family_size+Age_group,
+model4 <- rpart(Survived ~ Sex + Pclass + Age + SibSp + Parch + Embarked + HasCabinNum + Friend_size + Fare_pp + Title + Deck + Ticket_class + Family_size + Group_size + Age_group,
+#model4 <- rpart(Survived ~ .,
               data=train,
               method="class")
 #assess prediction accuracy on train data
@@ -334,7 +343,7 @@ conMat$table
 predict4_train_accuracy <- conMat$overall["Accuracy"]
 predict4_train_accuracy
 ```
-Our assessment on model4's accuracy on the train data shows model4's accuracy is 85%. This is hug improvement! Let us use this model to make a prediction on the test dataset. 
+Our assessment on model4's accuracy on the train data shows model4's accuracy is 85%. Let us use this model to make a prediction on the test dataset. 
 
 ```{r}
 # make prediction on test dataset
@@ -342,72 +351,81 @@ Prediction4 <- predict(model4, test, type = "class")
 submit4 <- data.frame(PassengerId = test$PassengerId, Survived = Prediction4)
 write.csv(submit4, file = "Tree_model4.CSV", row.names = FALSE)
 ```
-We have produced a new prediction with new model. You can submit to Kaggle for an evaluation. You may find it has a pretty bed score (**0.75119**)! It even worse than the decision tree with only looking in to sex!!! Let us examine our classifier again by plot it in a graph.
+We have produced a new prediction with new model. You can submit to Kaggle for an evaluation. You may find it has a pretty bed score (**0.75119**). Let us examine our classifier again by plot it in a graph.
 
-```{r tree3, out.width='50%', fig.show='hold', fig.cap='Decision trees.'}
+```{r tree3, out.width='50%', fig.show='hold', fig.cap='Decision trees.', fig.align ="center"} 
 # plot our full house classifier 
 prp(model4, type = 0, extra = 1, under = TRUE)
 fancyRpartPlot(model4)
 ```
 
-We can see from the tree, the first test condition is `"title = Mr"`. We know that there are large number of passengers are male adult and most of them are perished. However, we can see from our decision tree (left branch) that there are two further test conditions are "Ticket_class" and "Deck" numbers. Our tree end with 2 leafs are survived and one is dead. The purity on the leads are not very high, the highest is 39:366 and the lowest is 1:2. However we know that the most powerful predictor Sex and pclass has not been used. That could be an explanation of the poor performance. We will demonstrate the detailed interpretation of the model in the later chapter of report.  
+We can see from the tree, the first test condition is `"title = Mr"`. We know that there are large number of passengers are male adult and most of them are perished. However, we can see from our decision tree (left branch) that there are two further test conditions are "Ticket_class" and "Deck" numbers. Our tree end with 2 survived leafs and one dead leaf. The purity on the leafs are not very high, the highest is 39:366 (90%:10%) and the lowest is 7:14 (33%:67%). 
 
-Let us look into the difference between the last two predictions, 
+On the right hand side of the tree, although some leaves has higher purity but the overall percentage is very low. The most powerful predictor Sex and Pclass has been used towards the leaf of the tree. That could be an explanation of the poor performance. We will demonstrate the detailed interpretation of the model in the later chapter of cross validation and report.  
 
+Let us look into the difference between the last two predictions,
 ```{r}
 # build a comparison data frame to record each prediction results
-compare <- data.frame(test$PassengerId, predict2 = Prediction2 , predict4 = Prediction4)
+compare <- data.frame(test$PassengerId, predict3 = Prediction3 , predict4 = Prediction4)
 # Find differences
 dif2 <- compare[compare[2] != compare[3], ]
 #show dif
 dif2
 ```
-There are 40 different predictions in comparison with the second prediction model.
+There are 20 different predictions in comparison with the third prediction model3 that is the best model we have with the decision tree.
 
 ## Summary
 
-In this section, we have produced 4 decision tree models. Model1 and model2 used the original attributes as predictors and model3 and model4 used re-engineered datasets. We have produced 4 predictions with these 4 models on the test datasets. The predictions were submitted to Kaggle for evaluation since we have no idea the survival values for the test dataset. The results obtained from the Kaggle in terms of prediction's accuracy were 76.555%, 77.511%, 75.598% and 75.837% respectively. 
+So far, we have produced four predictions models with different predictors. We also used these four models to generate four submissions to the Kaggle competition for evaluation since we don't have the survival's values for the test dataset. 
+
+The results obtained from the Kaggle in terms of prediction's accuracy were 76.56%, 76.56%, 77.03% and 75.12% respectively. 
 
 We have noticed the accuracy differences between the model's assessment and model's test accuracy are:
 
 + model1's assessed accuracy was 78.68% but the accuracy on test was 76.555%; 
 
-+ Model2's accessed accuracy was 83.95% and the actual accuracy on test was 77.511%;
++ Model2's accessed accuracy was 81.48% and the actual accuracy on test was still 76.555%;
 
-Model3 and model4 are models trained on the re-engineered dataset. They were hoped to achieve a higher prediction's accuracy. 
++ Model3's accessed accuracy was 85.19%. and the actual accuracy on test was 77.03%; 
 
-+ Model3's accessed accuracy was 85.97%. and the actual accuracy on test was 75.598%; 
-
-+ Model4's accessed accuracy was 81.48% and the actual accuracy on test was 75.837%. 
++ Model4's accessed accuracy was 85.41% and the actual accuracy on test was 75.12%. 
 
 let us plot these model's accuracy, so we can have a comparison.
-```{r Tree_model_modelcompare, fig.cap = "Decision Tree models' accuracy on Train dataset and Test dataset."}
-
-
+```{r}
 library(tidyr)
-model <- c("M1","M2","M3","M4")
+options(digits = 10)
+Model <- c("Model1","Model2","Model3","Model4")
+Pre <- c("Sex", "Sex, Pclass, HasCabinNum, Deck, Fare_pp", "Sex, Fare_pp, Pclass, Title, Age_group, Group_size, Ticket_class, Embarked", "All")
+Train <- c(78.68, 81.48, 85.19, 85.41)
+Test <- c(76.56, 76.56, 77.03, 75.12)
+df1 <- data.frame(Model, Pre, Train, Test)
+df2 <- data.frame(Model, Train, Test)
+knitr::kable(df1, longtable = TRUE, booktabs = TRUE, digits = 2, col.names =c("Models", "Predictors", "Accuracy on Train", "Accuracy on Test"), 
+  caption = 'The Comparision among 4 decision tree models'
+)
+```
 
-Train <- c(78.68,83.95,85.97,81.48)
-Test <- c(76.555,77.511,75.598,75.837)
 
-df <- data.frame(model, Train, Test)
-
-df.long <- gather(df, Dataset, Accuracy, -model, factor_key =TRUE)
-
-ggplot(data = df.long, aes(x = model, y = Accuracy, fill = Dataset)) +
+```{r modelcompare, fig.cap = "Decision Tree models' accuracy on Train dataset and Test dataset."}
+df.long <- gather(df2, Dataset, Accuracy, -Model, factor_key =TRUE)
+ggplot(data = df.long, aes(x = Model, y = Accuracy, fill = Dataset)) +
   geom_col(position = position_dodge()) 
 
 ```
-From the plot we can see that all four models perform better when predicting the survive on the train dataset than they do on the test data. The biggest drop of prediction accuracy is model3, the difference is almost 10% from 85.97% on train data to 75.6% on the test dataset. The model3 has the highest model accuracy on the training dataset. The best accuracy on teh test dataset is the model2.
+From the plot we can see that:
 
-What surprising is that the accuracy of model3 and model4 are worse than model1 and model2. It indicates that there is a possibility of overfitting in model3 and model4 because the re-engineered dateset has done a lot of cleaning, formatting and transforming. Ideally, models built based on the re-engineered dataset should have a higher prediction accuracy. 
+1. All four models perform better when predicting the survive on the train dataset than they do on the test data. In other words, all models drop prediction accuracy when facing unseen new data.
+2. The accuracy on the training and testing datasets are both affected by the number of predictors used in the model. 
+3. It is not true that the more predictors a model has the better accuracy. Model4 has the worst accuracy on test dataset.
+4. The biggest drop of prediction accuracy is model4, the difference is almost 11% from 85% on train data to 74% on the test dataset. 
 
-The fact is model3 and model4 performed badly with the unseen data. This is a common problem with a prediction model. There are many possible reasons for this. We will investigate it by a method called "Cross Validation" later in Chapters 9. 
+The issue demonstrated by the model4 is called overfitting. That is a phenomena that a model has a higher prediction accuracy on the training dataset and subsequently drops prediction accuracy on the unseen data. Overfitting can be a consequence of many factors. One of the factor has been illustrated with the model4. **That is the more predictors a model used the more chance of the model's overfitting**. this is because the model will be well fitted with the training dataset. This can be seen from the prediction accuracy on the train dataset. The overfit will not suit the unseen data so the model will perform badly on the test dataset. 
 
+We will investigate overfitting by a method called "Cross Validation" later in Chapters 10. 
 
 ## Excerces 
 
-1. Prove there is overfitting with model3 and model4. The idea is take certain samples from the training dataset form a validate dataset. Remove the value of attribute *survived* from the validate dataset. Using models to a prediction on validate dataset. Compare their results. If model3 performs better than model2 on the validate dataset but not on test dataset (which is given by Kaggle), it shows the model has an overfit problem. Proive this exists on both model3 and model4.
+1. Prove there is overfitting with model3 and model4. The idea is take certain samples from the training dataset form a validate dataset. Remove the value of attribute *survived* from the validate dataset. Using models to a prediction on validate dataset. Compare their results. If model3 performs better than model2 on the validate dataset but not on test dataset (which is given by Kaggle), it shows the model has an overfitting problem. Prove this exists on both model3 and model4.
 
 Here are some sample code.
 

@@ -279,7 +279,7 @@ tunegrid <- expand.grid(.mtry=c(sqrt(ncol(trainData))))
 modellist <- list()
 for (ntree in c(500, 1000, 1500, 2000, 2500)) {
 	set.seed(3333)
-	fit <- train(Survived~., data=trainData, method="rf", metric="Accuracy", tuneGrid=tunegrid, trControl=control, ntree=ntree)
+	fit <- train(Survived ~ ., data=trainData, method="rf", metric="Accuracy", tuneGrid=tunegrid, trControl=control, ntree=ntree)
 	key <- toString(ntree)
 	modellist[[key]] <- fit
 }

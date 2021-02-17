@@ -440,7 +440,7 @@ Perhaps, it is a good time to introduce **Exploratory analysis**, on the contras
 
 To do so, we need to import some useful graphical tools provided by R community. We can then use them to plot *Survived* as an factor on *Pclass* numbers.
 
-```{r Survivalrate, fig.cap = "Total count and survive rate of passenger on Pcalss."}
+```{r Survivalrate, fig.cap = "Total count and survive rate of passenger on Pcalss.", fig.align = 'center'}
 
 # Load up ggplot2 package to use for visualizations
 library(ggplot2)
@@ -499,7 +499,7 @@ It is obvious that there is no error and missing values. The result confirms thi
 
 It is also simple to explore the relationship between gender and the survival rate. We had an assumption that the male passengers have a high death rate. We have plot tools in our disposal, let's make use of it. Since only dataset `train` has the values on *Survived*, it makes sense that we only plot relation between gender and survival on dataset `train`.
 
-```{r Survivalrateonsex, fig.cap = "Total count and survive rate of passenger on sex."}
+```{r Survivalrateonsex, fig.cap = "Total count and survive rate of passenger on sex.", fig.align = 'center'}
 # plot Survived over Sex on dataset train
 
 ggplot(data[1:891,], aes(x = Sex, fill = Survived)) +

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1.1 Steps to Build a Random Forest | 08-Random-Forest.utf8</title>
-  <meta name="description" content="" />
+  <title>1.2 Attributes Analysis | Predictor Selection</title>
+  <meta name="description" content="1.2 Attributes Analysis | Predictor Selection" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1.1 Steps to Build a Random Forest | 08-Random-Forest.utf8" />
+  <meta property="og:title" content="1.2 Attributes Analysis | Predictor Selection" />
   <meta property="og:type" content="book" />
   
   
@@ -16,11 +16,12 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1.1 Steps to Build a Random Forest | 08-Random-Forest.utf8" />
+  <meta name="twitter:title" content="1.2 Attributes Analysis | Predictor Selection" />
   
   
   
 
+<meta name="author" content="Gangmin Li" />
 
 
 
@@ -29,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="titiannic-prediction-with-random-forest.html"/>
-<link rel="next" href="titanic-prediciton-with-a-random-forest.html"/>
+<link rel="prev" href="predictor-selection-pricinples.html"/>
+<link rel="next" href="attributes-correlation-analysis.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -49,6 +50,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -132,16 +135,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Authoring Books with R Markdown</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="titiannic-prediction-with-random-forest.html"><a href="titiannic-prediction-with-random-forest.html"><i class="fa fa-check"></i><b>1</b> Titiannic Prediction with Random Forest</a><ul>
-<li class="chapter" data-level="1.1" data-path="steps-to-build-a-random-forest.html"><a href="steps-to-build-a-random-forest.html"><i class="fa fa-check"></i><b>1.1</b> Steps to Build a Random Forest</a></li>
-<li class="chapter" data-level="1.2" data-path="titanic-prediciton-with-a-random-forest.html"><a href="titanic-prediciton-with-a-random-forest.html"><i class="fa fa-check"></i><b>1.2</b> Titanic prediciton with a Random Forest</a><ul>
-<li class="chapter" data-level="" data-path="titanic-prediciton-with-a-random-forest.html"><a href="titanic-prediciton-with-a-random-forest.html#random-forest-with-key-predictors"><i class="fa fa-check"></i>Random Forest with Key Predictors</a></li>
-<li class="chapter" data-level="" data-path="titanic-prediciton-with-a-random-forest.html"><a href="titanic-prediciton-with-a-random-forest.html#random-forest-with-more-variables"><i class="fa fa-check"></i>Random Forest with More Variables</a></li>
-<li class="chapter" data-level="" data-path="titanic-prediciton-with-a-random-forest.html"><a href="titanic-prediciton-with-a-random-forest.html#random-forest-with-all-variables"><i class="fa fa-check"></i>Random Forest with All Variables</a></li>
-<li class="chapter" data-level="1.2.1" data-path="titanic-prediciton-with-a-random-forest.html"><a href="titanic-prediciton-with-a-random-forest.html#comparision-the-three-random-forest-models"><i class="fa fa-check"></i><b>1.2.1</b> Comparision the Three Random Forest Models</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>1.3</b> Summary</a></li>
-<li class="chapter" data-level="1.4" data-path="excercise-8.html"><a href="excercise-8.html"><i class="fa fa-check"></i><b>1.4</b> Excercise 8</a></li>
+<li class="chapter" data-level="1" data-path="predictor-selection.html"><a href="predictor-selection.html"><i class="fa fa-check"></i><b>1</b> Predictor Selection</a><ul>
+<li class="chapter" data-level="1.1" data-path="predictor-selection-pricinples.html"><a href="predictor-selection-pricinples.html"><i class="fa fa-check"></i><b>1.1</b> Predictor Selection Pricinples</a></li>
+<li class="chapter" data-level="1.2" data-path="attributes-analysis.html"><a href="attributes-analysis.html"><i class="fa fa-check"></i><b>1.2</b> Attributes Analysis</a></li>
+<li class="chapter" data-level="1.3" data-path="attributes-correlation-analysis.html"><a href="attributes-correlation-analysis.html"><i class="fa fa-check"></i><b>1.3</b> Attributes Correlation Analysis</a></li>
+<li class="chapter" data-level="1.4" data-path="pca-analysis.html"><a href="pca-analysis.html"><i class="fa fa-check"></i><b>1.4</b> PCA Analysis</a></li>
+<li class="chapter" data-level="1.5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>1.5</b> Summary</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
@@ -155,7 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Predictor Selection</a>
           </h1>
         </div>
 
@@ -163,36 +162,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="steps-to-build-a-random-forest" class="section level2">
-<h2><span class="header-section-number">1.1</span> Steps to Build a Random Forest</h2>
-<ol style="list-style-type: decimal">
-<li>Randomly select <span class="math inline">\(k\)</span> attributes from total <span class="math inline">\(m\)</span> attributes where <span class="math inline">\(k &lt; m\)</span>, the default value of <span class="math inline">\(k\)</span> is generally <span class="math inline">\(\sqrt{m}\)</span>.</li>
-<li>Among the <span class="math inline">\(k\)</span> attributes, calculate the node <span class="math inline">\(d\)</span> using the <strong>best split point</strong></li>
-<li>Split the node into a number of nodes using the <strong>best split method</strong>. See Section @ref(best_split), by default R random Forest uses Gini impurity values</li>
-<li>Repeat the previous steps build an individual decision tree</li>
-<li>Build a forest by repeating all steps for <span class="math inline">\(n\)</span> number times to create <span class="math inline">\(n\)</span> number of trees</li>
-</ol>
-<p>After the random forest trees and classifiers are created, predictions can be made using the following steps:</p>
-<ol style="list-style-type: decimal">
-<li>Run the test data through the rules of each decision tree to predict the outcome and then</li>
-<li>Store that predicted target outcome</li>
-<li>Calculate the votes for each of the predicted targets</li>
-<li>Output the most highly voted predicted target as the final prediction</li>
-</ol>
-<p>Similar with the decision tree model, random forest also has many implementations already built. You do not need to write code to do the actual model construction. In R, you can use a package called ‘randomForest’. There are a number of terminologies that are used in random forest algorithms need to be understood, such as:</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Variance</strong>. When there is a change in the training data algorithm, this is the measure of that change. The most commonly used parameters to reflect changes are <em>ntree</em> and <em>mtry</em>.</p></li>
-<li><p><strong>Bagging</strong>. This is a variance-reducing method that trains the model based on random sub-samples of training data.</p></li>
-<li><p><strong>Out-of-bag (oob)</strong> error estimate - The random forest classifier is trained using bootstrap aggregation, where each new tree is fit from a bootstrap sample of the training dataset. The out-of-bag (OOB) error is the average error for each calculation using predictions from the trees that do not contain their respective bootstrap sample. This enables the random forest classifier to be adjusted and validated during training.</p></li>
-</ol>
+<div id="attributes-analysis" class="section level2">
+<h2><span class="header-section-number">1.2</span> Attributes Analysis</h2>
+<p>To obtain the attributes’ prediction power and the correlation among them, the basic analytic tasks need to be performed. These analytic tasks include Correlation Analysis, Principal component analysis (PCA) and Possibly factor analysis (FA).</p>
+<ul>
+<li><p><strong>Correlation Analysis</strong>. Analysis the correlation among the attributes, and ordering them based the correlation of attributes with the dependent attribute. Select appropriate number of the attributes from the highest value towards the lowest value of correlation.</p></li>
+<li><p><strong>Principal component analysis (PCA)</strong>. PCA is a dimension reduction method by projecting each data point onto only the first few principal components to obtain lower-dimensional data while preserving as much of the data’s variation as possible. PCA only works on numerical variables.</p></li>
+<li><p><strong>Possibly factor analysis (FA)</strong>. Factor analysis is a statistical method used to describe variability among observed, correlated variables in terms of a potentially lower number of unobserved variables called factors. For example, it is possible that variations in six observed variables mainly reflect the variations in two unobserved (underlying) variables.</p></li>
+</ul>
+<p>There are other similar tasks such as <strong>MCA</strong>, <strong>FAMD</strong>, <strong>CA</strong>, and <strong>MFA</strong>. MCA stands for multiple correspondence analysis. It can only apply to categorical variables; FAMD stands for factor analysis of mixed data. It can apply to both numerical and categorical variables; CA is correspondence analysis, it can only works on two variables (contingency table); MFA is multiple factor analysis, it is needed only when you have variables set by group. These tasks are all specific of the PCA.</p>
+<p>In this Chapter we will demonstrate the basic Correlation analysis and principal component analysis to understand the relationship among attributes and between predictor and the dependent variable. We will continue to use the Titanic example.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="titiannic-prediction-with-random-forest.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="titanic-prediciton-with-a-random-forest.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="predictor-selection-pricinples.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="attributes-correlation-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -243,20 +230,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

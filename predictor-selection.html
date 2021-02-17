@@ -31,7 +31,7 @@
   
   
 
-<link rel="next" href="attributes-correlation-analysis.html"/>
+<link rel="next" href="predictor-selection-pricinples.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -135,9 +135,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Authoring Books with R Markdown</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="predictor-selection.html"><a href="predictor-selection.html"><i class="fa fa-check"></i><b>1</b> Predictor selection</a><ul>
-<li class="chapter" data-level="" data-path="attributes-correlation-analysis.html"><a href="attributes-correlation-analysis.html"><i class="fa fa-check"></i>Attributes Correlation Analysis</a></li>
-<li class="chapter" data-level="" data-path="pca-analysis.html"><a href="pca-analysis.html"><i class="fa fa-check"></i>PCA Analysis</a></li>
+<li class="chapter" data-level="1" data-path="predictor-selection.html"><a href="predictor-selection.html"><i class="fa fa-check"></i><b>1</b> Predictor Selection</a><ul>
+<li class="chapter" data-level="1.1" data-path="predictor-selection-pricinples.html"><a href="predictor-selection-pricinples.html"><i class="fa fa-check"></i><b>1.1</b> Predictor Selection Pricinples</a></li>
+<li class="chapter" data-level="1.2" data-path="attributes-analysis.html"><a href="attributes-analysis.html"><i class="fa fa-check"></i><b>1.2</b> Attributes Analysis</a></li>
+<li class="chapter" data-level="1.3" data-path="attributes-correlation-analysis.html"><a href="attributes-correlation-analysis.html"><i class="fa fa-check"></i><b>1.3</b> Attributes Correlation Analysis</a></li>
+<li class="chapter" data-level="1.4" data-path="pca-analysis.html"><a href="pca-analysis.html"><i class="fa fa-check"></i><b>1.4</b> PCA Analysis</a></li>
+<li class="chapter" data-level="1.5" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>1.5</b> Summary</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
@@ -165,15 +168,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p class="date"><em>2/12/2021</em></p>
 </div>
 <div id="predictor-selection" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Predictor selection</h1>
-<p>It does not matter which methods you are going to use, it can only be effective once the basic analytic tasks are performed. These analytic tasks can provide you a clear understanding of the correlation and covariance of existing attributes. So you can be confident to selection suitable predictors. These tasks are:</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Correlation Analysis</strong>. Analysis the correlation among the attributes, and ordering them based the correlation of attributes with the dependent attribute. Select appropriate number of the attributes from the highest value towards the lowest value of correlation.</p></li>
-<li><p><strong>Principal component analysis (PCA)</strong>. PCA is a dimension reduction method by projecting each data point onto only the first few principal components to obtain lower-dimensional data while preserving as much of the data’s variation as possible. PCA only works on numerical variables.</p></li>
-<li><p><strong>Possibly factor analysis (FA)</strong>. Factor analysis is a statistical method used to describe variability among observed, correlated variables in terms of a potentially lower number of unobserved variables called factors. For example, it is possible that variations in six observed variables mainly reflect the variations in two unobserved (underlying) variables.</p></li>
-</ol>
-<p>There are other similar tasks such as <strong>MCA</strong>, <strong>FAMD</strong>, <strong>CA</strong>, and <strong>MFA</strong>. MCA stands for multiple correspondence analysis. It can only apply to categorical variables; FAMD stands for factor analysis of mixed data. It can apply to both numerical and categorical variables; CA is correspondence analysis, it can only works on two variables (contingency table); MFA is multiple factor analysis, it is needed only when you have variables set by group. These tasks are all specific of the PCA.</p>
-<p>In this section we will demonstrate the basic Correlation analysis and principal component analysis to understand the relationship among attributes and between predictor and the dependent variable. We will continue to use the Titanic example.</p>
+<h1><span class="header-section-number">Chapter 1</span> Predictor Selection</h1>
+<blockquote>
+<p>Variable selection is a means to an end and not an end itself.</p>
+<p>“Choose well. Your choice is brief, and yet endless.”</p>
+<p>— Johann Wolfgang von Goethe</p>
+</blockquote>
+<p>In the previous Chapter we have established an idea that PDA is a model building. In its three steps process, the first step is predictor selection. This is because most prediction model does not use all the attributes of the data samples. Only small amount of the predictors are used in a model. Therefore before a model can be constructed it is necessary to select predictors.</p>
 </div>
             </section>
 
@@ -181,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="attributes-correlation-analysis.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="predictor-selection-pricinples.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

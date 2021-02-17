@@ -166,71 +166,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="the-decision-tree-with-more-predictors" class="section level2">
 <h2><span class="header-section-number">1.4</span> The Decision Tree with More Predictors</h2>
-<p>Let us see if we can improve on this with more predictors from the correlation analysis and PCA analyses results. We use five most related attributes: <em>Sex</em>, <em>Pclass</em>, <em>HasCabinNum</em>, <em>Deck</em> and <em>Fare_pp</em>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="the-decision-tree-with-more-predictors.html#cb34-1"></a>model3 &lt;-<span class="st"> </span><span class="kw">rpart</span>(Survived <span class="op">~</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>Fare_pp <span class="op">+</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>HasCabinNum <span class="op">+</span><span class="st"> </span>Deck <span class="op">+</span><span class="st"> </span>Group_size,</span>
-<span id="cb34-2"><a href="the-decision-tree-with-more-predictors.html#cb34-2"></a>              <span class="dt">data=</span>train,</span>
-<span id="cb34-3"><a href="the-decision-tree-with-more-predictors.html#cb34-3"></a>              <span class="dt">method=</span><span class="st">&quot;class&quot;</span>)</span>
-<span id="cb34-4"><a href="the-decision-tree-with-more-predictors.html#cb34-4"></a></span>
-<span id="cb34-5"><a href="the-decision-tree-with-more-predictors.html#cb34-5"></a><span class="co">#assess prediction accuracy on train data</span></span>
-<span id="cb34-6"><a href="the-decision-tree-with-more-predictors.html#cb34-6"></a>Predict_model3_train &lt;-<span class="st"> </span><span class="kw">predict</span>(model3, train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb34-7"><a href="the-decision-tree-with-more-predictors.html#cb34-7"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(Predict_model3_train), <span class="kw">as.factor</span>(train<span class="op">$</span>Survived))</span>
-<span id="cb34-8"><a href="the-decision-tree-with-more-predictors.html#cb34-8"></a>conMat<span class="op">$</span>table</span></code></pre></div>
+<p>We have seen that our 5 key predictor decision tree model has improved on the sex only prediction model. However, we know that our re-engineered data has more dimensions that contains useful information. Let us see if we can improve decision tree model with more predictors from the correlation analysis and PCA analyses results. This time We add travel in groups aspect and the title attributes: <em>Sex</em>, <em>Pclass</em>, <em>HasCabinNum</em>, <em>Deck</em> and <em>Fare_pp</em>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="the-decision-tree-with-more-predictors.html#cb29-1"></a>model3 &lt;-<span class="st"> </span><span class="kw">rpart</span>(Survived <span class="op">~</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>Fare_pp <span class="op">+</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>HasCabinNum <span class="op">+</span><span class="st"> </span>Deck <span class="op">+</span><span class="st"> </span>Group_size <span class="op">+</span><span class="st"> </span>Title,</span>
+<span id="cb29-2"><a href="the-decision-tree-with-more-predictors.html#cb29-2"></a>              <span class="dt">data=</span>train,</span>
+<span id="cb29-3"><a href="the-decision-tree-with-more-predictors.html#cb29-3"></a>              <span class="dt">method=</span><span class="st">&quot;class&quot;</span>)</span>
+<span id="cb29-4"><a href="the-decision-tree-with-more-predictors.html#cb29-4"></a></span>
+<span id="cb29-5"><a href="the-decision-tree-with-more-predictors.html#cb29-5"></a><span class="co">#assess prediction accuracy on train data</span></span>
+<span id="cb29-6"><a href="the-decision-tree-with-more-predictors.html#cb29-6"></a>Predict_model3_train &lt;-<span class="st"> </span><span class="kw">predict</span>(model3, train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb29-7"><a href="the-decision-tree-with-more-predictors.html#cb29-7"></a>conMat &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(Predict_model3_train), <span class="kw">as.factor</span>(train<span class="op">$</span>Survived))</span>
+<span id="cb29-8"><a href="the-decision-tree-with-more-predictors.html#cb29-8"></a>conMat<span class="op">$</span>table</span></code></pre></div>
 <pre><code>##           Reference
 ## Prediction   0   1
-##          0 510 119
-##          1  39 223</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="the-decision-tree-with-more-predictors.html#cb36-1"></a><span class="co">#conMat$overall</span></span>
-<span id="cb36-2"><a href="the-decision-tree-with-more-predictors.html#cb36-2"></a>predict3_train_accuracy &lt;-<span class="st"> </span>conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]</span>
-<span id="cb36-3"><a href="the-decision-tree-with-more-predictors.html#cb36-3"></a>predict3_train_accuracy</span></code></pre></div>
-<pre><code>##  Accuracy 
-## 0.8226712</code></pre>
-<p>Our assessment on model3’s accuracy on the train data shows model3’s accuracy is 81%. It has increased a bit from the model2, which was 79%. Let us use this model to make another prediction on the test dataset and see if the accuracy on the test dataset is also increased.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="the-decision-tree-with-more-predictors.html#cb38-1"></a>Prediction3 &lt;-<span class="st"> </span><span class="kw">predict</span>(model3, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb38-2"><a href="the-decision-tree-with-more-predictors.html#cb38-2"></a>submit3&lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> Prediction3)</span>
-<span id="cb38-3"><a href="the-decision-tree-with-more-predictors.html#cb38-3"></a><span class="kw">write.csv</span>(submit3, <span class="dt">file =</span> <span class="st">&quot;tree_model3.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<p>After submit to Kaggle the feedback was <strong>0.75837</strong>. Despite the accuracy on train dataset has been decreased almost 4.5%, There is a little improvement on the test dataset. Let us look into the difference between the last two predictions,</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="the-decision-tree-with-more-predictors.html#cb39-1"></a><span class="co"># plot our full house classifier </span></span>
-<span id="cb39-2"><a href="the-decision-tree-with-more-predictors.html#cb39-2"></a><span class="kw">prp</span>(model3, <span class="dt">type =</span> <span class="dv">0</span>, <span class="dt">extra =</span> <span class="dv">1</span>, <span class="dt">under =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb39-3"><a href="the-decision-tree-with-more-predictors.html#cb39-3"></a><span class="co"># plot our full house classifier </span></span>
-<span id="cb39-4"><a href="the-decision-tree-with-more-predictors.html#cb39-4"></a><span class="kw">fancyRpartPlot</span>(model3)</span></code></pre></div>
-<div class="figure"><span id="fig:multi-trees"></span>
-<img src="07-decision-tree_files/figure-html/multi-trees-1.svg" alt="Decision trees." width="50%" /><img src="07-decision-tree_files/figure-html/multi-trees-2.svg" alt="Decision trees." width="50%" />
+##          0 510  97
+##          1  39 245</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="the-decision-tree-with-more-predictors.html#cb31-1"></a><span class="co">#conMat$overall</span></span>
+<span id="cb31-2"><a href="the-decision-tree-with-more-predictors.html#cb31-2"></a>predict3_train_accuracy &lt;-<span class="st"> </span>conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]</span>
+<span id="cb31-3"><a href="the-decision-tree-with-more-predictors.html#cb31-3"></a>predict3_train_accuracy</span></code></pre></div>
+<pre><code>## Accuracy 
+##   0.8474</code></pre>
+<p>Our assessment about the model3’s accuracy on the train data shows the accuracy has increased to 85%. It is a big increase from 82% of model2. Let us use this model to make another prediction on the test dataset and see if the accuracy on the test dataset is also increased.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="the-decision-tree-with-more-predictors.html#cb33-1"></a>Prediction3 &lt;-<span class="st"> </span><span class="kw">predict</span>(model3, test, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb33-2"><a href="the-decision-tree-with-more-predictors.html#cb33-2"></a>submit3&lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> Prediction3)</span>
+<span id="cb33-3"><a href="the-decision-tree-with-more-predictors.html#cb33-3"></a><span class="kw">write.csv</span>(submit3, <span class="dt">file =</span> <span class="st">&quot;tree_model3.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>After submit to Kaggle the feedback was <strong>0.75837</strong>. Despite the accuracy on train dataset has been decreased 3%, There is a little improvement on the test dataset. Let us look into the difference between the last two predictions,</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="the-decision-tree-with-more-predictors.html#cb34-1"></a><span class="co"># plot our full house classifier </span></span>
+<span id="cb34-2"><a href="the-decision-tree-with-more-predictors.html#cb34-2"></a><span class="kw">prp</span>(model3, <span class="dt">type =</span> <span class="dv">0</span>, <span class="dt">extra =</span> <span class="dv">1</span>, <span class="dt">under =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb34-3"><a href="the-decision-tree-with-more-predictors.html#cb34-3"></a><span class="co"># plot our full house classifier </span></span>
+<span id="cb34-4"><a href="the-decision-tree-with-more-predictors.html#cb34-4"></a><span class="kw">fancyRpartPlot</span>(model3)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:multi-trees"></span>
+<img src="07-decision-tree_files/figure-html/multi-trees-1.svg" alt="Decision trees with more predictors." width="50%" /><img src="07-decision-tree_files/figure-html/multi-trees-2.svg" alt="Decision trees with more predictors." width="50%" />
 <p class="caption">
-Figure 1.6: Decision trees.
+Figure 1.7: Decision trees with more predictors.
 </p>
 </div>
-<p>We do the same to understand what went wrong.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="the-decision-tree-with-more-predictors.html#cb40-1"></a><span class="co"># build a comparison data frame to record each prediction results</span></span>
-<span id="cb40-2"><a href="the-decision-tree-with-more-predictors.html#cb40-2"></a>compare &lt;-<span class="st"> </span><span class="kw">data.frame</span>(test<span class="op">$</span>PassengerId, <span class="dt">predict2 =</span> Prediction2 , <span class="dt">predict3 =</span> Prediction3)</span>
-<span id="cb40-3"><a href="the-decision-tree-with-more-predictors.html#cb40-3"></a><span class="co"># Find differences</span></span>
-<span id="cb40-4"><a href="the-decision-tree-with-more-predictors.html#cb40-4"></a>dif &lt;-<span class="st"> </span>compare[compare[<span class="dv">2</span>] <span class="op">!=</span><span class="st"> </span>compare[<span class="dv">3</span>], ]</span>
-<span id="cb40-5"><a href="the-decision-tree-with-more-predictors.html#cb40-5"></a><span class="co">#show dif</span></span>
-<span id="cb40-6"><a href="the-decision-tree-with-more-predictors.html#cb40-6"></a>dif</span></code></pre></div>
+<p>Again, let us look into the model to understand what went wrong.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="the-decision-tree-with-more-predictors.html#cb35-1"></a><span class="co"># build a comparison data frame to record each prediction results</span></span>
+<span id="cb35-2"><a href="the-decision-tree-with-more-predictors.html#cb35-2"></a>compare &lt;-<span class="st"> </span><span class="kw">data.frame</span>(test<span class="op">$</span>PassengerId, <span class="dt">predict2 =</span> Prediction2 , <span class="dt">predict3 =</span> Prediction3)</span>
+<span id="cb35-3"><a href="the-decision-tree-with-more-predictors.html#cb35-3"></a><span class="co"># Find differences</span></span>
+<span id="cb35-4"><a href="the-decision-tree-with-more-predictors.html#cb35-4"></a>dif &lt;-<span class="st"> </span>compare[compare[<span class="dv">2</span>] <span class="op">!=</span><span class="st"> </span>compare[<span class="dv">3</span>], ]</span>
+<span id="cb35-5"><a href="the-decision-tree-with-more-predictors.html#cb35-5"></a><span class="co">#show dif</span></span>
+<span id="cb35-6"><a href="the-decision-tree-with-more-predictors.html#cb35-6"></a>dif</span></code></pre></div>
 <pre><code>##      test.PassengerId predict2 predict3
 ## 893               893        0        1
 ## 896               896        0        1
 ## 911               911        0        1
+## 913               913        0        1
 ## 924               924        0        1
 ## 925               925        0        1
 ## 941               941        0        1
+## 956               956        0        1
+## 972               972        0        1
+## 981               981        0        1
 ## 982               982        0        1
 ## 996               996        0        1
 ## 1009             1009        0        1
 ## 1045             1045        0        1
 ## 1051             1051        0        1
+## 1053             1053        0        1
+## 1084             1084        0        1
+## 1086             1086        0        1
+## 1088             1088        0        1
+## 1093             1093        0        1
 ## 1106             1106        1        0
 ## 1117             1117        0        1
+## 1136             1136        0        1
 ## 1141             1141        0        1
 ## 1155             1155        0        1
+## 1173             1173        0        1
 ## 1175             1175        0        1
 ## 1176             1176        0        1
 ## 1183             1183        0        1
+## 1199             1199        0        1
 ## 1201             1201        0        1
 ## 1225             1225        0        1
+## 1231             1231        0        1
+## 1236             1236        0        1
 ## 1246             1246        0        1
-## 1301             1301        0        1</code></pre>
-<p>There are 37 differences.</p>
-<p>Now let us use our re-engineered train dataset to train our classifier to see how could we improve our prediction results.</p>
+## 1284             1284        0        1
+## 1301             1301        0        1
+## 1309             1309        0        1</code></pre>
+<p>There are 38 differences.</p>
 </div>
             </section>
 

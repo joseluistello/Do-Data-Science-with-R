@@ -301,15 +301,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-2"><a href="attvalue.html#cb17-2"></a><span class="co"># Look into Kaggle&#39;s explanation about Pclass: it is a proxy for social class i.e. rich or poor</span></span>
 <span id="cb17-3"><a href="attvalue.html#cb17-3"></a><span class="co"># It should be factor and it does not make sense to stay in int.</span></span>
 <span id="cb17-4"><a href="attvalue.html#cb17-4"></a>data<span class="op">$</span>Pclass &lt;-<span class="st"> </span><span class="kw">as.factor</span>(data<span class="op">$</span>Pclass)</span>
-<span id="cb17-5"><a href="attvalue.html#cb17-5"></a>test<span class="op">$</span>Pclass &lt;-<span class="st"> </span><span class="kw">as.factor</span>(test<span class="op">$</span>Pclass)</span>
-<span id="cb17-6"><a href="attvalue.html#cb17-6"></a>train<span class="op">$</span>Pclass &lt;-<span class="st"> </span><span class="kw">as.factor</span>(train<span class="op">$</span>Pclass)</span>
-<span id="cb17-7"><a href="attvalue.html#cb17-7"></a></span>
-<span id="cb17-8"><a href="attvalue.html#cb17-8"></a><span class="co"># Distribution across classes</span></span>
-<span id="cb17-9"><a href="attvalue.html#cb17-9"></a><span class="kw">table</span>(data<span class="op">$</span>Pclass)</span></code></pre></div>
-<pre><code>## 
+<span id="cb17-5"><a href="attvalue.html#cb17-5"></a></span>
+<span id="cb17-6"><a href="attvalue.html#cb17-6"></a><span class="co"># Distribution across classes</span></span>
+<span id="cb17-7"><a href="attvalue.html#cb17-7"></a><span class="kw">table</span>(data<span class="op">$</span>Pclass, <span class="dt">dnn =</span> <span class="st">&quot;Pclass values in the Data&quot;</span>)</span></code></pre></div>
+<pre><code>## Pclass values in the Data
 ##   1   2   3 
 ## 323 277 709</code></pre>
-<p>If you want, you can check the total of the three classes which is 1309. It equals to the total number of records in the <code>data</code> (total number fo passenger). And there is no other numbers than 1,2 and 3. So we can conclude that there is no missing value and no errors in <em>Pcalss</em>.</p>
+<p>If you want, you can check the total of the three classes which is 1309. It equals to the total number of records in the <code>Data</code> (total number fo passenger). And there is no other numbers than 1,2 and 3. So we can conclude that there is no missing value and no errors in <em>Pcalss</em>.</p>
 <p>It will be interesting to see the survival rate for each class,</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="attvalue.html#cb19-1"></a><span class="co"># Distribution across classes with survive</span></span>
 <span id="cb19-2"><a href="attvalue.html#cb19-2"></a><span class="kw">table</span>(data<span class="op">$</span>Pclass, data<span class="op">$</span>Survived)</span></code></pre></div>
@@ -323,7 +321,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>The death distribution</strong>. Among the three classes from class-1 to class-3 is: 80, 97 and 379. It confirms that the passenger in Class-3 has largest number of death (372);</p></li>
 <li><p><strong>The survival distribution</strong>. Among the three classes, class-1 has the highest number of survival (136);</p></li>
 <li><p><strong>The passengers distribution</strong>. Among the three classes, class-3 has the largest passenger numbers (372+119+218) in total, and overtaking other two classes together for both datasets <code>train</code> and <code>test</code> (372+119) &gt; ((80+97) + (136+87)).</p></li>
-<li><p>The last column is the pasenger distribution among the three glasses for dataset <code>test</code>. This is because its <em>Survived</em> value is “NA” (not defined).</p></li>
+<li><p>The last column is the passenger distribution among the three glasses for the test dataset. This is because its <em>Survived</em> value is “NA” (not defined).</p></li>
 </ol>
 <p>We can calculate distributions among the three classes in terms of percentage.</p>
 <ol style="list-style-type: decimal">
@@ -331,8 +329,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="attvalue.html#cb21-1"></a><span class="co"># Calculate the distribution on Pclass</span></span>
 <span id="cb21-2"><a href="attvalue.html#cb21-2"></a><span class="co"># Overall passenger distribution on classes.</span></span>
-<span id="cb21-3"><a href="attvalue.html#cb21-3"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(<span class="kw">as.factor</span>(data<span class="op">$</span>Pclass)))</span></code></pre></div>
-<pre><code>## 
+<span id="cb21-3"><a href="attvalue.html#cb21-3"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(<span class="kw">as.factor</span>(data<span class="op">$</span>Pclass), <span class="dt">dnn =</span> <span class="st">&quot;Pclass percentage in the Data&quot;</span>))</span></code></pre></div>
+<pre><code>## Pclass percentage in the Data
 ##         1         2         3 
 ## 0.2467532 0.2116119 0.5416348</code></pre>
 <p>That is 24.67% passenger in Class-1, 21.16% passenger is class-2 and 54.16% of passenger in class-3.</p>
@@ -340,20 +338,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The passenger’s distribution among the three classes given by dataset <code>train</code>:</li>
 </ol>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="attvalue.html#cb23-1"></a><span class="co"># Train data passenger distribution on classes.</span></span>
-<span id="cb23-2"><a href="attvalue.html#cb23-2"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(<span class="kw">as.factor</span>(train<span class="op">$</span>Pclass)))</span></code></pre></div>
-<pre><code>## 
+<span id="cb23-2"><a href="attvalue.html#cb23-2"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(<span class="kw">as.factor</span>(train<span class="op">$</span>Pclass),<span class="dt">dnn =</span> <span class="st">&quot;Pclass percentage in the Train&quot;</span>))</span></code></pre></div>
+<pre><code>## Pclass percentage in the Train
 ##         1         2         3 
 ## 0.2424242 0.2065095 0.5510662</code></pre>
 <p>The number tells us the distribution of passengers from dataset <code>train</code> is: class-1, 24.24%; class-2, 20.65% and class-3 has 55.1%.</p>
 <ol start="3" style="list-style-type: decimal">
-<li>The passenger’s distribution among the three classes given by dataset <code>test</code>:</li>
+<li>The passenger’s distribution among the three classes in the test dataset:</li>
 </ol>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="attvalue.html#cb25-1"></a><span class="co"># Test data passenger distribution on classes.</span></span>
-<span id="cb25-2"><a href="attvalue.html#cb25-2"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(<span class="kw">as.factor</span>(test<span class="op">$</span>Pclass)))</span></code></pre></div>
-<pre><code>## 
+<span id="cb25-2"><a href="attvalue.html#cb25-2"></a><span class="kw">prop.table</span>(<span class="kw">table</span>(<span class="kw">as.factor</span>(test<span class="op">$</span>Pclass), <span class="dt">dnn =</span> <span class="st">&quot;Pclass percentage in the Test&quot;</span>))</span></code></pre></div>
+<pre><code>## Pclass percentage in the Test
 ##         1         2         3 
 ## 0.2559809 0.2224880 0.5215311</code></pre>
-<p>Lastly, the passenger distribution from dataset <code>test</code> are: 25.6% in class-1, 22.24% in class-2 and 52.15% percent in class-3.</p>
+<p>Lastly, the passenger distribution from test dataset are: 25.6% in class-1, 22.24% in class-2 and 52.15% percent in class-3.</p>
 <p>We can see that the distribution of passengers, in terms of percentage, among the three classes are almost identical both in order and in proportion. That is the most passenger are in class-3, then class-1 and finally class-2.</p>
 <p>Let us look into death and survive distribution among the three classes<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>,</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="attvalue.html#cb27-1"></a><span class="co"># Calculate death distribution across classes with Train data</span></span>

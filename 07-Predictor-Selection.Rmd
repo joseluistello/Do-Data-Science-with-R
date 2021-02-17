@@ -8,21 +8,45 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Predictor selection 
+# Predictor Selection  
 
-It does not matter which methods you are going to use, it can only be effective once the basic analytic tasks are performed. These analytic tasks can provide you a clear understanding of the correlation and covariance of existing attributes. So you can be confident to selection suitable predictors. These tasks are:
+>
+>
+>Variable selection is a means to an end and not an end itself.
+>
+>“Choose well. Your choice is brief, and yet endless.”
+>
+>— Johann Wolfgang von Goethe
+>
 
-1. **Correlation Analysis**. Analysis the correlation among the attributes, and ordering them based the correlation of attributes with the dependent attribute. Select appropriate number of the attributes from the highest value towards the lowest value of correlation. 
+In the previous Chapter we have established an idea that PDA is a model building. In its three steps process, the first step is predictor selection. This is because most prediction model does not use all the attributes of the data samples. Only small amount of the predictors are used in a model. Therefore before a model can be constructed it is necessary to select predictors. 
 
-2. **Principal component analysis (PCA)**. PCA is a dimension reduction method by projecting each data point onto only the first few principal components to obtain lower-dimensional data while preserving as much of the data's variation as possible. PCA only works on numerical variables.
+## Predictor Selection Pricinples
 
-3. **Possibly factor analysis (FA)**. Factor analysis is a statistical method used to describe variability among observed, correlated variables in terms of a potentially lower number of unobserved variables called factors. For example, it is possible that variations in six observed variables mainly reflect the variations in two unobserved (underlying) variables.
+Selecting predictors needs to answer two questions: how many predictors and which on to be selected. It is a very complected issue that not only depends on the attributes but also the model to be constructed. The later can only be clear after the model construction. Let us focus on the first factor that is the the attributes themselves. 
+
+Predictor selection when considering the attributes, the principle are:
+
+1. Select as less as possible. Since the more predictors may increase the computation cost of a model and may reduce the model's performance by introducing noise and outliars. 
+2. Do not select attributes which does not have prediction power. the prediction power refers to the influence or impact a predictor on the dependent variable.
+3. Do not select attributes which does not provide extra information. Some attributes are strongly correlated or has Collinearity^[A phenomenon in which one predictor variable in a multiple regression model can be linearly predicted from the others with a substantial degree of accuracy.]. In this case only one predictor from them is enough.
+4. Always choose predictors follow the order of the prediction power. That is select the attribute has the most prediction power and then the second and the third, so on so forth. 
+
+## Attributes Analysis
+
+To obtain the attributes' prediction power and the correlation among them, the basic analytic tasks need to be performed. These analytic tasks include Correlation Analysis, Principal component analysis (PCA) and Possibly factor analysis (FA).
+
+- **Correlation Analysis**. Analysis the correlation among the attributes, and ordering them based the correlation of attributes with the dependent attribute. Select appropriate number of the attributes from the highest value towards the lowest value of correlation. 
+
+- **Principal component analysis (PCA)**. PCA is a dimension reduction method by projecting each data point onto only the first few principal components to obtain lower-dimensional data while preserving as much of the data's variation as possible. PCA only works on numerical variables.
+
+- **Possibly factor analysis (FA)**. Factor analysis is a statistical method used to describe variability among observed, correlated variables in terms of a potentially lower number of unobserved variables called factors. For example, it is possible that variations in six observed variables mainly reflect the variations in two unobserved (underlying) variables.
 
 There are other similar tasks such as **MCA**, **FAMD**, **CA**, and **MFA**. MCA stands for multiple correspondence analysis. It can only apply to categorical variables; FAMD stands for factor analysis of mixed data. It can apply to both numerical and categorical variables; CA is correspondence analysis, it can only works on two variables (contingency table); MFA is multiple factor analysis, it is needed only when you have variables set by group. These tasks are all specific of the PCA. 
 
-In this section we will demonstrate the basic Correlation analysis and principal component analysis to understand the relationship among attributes and between predictor and the dependent variable. We will continue to use the Titanic example.  
+In this Chapter we will demonstrate the basic Correlation analysis and principal component analysis to understand the relationship among attributes and between predictor and the dependent variable. We will continue to use the Titanic example.  
 
-## Attributes Correlation Analysis {-}
+## Attributes Correlation Analysis
 
 We have re-engineered the Titanic dataset. So instead of using the original dataset, let us consider the correlation among attributes of our re-engineered dataset. 
 
@@ -44,7 +68,7 @@ library(tictoc) # timing models
 
 RE_data$Survived <- as.numeric(RE_data$Survived)
 RE_data$Pclass <- as.numeric(RE_data$Pclass)
- RE_data$Title <- as.numeric(RE_data$Title)
+RE_data$Title <- as.numeric(RE_data$Title)
 RE_data$Sex <- as.numeric(RE_data$Sex)
 RE_data$Age_group <- as.numeric(RE_data$Age_group)
 RE_data$Ticket_class <- as.numeric(RE_data$Ticket_class)
@@ -52,9 +76,10 @@ RE_data$Deck <- as.numeric(RE_data$Deck)
 RE_data$HasCabinNum <- as.numeric(RE_data$HasCabinNum)
 RE_data$Embarked <- as.numeric(RE_data$Embarked)
 # cor<-RE_data %>%
-#   select(Survived, Pclass, Title, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Deck, HasCabinNum, Embarked) %>% cor(use="pairwise.complete.obs") %>%
-#   corrplot::corrplot.mixed(upper = "circle", tl.col = "black")
-cor<- RE_data %>% select(-c(Ticket,PassengerId)) %>%
+#    select(Survived, Pclass, Title, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Deck, HasCabinNum, Embarked) %>% cor(use="pairwise.complete.obs") %>%
+#    corrplot::corrplot.mixed(upper = "circle", tl.col = "black")
+# RE_data$Ticket
+cor<- RE_data %>% select(., -c(Ticket, PassengerId)) %>%
   cor(use="pairwise.complete.obs") %>%
   corrplot::corrplot.mixed(upper = "circle", tl.col = "black")
 ```
@@ -79,7 +104,7 @@ The similar concept can be read between attribute *Group_size* and other three a
 
 The important point is that the correlation analysis is very useful. It provide the basic reasons for our predictor selection. The idea is that we should choose attributes that has a high correlation with response variable. For example, if only choose three predictors in a model to predict *Survived*, we should choose the *Sex*, *Pclass* and *HasCabinNum* because they have the three highest absolute correlation values with *Survived*. If in a model we have chosen *Pclass* we may not need to choose *Fare_pp* and *Deck* because these three have large correction values.   
 
-## PCA Analysis {-}
+## PCA Analysis 
 
 PCA and Factor analysis are most commonly used methods in dimension reduction. In a general data science project, it is possible that a given dataset can has tens or hundreds of features (attributes). For example in the text analysis, if we count words appearance in a document, we could easily have hundreds even thousands of dimensions. If we want reduce the dimension into a manageable numbers, PCA can be very useful. Particularly in visualization, human are not good with anything over three dimensions. 
 
@@ -139,3 +164,7 @@ With these correlation and PCA analyses, We can have a pretty good idea about th
 Attribute selection is a parsimonious process that aims to identify a minimal set of predictors for the maximum gain (predictive accuracy). This approach is the opposite of data pre-process where as many meaningful attributes as possible are considered for potential use. 
 
 It is also important to recognize that attribute selection cloud be an iterative process that occurs throughout the model building process. It finishes after no more improvement can be achieved in terms of model accuracy.
+
+## Summary
+
+Predictor selection is a complex issue. It has been studied in many fields like Statistics, Data analysis, Predictions and Machine learning. In data science, it is addressed at individual attribute level and at multiple attributes level. At the individual attribute level it is called single variant analysis, it is many study the relationship between individual attribute and the dependent variable like what we have done in the Chapter 4 and 5. Correlation analysis between individual attribute and the dependent variable can provide the prediction power of each individual attribute so the selection can take predictors as wished. At the multiple attribute analysis, called multivariant analysis, focused on and covariant among the multiple arrtibutes, so the strong correlation or collinearity can be identified, so only representive attribute can be selected as a predictor. Predictor selection is also influenced and affacted by the model constructed. this will become clear in later Chapters after the model construction is introduced. 

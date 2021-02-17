@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.3 Multiple Models Comparison | 09-Model-Cross-Validation.utf8</title>
+  <meta name="description" content="" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.3 Multiple Models Comparison | 09-Model-Cross-Validation.utf8" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.3 Multiple Models Comparison | 09-Model-Cross-Validation.utf8" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="general-cross-validation-methods.html"/>
+<link rel="next" href="summary.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Authoring Books with R Markdown</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="model-cross-validation.html"><a href="model-cross-validation.html"><i class="fa fa-check"></i><b>1</b> Model Cross Validation</a><ul>
+<li class="chapter" data-level="1.1" data-path="models-underfitting-and-overfitting.html"><a href="models-underfitting-and-overfitting.html"><i class="fa fa-check"></i><b>1.1</b> Model’s Underfitting and Overfitting</a></li>
+<li class="chapter" data-level="1.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html"><i class="fa fa-check"></i><b>1.2</b> General Cross Validation Methods</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#single-model-cross-validation"><i class="fa fa-check"></i><b>1.2.1</b> Single model Cross Validation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#general-procedure-of-cross-validation"><i class="fa fa-check"></i><b>1.2.2</b> General Procedure of Cross-validation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-decision-tree-models"><i class="fa fa-check"></i><b>1.2.3</b> Cross Validation on Decision Tree Models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html"><i class="fa fa-check"></i><b>1.3</b> Multiple Models Comparison</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#regression-model-for-titanic"><i class="fa fa-check"></i><b>1.3.1</b> Regression Model for Titanic</a></li>
+<li class="chapter" data-level="1.3.2" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#support-vector-machine-model-for-titanic"><i class="fa fa-check"></i><b>1.3.2</b> Support Vector Machine Model for Titanic</a></li>
+<li class="chapter" data-level="1.3.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#neural-network-models"><i class="fa fa-check"></i><b>1.3.3</b> Neural Network Models</a></li>
+<li class="chapter" data-level="1.3.4" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#comparision-among-different-models"><i class="fa fa-check"></i><b>1.3.4</b> Comparision among different models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>1.4</b> Summary</a></li>
+<li class="chapter" data-level="1.5" data-path="excersis.html"><a href="excersis.html"><i class="fa fa-check"></i><b>1.5</b> Excersis</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-models-comparison" class="section level2">
+<h2><span class="header-section-number">1.3</span> Multiple Models Comparison</h2>
+<p>Multiple model comparison is also called Cross Model Validation. The idea is to use multiple models constructed from the same training dataset and validated using the same verification dataset to find out the performance of the different models.</p>
+<p>We somehow already used the technique to compare our decision tree models and random forest models. Cross model verification has a broader meaning that refers to the comparison between different models produced by the different algorithms or completely different approaches such as decision tree against random forest or decision tree against Support Victor Machine(SVM) etc.</p>
+<p>To demonstrate cross model validation, let us produce a few more models with complete different algorithms with same predictors as much as possible. Let us use <em>Sex</em>, <em>Fare_pp</em>, <em>Pclass</em>, <em>Title</em>, <em>Age_group</em>, <em>Group_size</em>, <em>Ticket_class</em>, <em>Embarked</em> as predictors.</p>
+<div id="regression-model-for-titanic" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Regression Model for Titanic</h3>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="multiple-models-comparison.html#cb90-1"></a>LR_Model &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> Survived <span class="op">~</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>Title <span class="op">+</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>Age_group <span class="op">+</span><span class="st"> </span>Group_size <span class="op">+</span><span class="st"> </span>Ticket_class  <span class="op">+</span><span class="st"> </span>Fare_pp <span class="op">+</span><span class="st"> </span>Embarked, <span class="dt">family =</span> binomial, <span class="dt">data =</span> trainData)</span>
+<span id="cb90-2"><a href="multiple-models-comparison.html#cb90-2"></a></span>
+<span id="cb90-3"><a href="multiple-models-comparison.html#cb90-3"></a><span class="co">#summary(LR_Model_CV)</span></span>
+<span id="cb90-4"><a href="multiple-models-comparison.html#cb90-4"></a><span class="co">### Validate on trainData</span></span>
+<span id="cb90-5"><a href="multiple-models-comparison.html#cb90-5"></a>Valid_trainData &lt;-<span class="st"> </span><span class="kw">predict</span>(LR_Model, <span class="dt">newdata =</span> trainData, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="co">#prediction threshold</span></span>
+<span id="cb90-6"><a href="multiple-models-comparison.html#cb90-6"></a>Valid_trainData &lt;-<span class="st"> </span><span class="kw">ifelse</span>(Valid_trainData <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)  <span class="co"># set binary </span></span>
+<span id="cb90-7"><a href="multiple-models-comparison.html#cb90-7"></a><span class="co">#produce confusion matrix</span></span>
+<span id="cb90-8"><a href="multiple-models-comparison.html#cb90-8"></a>confusion_Mat&lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(trainData<span class="op">$</span>Survived),<span class="kw">as.factor</span>(Valid_trainData))</span>
+<span id="cb90-9"><a href="multiple-models-comparison.html#cb90-9"></a><span class="co"># output accuracy</span></span>
+<span id="cb90-10"><a href="multiple-models-comparison.html#cb90-10"></a>Regression_Acc_Train &lt;-<span class="st"> </span><span class="kw">round</span>(confusion_Mat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>)</span>
+<span id="cb90-11"><a href="multiple-models-comparison.html#cb90-11"></a><span class="kw">paste</span>(<span class="st">&#39;Model Train Accuracy =&#39;</span>, Regression_Acc_Train)</span></code></pre></div>
+<pre><code>## [1] &quot;Model Train Accuracy = 84.97&quot;</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="multiple-models-comparison.html#cb92-1"></a><span class="co">### Validate on validData</span></span>
+<span id="cb92-2"><a href="multiple-models-comparison.html#cb92-2"></a>validData_Survived_predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(LR_Model, <span class="dt">newdata =</span> validData, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)  </span>
+<span id="cb92-3"><a href="multiple-models-comparison.html#cb92-3"></a>validData_Survived_predicted  &lt;-<span class="st"> </span><span class="kw">ifelse</span>(validData_Survived_predicted  <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)  <span class="co"># set binary prediction threshold</span></span>
+<span id="cb92-4"><a href="multiple-models-comparison.html#cb92-4"></a>conMat&lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(validData<span class="op">$</span>Survived),<span class="kw">as.factor</span>(validData_Survived_predicted))</span>
+<span id="cb92-5"><a href="multiple-models-comparison.html#cb92-5"></a></span>
+<span id="cb92-6"><a href="multiple-models-comparison.html#cb92-6"></a>Regression_Acc_Valid &lt;-<span class="kw">round</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]<span class="op">*</span><span class="dv">100</span>,<span class="dv">2</span>)</span>
+<span id="cb92-7"><a href="multiple-models-comparison.html#cb92-7"></a><span class="kw">paste</span>(<span class="st">&#39;Model Valid Accuracy =&#39;</span>, Regression_Acc_Valid) </span></code></pre></div>
+<pre><code>## [1] &quot;Model Valid Accuracy = 79.89&quot;</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="multiple-models-comparison.html#cb94-1"></a><span class="co">### produce a prediction on test data</span></span>
+<span id="cb94-2"><a href="multiple-models-comparison.html#cb94-2"></a><span class="kw">library</span>(pROC)</span></code></pre></div>
+<pre><code>## Warning: package &#39;pROC&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;pROC&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     cov, smooth, var</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="multiple-models-comparison.html#cb99-1"></a><span class="kw">auc</span>(<span class="kw">roc</span>(trainData<span class="op">$</span>Survived,Valid_trainData))  <span class="co"># calculate AUROC curve</span></span></code></pre></div>
+<pre><code>## Setting levels: control = 0, case = 1</code></pre>
+<pre><code>## Setting direction: controls &lt; cases</code></pre>
+<pre><code>## Area under the curve: 0.832</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="multiple-models-comparison.html#cb103-1"></a><span class="co">#predict on test</span></span>
+<span id="cb103-2"><a href="multiple-models-comparison.html#cb103-2"></a>test<span class="op">$</span>Survived &lt;-<span class="st"> </span><span class="kw">predict</span>(LR_Model, <span class="dt">newdata =</span> test, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)  </span>
+<span id="cb103-3"><a href="multiple-models-comparison.html#cb103-3"></a>test<span class="op">$</span>Survived &lt;-<span class="st"> </span><span class="kw">ifelse</span>(test<span class="op">$</span>Survived <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)  <span class="co"># set binary prediction threshold</span></span>
+<span id="cb103-4"><a href="multiple-models-comparison.html#cb103-4"></a>submit &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId =</span> test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> <span class="kw">as.factor</span>(test<span class="op">$</span>Survived))</span>
+<span id="cb103-5"><a href="multiple-models-comparison.html#cb103-5"></a></span>
+<span id="cb103-6"><a href="multiple-models-comparison.html#cb103-6"></a><span class="kw">write.csv</span>(submit, <span class="dt">file =</span> <span class="st">&quot;LG_model1_CV.CSV&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb103-7"><a href="multiple-models-comparison.html#cb103-7"></a>Regr_Acc &lt;-<span class="st"> </span><span class="kw">c</span>(Regression_Acc_Train, Regression_Acc_Valid, <span class="fl">0.76555</span>)</span>
+<span id="cb103-8"><a href="multiple-models-comparison.html#cb103-8"></a>Regr_Acc</span></code></pre></div>
+<pre><code>## Accuracy Accuracy          
+## 84.97000 79.89000  0.76555</code></pre>
+</div>
+<div id="support-vector-machine-model-for-titanic" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Support Vector Machine Model for Titanic</h3>
+<p>Let us also consider a support vector machine (SVM) model <span class="citation">[@Cortes-and-Vapnik]</span>(Cortes and Vapnik 1995 Cortes, Corinna, and Vladimir Vapnik. 1995. “Support-Vector Networks.” Machine Learning, 273–97.). We use the C-classification mode. Again, we fit a model with the same set of attributes as in the logistic regression model to fit the model, we use function <code>svm()</code> from the <code>e1071</code> package (Meyer et al. 2019).</p>
+<p>We could try to tune the two parameters of the SVM model <code>gamma</code> &amp; <code>cost</code>, find and select the best parameters (see exercise).</p>
+<p>We then use the best model to make predictions. The results of the model are collected for comparison.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="multiple-models-comparison.html#cb105-1"></a><span class="kw">library</span>(e1071)</span></code></pre></div>
+<pre><code>## Warning: package &#39;e1071&#39; was built under R version 3.6.3</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="multiple-models-comparison.html#cb107-1"></a><span class="co">#gamma=.05, cost=1.30</span></span>
+<span id="cb107-2"><a href="multiple-models-comparison.html#cb107-2"></a><span class="co">#SVM_model&lt;-svm(Survived ~ Pclass + Title + Sex + Age_group + Group_size + Ticket_class + Fare_pp + Deck + HasCabinNum + Embarked, data=trainData, gamma=0.05, cost=1.3,type=&quot;C-classification&quot;)</span></span>
+<span id="cb107-3"><a href="multiple-models-comparison.html#cb107-3"></a></span>
+<span id="cb107-4"><a href="multiple-models-comparison.html#cb107-4"></a>SVM_model&lt;-<span class="st"> </span><span class="kw">svm</span>(Survived <span class="op">~</span><span class="st"> </span>Pclass <span class="op">+</span><span class="st"> </span>Title <span class="op">+</span><span class="st"> </span>Sex <span class="op">+</span><span class="st"> </span>Age_group <span class="op">+</span><span class="st"> </span>Group_size <span class="op">+</span><span class="st"> </span>Ticket_class <span class="op">+</span><span class="st"> </span>Fare_pp <span class="op">+</span><span class="st"> </span>Deck <span class="op">+</span><span class="st"> </span>HasCabinNum <span class="op">+</span><span class="st"> </span>Embarked, <span class="dt">data=</span>trainData, <span class="dt">kernel =</span> <span class="st">&#39;radial&#39;</span>, <span class="dt">type=</span><span class="st">&quot;C-classification&quot;</span>)</span>
+<span id="cb107-5"><a href="multiple-models-comparison.html#cb107-5"></a></span>
+<span id="cb107-6"><a href="multiple-models-comparison.html#cb107-6"></a><span class="co">#summary(SVM_model)</span></span>
+<span id="cb107-7"><a href="multiple-models-comparison.html#cb107-7"></a><span class="co">### Validate on trainData</span></span>
+<span id="cb107-8"><a href="multiple-models-comparison.html#cb107-8"></a>Valid_trainData &lt;-<span class="st"> </span><span class="kw">predict</span>(SVM_model, trainData) </span>
+<span id="cb107-9"><a href="multiple-models-comparison.html#cb107-9"></a><span class="co">#produce confusion matrix</span></span>
+<span id="cb107-10"><a href="multiple-models-comparison.html#cb107-10"></a>confusion_Mat&lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(trainData<span class="op">$</span>Survived), <span class="kw">as.factor</span>(Valid_trainData))</span>
+<span id="cb107-11"><a href="multiple-models-comparison.html#cb107-11"></a><span class="co"># output accuracy</span></span>
+<span id="cb107-12"><a href="multiple-models-comparison.html#cb107-12"></a>AVM_Acc_Train &lt;-<span class="st"> </span><span class="kw">round</span>(confusion_Mat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]<span class="op">*</span><span class="dv">100</span>,<span class="dv">4</span>)</span>
+<span id="cb107-13"><a href="multiple-models-comparison.html#cb107-13"></a><span class="kw">paste</span>(<span class="st">&#39;Model Train Accuracy =&#39;</span>, AVM_Acc_Train)</span></code></pre></div>
+<pre><code>## [1] &quot;Model Train Accuracy = 84.4101&quot;</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="multiple-models-comparison.html#cb109-1"></a><span class="co">### Validate on validData</span></span>
+<span id="cb109-2"><a href="multiple-models-comparison.html#cb109-2"></a>validData_Survived_predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(SVM_model, validData)  </span>
+<span id="cb109-3"><a href="multiple-models-comparison.html#cb109-3"></a>conMat&lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(validData<span class="op">$</span>Survived), <span class="kw">as.factor</span>(validData_Survived_predicted))</span>
+<span id="cb109-4"><a href="multiple-models-comparison.html#cb109-4"></a></span>
+<span id="cb109-5"><a href="multiple-models-comparison.html#cb109-5"></a>AVM_Acc_Valid &lt;-<span class="st"> </span><span class="kw">round</span>(conMat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]<span class="op">*</span><span class="dv">100</span>,<span class="dv">4</span>)</span>
+<span id="cb109-6"><a href="multiple-models-comparison.html#cb109-6"></a><span class="kw">paste</span>(<span class="st">&#39;Model Valid Accuracy =&#39;</span>, AVM_Acc_Valid) </span></code></pre></div>
+<pre><code>## [1] &quot;Model Valid Accuracy = 78.2123&quot;</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="multiple-models-comparison.html#cb111-1"></a><span class="co">### make prediction on test</span></span>
+<span id="cb111-2"><a href="multiple-models-comparison.html#cb111-2"></a><span class="co"># SVM failed to produce a prediction on test because test has Survived col and it has value NA. A work around is assign it with a num like 1.</span></span>
+<span id="cb111-3"><a href="multiple-models-comparison.html#cb111-3"></a>test<span class="op">$</span>Survived &lt;-<span class="dv">1</span></span>
+<span id="cb111-4"><a href="multiple-models-comparison.html#cb111-4"></a></span>
+<span id="cb111-5"><a href="multiple-models-comparison.html#cb111-5"></a>Survived &lt;-<span class="st"> </span><span class="kw">predict</span>(SVM_model, test)</span>
+<span id="cb111-6"><a href="multiple-models-comparison.html#cb111-6"></a>solution &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId=</span>test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span>Survived)</span>
+<span id="cb111-7"><a href="multiple-models-comparison.html#cb111-7"></a><span class="kw">write.csv</span>(solution, <span class="dt">file =</span> <span class="st">&#39;svm_predicton.csv&#39;</span>, <span class="dt">row.names =</span> F)</span>
+<span id="cb111-8"><a href="multiple-models-comparison.html#cb111-8"></a></span>
+<span id="cb111-9"><a href="multiple-models-comparison.html#cb111-9"></a>SVM_Acc &lt;-<span class="st"> </span><span class="kw">c</span>(AVM_Acc_Train, AVM_Acc_Valid, <span class="fl">0.78947</span>)</span>
+<span id="cb111-10"><a href="multiple-models-comparison.html#cb111-10"></a>SVM_Acc</span></code></pre></div>
+<pre><code>## Accuracy Accuracy          
+## 84.41010 78.21230  0.78947</code></pre>
+</div>
+<div id="neural-network-models" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> Neural Network Models</h3>
+<p>Neural networks are a rapidly developing paradigm for information processing based loosely on how neurons in the brain processes information. A neural network consists of multiple layers of nodes, where each node performs a unit of computation and passes the result onto the next node. Multiple nodes can pass inputs to a single node and vice versa.</p>
+<p>The neural network also contains a set of weights, which can be refined over time as the network learns from sample data. The weights are used to describe and refine the connection strengths between nodes.</p>
+<p>Neural Network with one hidden layer utilizing all features</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="multiple-models-comparison.html#cb113-1"></a><span class="kw">library</span>(nnet)</span></code></pre></div>
+<pre><code>## Warning: package &#39;nnet&#39; was built under R version 3.6.3</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="multiple-models-comparison.html#cb115-1"></a>xTrain =<span class="st"> </span>train[ , <span class="kw">c</span>(<span class="st">&quot;Survived&quot;</span>, <span class="st">&quot;Pclass&quot;</span>,<span class="st">&quot;Title&quot;</span>, <span class="st">&quot;Sex&quot;</span>,<span class="st">&quot;Age_group&quot;</span>,<span class="st">&quot;Group_size&quot;</span>, <span class="st">&quot;Ticket_class&quot;</span>, <span class="st">&quot;Fare_pp&quot;</span>, <span class="st">&quot;Deck&quot;</span>, <span class="st">&quot;HasCabinNum&quot;</span>, <span class="st">&quot;Embarked&quot;</span>)]</span>
+<span id="cb115-2"><a href="multiple-models-comparison.html#cb115-2"></a></span>
+<span id="cb115-3"><a href="multiple-models-comparison.html#cb115-3"></a>NN_model1 &lt;-<span class="st"> </span><span class="kw">nnet</span>(Survived <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> xTrain, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">maxit=</span><span class="dv">500</span>, <span class="dt">trace=</span><span class="ot">FALSE</span>)</span>
+<span id="cb115-4"><a href="multiple-models-comparison.html#cb115-4"></a></span>
+<span id="cb115-5"><a href="multiple-models-comparison.html#cb115-5"></a><span class="co">#How do we do on the training data?</span></span>
+<span id="cb115-6"><a href="multiple-models-comparison.html#cb115-6"></a>nn_pred_train_class =<span class="st"> </span><span class="kw">predict</span>(NN_model1, xTrain, <span class="dt">type=</span><span class="st">&quot;class&quot;</span> )  <span class="co"># yields &quot;0&quot;, &quot;1&quot;</span></span>
+<span id="cb115-7"><a href="multiple-models-comparison.html#cb115-7"></a>nn_train_pred =<span class="st"> </span><span class="kw">as.numeric</span>(nn_pred_train_class ) <span class="co">#transform to 0, 1</span></span>
+<span id="cb115-8"><a href="multiple-models-comparison.html#cb115-8"></a>confusion_Mat&lt;-<span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(nn_train_pred), train<span class="op">$</span>Survived)</span>
+<span id="cb115-9"><a href="multiple-models-comparison.html#cb115-9"></a><span class="co"># output accuracy</span></span>
+<span id="cb115-10"><a href="multiple-models-comparison.html#cb115-10"></a>NN_Acc_Train &lt;-<span class="st"> </span><span class="kw">round</span>(confusion_Mat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]<span class="op">*</span><span class="dv">100</span>,<span class="dv">4</span>)</span>
+<span id="cb115-11"><a href="multiple-models-comparison.html#cb115-11"></a><span class="kw">paste</span>(<span class="st">&#39;Model Train Accuracy =&#39;</span>, NN_Acc_Train)</span></code></pre></div>
+<pre><code>## [1] &quot;Model Train Accuracy = 91.1336&quot;</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="multiple-models-comparison.html#cb117-1"></a><span class="co">#How do we do on the valid data?</span></span>
+<span id="cb117-2"><a href="multiple-models-comparison.html#cb117-2"></a>nn_pred_valid_class =<span class="st"> </span><span class="kw">predict</span>(NN_model1, validData, <span class="dt">type=</span><span class="st">&quot;class&quot;</span> )  <span class="co"># yields &quot;0&quot;, &quot;1&quot;</span></span>
+<span id="cb117-3"><a href="multiple-models-comparison.html#cb117-3"></a>nn_valid_pred =<span class="st"> </span><span class="kw">as.numeric</span>(nn_pred_valid_class ) <span class="co">#transform to 0, 1</span></span>
+<span id="cb117-4"><a href="multiple-models-comparison.html#cb117-4"></a>confusion_Mat&lt;-<span class="kw">confusionMatrix</span>(<span class="kw">as.factor</span>(nn_valid_pred), validData<span class="op">$</span>Survived)</span>
+<span id="cb117-5"><a href="multiple-models-comparison.html#cb117-5"></a><span class="co"># output accuracy</span></span>
+<span id="cb117-6"><a href="multiple-models-comparison.html#cb117-6"></a>NN_Acc_Valid &lt;-<span class="st"> </span><span class="kw">round</span>(confusion_Mat<span class="op">$</span>overall[<span class="st">&quot;Accuracy&quot;</span>]<span class="op">*</span><span class="dv">100</span>,<span class="dv">4</span>)</span>
+<span id="cb117-7"><a href="multiple-models-comparison.html#cb117-7"></a><span class="kw">paste</span>(<span class="st">&#39;Model valid Accuracy =&#39;</span>, NN_Acc_Valid)</span></code></pre></div>
+<pre><code>## [1] &quot;Model valid Accuracy = 87.7095&quot;</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="multiple-models-comparison.html#cb119-1"></a><span class="co">#make a prediction on test data</span></span>
+<span id="cb119-2"><a href="multiple-models-comparison.html#cb119-2"></a>nn_pred_test_class =<span class="st"> </span><span class="kw">predict</span>(NN_model1, test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span> )  <span class="co"># yields &quot;0&quot;, &quot;1&quot;</span></span>
+<span id="cb119-3"><a href="multiple-models-comparison.html#cb119-3"></a>nn_pred_test =<span class="st"> </span><span class="kw">as.numeric</span>(nn_pred_test_class ) <span class="co">#transform to 0, 1</span></span>
+<span id="cb119-4"><a href="multiple-models-comparison.html#cb119-4"></a>solution &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">PassengerId=</span>test<span class="op">$</span>PassengerId, <span class="dt">Survived =</span> nn_pred_test)</span>
+<span id="cb119-5"><a href="multiple-models-comparison.html#cb119-5"></a><span class="kw">write.csv</span>(solution, <span class="dt">file =</span> <span class="st">&#39;NN_predicton.csv&#39;</span>, <span class="dt">row.names =</span> F)</span>
+<span id="cb119-6"><a href="multiple-models-comparison.html#cb119-6"></a></span>
+<span id="cb119-7"><a href="multiple-models-comparison.html#cb119-7"></a><span class="co">###</span></span>
+<span id="cb119-8"><a href="multiple-models-comparison.html#cb119-8"></a><span class="co"># 0.8934,0.8547, 0.71052</span></span>
+<span id="cb119-9"><a href="multiple-models-comparison.html#cb119-9"></a>NN_Acc &lt;-<span class="st"> </span><span class="kw">c</span>(NN_Acc_Train, NN_Acc_Valid, <span class="fl">0.71052</span>)</span>
+<span id="cb119-10"><a href="multiple-models-comparison.html#cb119-10"></a>NN_Acc</span></code></pre></div>
+<pre><code>## Accuracy Accuracy          
+## 91.13360 87.70950  0.71052</code></pre>
+</div>
+<div id="comparision-among-different-models" class="section level3">
+<h3><span class="header-section-number">1.3.4</span> Comparision among different models</h3>
+<p>Let us compare the different models we have produced and see which one has a better predciton accuracy on the test dataset.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="multiple-models-comparison.html#cb121-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb121-2"><a href="multiple-models-comparison.html#cb121-2"></a>Model &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Regression&quot;</span>,<span class="st">&quot;SVM&quot;</span>,<span class="st">&quot;NN&quot;</span>) </span>
+<span id="cb121-3"><a href="multiple-models-comparison.html#cb121-3"></a>Train &lt;-<span class="st"> </span><span class="kw">c</span>(Regression_Acc_Train, AVM_Acc_Train, NN_Acc_Train)</span>
+<span id="cb121-4"><a href="multiple-models-comparison.html#cb121-4"></a>Valid &lt;-<span class="st"> </span><span class="kw">c</span>(Regression_Acc_Valid, AVM_Acc_Valid, NN_Acc_Valid)</span>
+<span id="cb121-5"><a href="multiple-models-comparison.html#cb121-5"></a>Test &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">76.56</span>, <span class="fl">78.95</span>, <span class="fl">71.05</span>)</span>
+<span id="cb121-6"><a href="multiple-models-comparison.html#cb121-6"></a>df1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(Model, Train, Valid, Test)</span>
+<span id="cb121-7"><a href="multiple-models-comparison.html#cb121-7"></a></span>
+<span id="cb121-8"><a href="multiple-models-comparison.html#cb121-8"></a>knitr<span class="op">::</span><span class="kw">kable</span>(df1, <span class="dt">longtable =</span> <span class="ot">TRUE</span>, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>, <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">col.names =</span><span class="kw">c</span>(<span class="st">&quot;Models&quot;</span>, <span class="st">&quot;Accuracy on Train&quot;</span>, <span class="st">&quot;Accuracy on Valid&quot;</span>,<span class="st">&quot;Accuracy on Test&quot;</span>), </span>
+<span id="cb121-9"><a href="multiple-models-comparison.html#cb121-9"></a>  <span class="dt">caption =</span> <span class="st">&#39;The Comparision among 3 Machine Learning Models&#39;</span></span>
+<span id="cb121-10"><a href="multiple-models-comparison.html#cb121-10"></a>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-15">Table 1.2: </span>The Comparision among 3 Machine Learning Models</caption>
+<thead>
+<tr class="header">
+<th align="left">Models</th>
+<th align="right">Accuracy on Train</th>
+<th align="right">Accuracy on Valid</th>
+<th align="right">Accuracy on Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Regression</td>
+<td align="right">84.97</td>
+<td align="right">79.89</td>
+<td align="right">76.56</td>
+</tr>
+<tr class="even">
+<td align="left">SVM</td>
+<td align="right">84.41</td>
+<td align="right">78.21</td>
+<td align="right">78.95</td>
+</tr>
+<tr class="odd">
+<td align="left">NN</td>
+<td align="right">91.13</td>
+<td align="right">87.71</td>
+<td align="right">71.05</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="multiple-models-comparison.html#cb122-1"></a>df.long &lt;-<span class="st"> </span><span class="kw">gather</span>(df1, Dataset, Accuracy, <span class="op">-</span>Model, <span class="dt">factor_key =</span><span class="ot">TRUE</span>)</span>
+<span id="cb122-2"><a href="multiple-models-comparison.html#cb122-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> df.long, <span class="kw">aes</span>(<span class="dt">x =</span> Model, <span class="dt">y =</span> Accuracy, <span class="dt">fill =</span> Dataset)) <span class="op">+</span></span>
+<span id="cb122-3"><a href="multiple-models-comparison.html#cb122-3"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="kw">position_dodge</span>()) </span></code></pre></div>
+<div class="figure"><span id="fig:RFmodelcompare"></span>
+<img src="09-Model-Cross-Validation_files/figure-html/RFmodelcompare-1.svg" alt="Accuracy comparision among differnt Machine Leanring models." width="672" />
+<p class="caption">
+Figure 1.3: Accuracy comparision among differnt Machine Leanring models.
+</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="general-cross-validation-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="summary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown/edit/master/inst/examples/%s",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "none"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

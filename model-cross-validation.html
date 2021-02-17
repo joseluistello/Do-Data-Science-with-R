@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Model Cross Validation | 09-Data-Reprot.utf8</title>
+  <title>Chapter 1 Model Cross Validation | 09-Model-Cross-Validation.utf8</title>
   <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Model Cross Validation | 09-Data-Reprot.utf8" />
+  <meta property="og:title" content="Chapter 1 Model Cross Validation | 09-Model-Cross-Validation.utf8" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Model Cross Validation | 09-Data-Reprot.utf8" />
+  <meta name="twitter:title" content="Chapter 1 Model Cross Validation | 09-Model-Cross-Validation.utf8" />
   
   
   
@@ -30,7 +30,7 @@
   
   
 
-<link rel="next" href="factorise.html"/>
+<link rel="next" href="models-underfitting-and-overfitting.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,6 +51,70 @@
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
@@ -68,12 +132,22 @@
 <li><a href="./">Authoring Books with R Markdown</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="model-cross-validation.html"><a href="model-cross-validation.html"><i class="fa fa-check"></i><b>1</b> Model Cross Validation</a></li>
-<li class="chapter" data-level="2" data-path="factorise.html"><a href="factorise.html"><i class="fa fa-check"></i><b>2</b> factorise</a></li>
-<li class="chapter" data-level="3" data-path="predicting-the-validation-set-results.html"><a href="predicting-the-validation-set-results.html"><i class="fa fa-check"></i><b>3</b> Predicting the Validation set results</a></li>
-<li class="chapter" data-level="4" data-path="checking-the-prediction-accuracy.html"><a href="checking-the-prediction-accuracy.html"><i class="fa fa-check"></i><b>4</b> Checking the prediction accuracy</a></li>
-<li class="chapter" data-level="5" data-path="check-prediction-accuracy.html"><a href="check-prediction-accuracy.html"><i class="fa fa-check"></i><b>5</b> Check prediction accuracy</a></li>
-<li class="chapter" data-level="6" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>6</b> 0.8258</a></li>
+<li class="chapter" data-level="1" data-path="model-cross-validation.html"><a href="model-cross-validation.html"><i class="fa fa-check"></i><b>1</b> Model Cross Validation</a><ul>
+<li class="chapter" data-level="1.1" data-path="models-underfitting-and-overfitting.html"><a href="models-underfitting-and-overfitting.html"><i class="fa fa-check"></i><b>1.1</b> Model’s Underfitting and Overfitting</a></li>
+<li class="chapter" data-level="1.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html"><i class="fa fa-check"></i><b>1.2</b> General Cross Validation Methods</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#single-model-cross-validation"><i class="fa fa-check"></i><b>1.2.1</b> Single model Cross Validation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#general-procedure-of-cross-validation"><i class="fa fa-check"></i><b>1.2.2</b> General Procedure of Cross-validation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="general-cross-validation-methods.html"><a href="general-cross-validation-methods.html#cross-validation-on-decision-tree-models"><i class="fa fa-check"></i><b>1.2.3</b> Cross Validation on Decision Tree Models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html"><i class="fa fa-check"></i><b>1.3</b> Multiple Models Comparison</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#regression-model-for-titanic"><i class="fa fa-check"></i><b>1.3.1</b> Regression Model for Titanic</a></li>
+<li class="chapter" data-level="1.3.2" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#support-vector-machine-model-for-titanic"><i class="fa fa-check"></i><b>1.3.2</b> Support Vector Machine Model for Titanic</a></li>
+<li class="chapter" data-level="1.3.3" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#neural-network-models"><i class="fa fa-check"></i><b>1.3.3</b> Neural Network Models</a></li>
+<li class="chapter" data-level="1.3.4" data-path="multiple-models-comparison.html"><a href="multiple-models-comparison.html#comparision-among-different-models"><i class="fa fa-check"></i><b>1.3.4</b> Comparision among different models</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>1.4</b> Summary</a></li>
+<li class="chapter" data-level="1.5" data-path="excersis.html"><a href="excersis.html"><i class="fa fa-check"></i><b>1.5</b> Excersis</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
 
@@ -98,32 +172,17 @@
 <!--bookdown:title:start-->
 <div id="model-cross-validation" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Model Cross Validation</h1>
-<p>jeff Leek</p>
-<blockquote>
-<p>You are entitled to your own opinion, but you are not entitled to your own facts.</p>
-<pre><code>                                      --   Daniel Patrick Moynihan</code></pre>
-</blockquote>
-<p>As in many real prediction applications, the titanic dataset provides training and test dataset. The train (inc. survival status) dataset has the target attributes values, ie. survival status. The test dataset has no survival status. In the absence of survival data in the test set, we have no means to compare our predicted values to actual values to evaluate model accuracy. Prediction accuracy is determined after a submission make to to Kaggle. IN real applications which means the model has been put in action.</p>
-<p>We have already experienced that our random forest model has a higher accuracy in training but falling much lower accuracy in test. It shows tat we have soem degree of overfitting. It is vital to discover this and try to avoid it before pu tmodel in practices. The way to do it is through model <strong>Cross Validation (CV)</strong>.</p>
-<p>The goal of cross-validation is to test the model’s ability to predict new data that was not used in model construction, in order to flag problems like overfitting or selection bias and to give an insight on how the model will generalize to an independent dataset or an unknown dataset.</p>
-<p>One round of cross-validation involves partitioning a sample of data into complementary subsets, performing the analysis on one subset (called the training set), and validating the analysis on the other subset (called the validation set). To reduce variability, in most methods multiple rounds of cross-validation are performed using different partitions, and the validation results are combined (e.g. averaged) over the rounds to give an estimate of the model’s predictive performance.</p>
-<p>There are two major Cross validation methods: exhaustive and non-exhaustive cross-validation.</p>
-<ul>
-<li><p><strong>Exhaustive cross-validation</strong> learn and test on all possible ways to divide the original sample into a training and a validation set. <strong>Leave-p-out cross-validation (LpO CV)</strong> is an exhaustive cross validation method. It involves using <span class="math inline">\(p\)</span> data samples as the validation dataset and the remaining data samples as the training dataset. This is repeated over and over until all possible ways to divide the original data sample into a training and a validation dataset <span class="math inline">\(p\)</span>.</p></li>
-<li><p><strong>Non-exhaustive cross validation</strong>, in the contrary, does not compute all the possible ways of splitting the original data sample but still has a certain coverage. <strong><span class="math inline">\(k\)</span>-fold cross-validation</strong> is a typical non-exhaustive cross validation. In <span class="math inline">\(k\)</span>-fold cross-validation, the original data sample is randomly partitioned into <span class="math inline">\(k\)</span> equal sized subsamples. Of the k subsamples, a single subsample is retained as the validation dataset for testing the model, and the remaining <span class="math inline">\(k\)</span> − 1 subsamples are used as training data. The cross-validation process is then repeated <span class="math inline">\(k\)</span> times, with each of the <span class="math inline">\(k\)</span> subsamples used exactly once as the validation data. The <span class="math inline">\(k\)</span> results can then be averaged to produce a single estimation. The advantage of this method over repeated random sub-sampling is that all observations are used for both training and validation, and each observation is used for validation exactly once. 10-fold cross-validation is commonly used in practice.</p></li>
-</ul>
-<p>Cross Validation of Decision Tree
-Utilising the split training data, let’s assess the accuracy of this model</p>
-<p>First, create cross validation folds, specifying parameters</p>
-<p>folds = createMultiFolds(train.cv$Survived,
-k = 10, # number of folds
-times = 5) # number of partitions
-Second, specify parameters for cross validation</p>
-<p>control &lt;- trainControl(method = “repeatedcv”,
-index = folds,
-number = 6,
-search = “grid”)
-Third, create model from cross validation data</p>
+<p><img src="images/weight.jpg" width="60%" style="display: block; margin: auto;" />
+&gt;
+&gt;“…with four parameters I can fit an elephant, and with five I can make him wiggle his trunk.”
+&gt;
+&gt; – John von Neumann
+&gt;
+&gt;</p>
+<p>In the previous two chapters we have demonstrated how to build prediction models using both Decision Tree and Random Forest, the two popular prediction models. The models we built have different prediction accuracy. The big problem with the models is their reduced prediction accuracy with the test dataset. A even bigger problem is that the reduction of the prediction accuracy with each model is different and unpredictable. Together they created a great difficulty to choose which model should be used for the real applications.</p>
+<p>We are luck because we have Kaggle competition that provides us with a test dataset and the feedback on our model’s performance. In real applications, as the titanic competition simulated, the test dataset has no response variable’s (survival status) value. We will have no means to compare to evaluate model’s accuracy.</p>
+<p>Although we may use the methods as we have used in Chapter 7, where we use our model to predict on the train dataset and made a comparison with the original value to estimate the model’s prediction accuracy. The similar method (OOB) is also used in the random forest models (in Chapter 8) to estimate the model’s accuracy. We know that our estimated accuracy is not reliable.</p>
+<p>There is a systematic method in data science to evaluate a prediction model’s performance. It is called “Cross Validation (CV)”. This chapter we will demonstrate how to use CV to evaluate a model’s performance.</p>
 </div>
             </section>
 
@@ -131,7 +190,7 @@ Third, create model from cross validation data</p>
         </div>
       </div>
 
-<a href="factorise.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="models-underfitting-and-overfitting.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

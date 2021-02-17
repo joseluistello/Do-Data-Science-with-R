@@ -395,4 +395,10 @@ Okay. Save your file and move to next Chapter.
 4. Explore project and working directory from RStudio.
 5. Create a R project called "MyDataScienceProject". 
 
+## Reference
 
+1. Hadley Wickham, Garrett Grolemund, R for Data Science, https://r4ds.had.co.nz/index.html 
+
+2. Kelly Black, R Tutorial, https://www.cyclismo.org/tutorial/R/index.html#r-tutorial
+
+1. David Dalpiaz Applied Statistics with R http://daviddalpiaz.github.io/appliedstats/

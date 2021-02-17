@@ -167,49 +167,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="excerces" class="section level2">
 <h2><span class="header-section-number">1.7</span> Excerces</h2>
 <ol style="list-style-type: decimal">
-<li>Prove there is overfitting with model3 and model4. The idea is take certain samples from the training dataset form a validate dataset. Remove the value of attribute <em>survived</em> from the validate dataset. Using models to a prediction on validate dataset. Compare their results. If model3 performs better than model2 on the validate dataset but not on test dataset (which is given by Kaggle), it shows the model has an overfit problem. Proive this exists on both model3 and model4.</li>
+<li>Prove there is overfitting with model3 and model4. The idea is take certain samples from the training dataset form a validate dataset. Remove the value of attribute <em>survived</em> from the validate dataset. Using models to a prediction on validate dataset. Compare their results. If model3 performs better than model2 on the validate dataset but not on test dataset (which is given by Kaggle), it shows the model has an overfitting problem. Prove this exists on both model3 and model4.</li>
 </ol>
 <p>Here are some sample code.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="excerces.html#cb53-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb53-2"><a href="excerces.html#cb53-2"></a>train &lt;-<span class="st"> </span>RE_data[<span class="dv">1</span><span class="op">:</span><span class="dv">891</span>, ]</span>
-<span id="cb53-3"><a href="excerces.html#cb53-3"></a>samp &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(train), <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(train))</span>
-<span id="cb53-4"><a href="excerces.html#cb53-4"></a>trainData &lt;-<span class="st"> </span>train[samp, ]</span>
-<span id="cb53-5"><a href="excerces.html#cb53-5"></a>validData &lt;-<span class="st"> </span>train[<span class="op">-</span>samp, ]</span>
-<span id="cb53-6"><a href="excerces.html#cb53-6"></a></span>
-<span id="cb53-7"><a href="excerces.html#cb53-7"></a>Prediction2 &lt;-<span class="st"> </span><span class="kw">predict</span>(model1, validData, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb53-8"><a href="excerces.html#cb53-8"></a>Prediction3 &lt;-<span class="st"> </span><span class="kw">predict</span>(model4, validData, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb53-9"><a href="excerces.html#cb53-9"></a><span class="co">#check up</span></span>
-<span id="cb53-10"><a href="excerces.html#cb53-10"></a><span class="kw">table</span>(Prediction2, validData<span class="op">$</span>Survived)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="excerces.html#cb47-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb47-2"><a href="excerces.html#cb47-2"></a>train &lt;-<span class="st"> </span>RE_data[<span class="dv">1</span><span class="op">:</span><span class="dv">891</span>, ]</span>
+<span id="cb47-3"><a href="excerces.html#cb47-3"></a>samp &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(train), <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(train))</span>
+<span id="cb47-4"><a href="excerces.html#cb47-4"></a>trainData &lt;-<span class="st"> </span>train[samp, ]</span>
+<span id="cb47-5"><a href="excerces.html#cb47-5"></a>validData &lt;-<span class="st"> </span>train[<span class="op">-</span>samp, ]</span>
+<span id="cb47-6"><a href="excerces.html#cb47-6"></a></span>
+<span id="cb47-7"><a href="excerces.html#cb47-7"></a>Prediction2 &lt;-<span class="st"> </span><span class="kw">predict</span>(model1, validData, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb47-8"><a href="excerces.html#cb47-8"></a>Prediction3 &lt;-<span class="st"> </span><span class="kw">predict</span>(model4, validData, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb47-9"><a href="excerces.html#cb47-9"></a><span class="co">#check up</span></span>
+<span id="cb47-10"><a href="excerces.html#cb47-10"></a><span class="kw">table</span>(Prediction2, validData<span class="op">$</span>Survived)</span></code></pre></div>
 <pre><code>##            
 ## Prediction2   0   1
 ##           0 146  25
 ##           1  24  73</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="excerces.html#cb49-1"></a><span class="kw">table</span>(validData<span class="op">$</span>Survived)</span></code></pre></div>
+<pre><code>## 
+##   0   1 
+## 170  98</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="excerces.html#cb51-1"></a><span class="kw">table</span>(Prediction2)</span></code></pre></div>
+<pre><code>## Prediction2
+##   0   1 
+## 171  97</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="excerces.html#cb53-1"></a><span class="kw">table</span>(Prediction3, validData<span class="op">$</span>Survived)</span></code></pre></div>
+<pre><code>##            
+## Prediction3   0   1
+##           0 170   1
+##           1   0  97</code></pre>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="excerces.html#cb55-1"></a><span class="kw">table</span>(validData<span class="op">$</span>Survived)</span></code></pre></div>
 <pre><code>## 
 ##   0   1 
 ## 170  98</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="excerces.html#cb57-1"></a><span class="kw">table</span>(Prediction2)</span></code></pre></div>
-<pre><code>## Prediction2
-##   0   1 
-## 171  97</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="excerces.html#cb59-1"></a><span class="kw">table</span>(Prediction3, validData<span class="op">$</span>Survived)</span></code></pre></div>
-<pre><code>##            
-## Prediction3   0   1
-##           0 156  23
-##           1  14  75</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="excerces.html#cb61-1"></a><span class="kw">table</span>(validData<span class="op">$</span>Survived)</span></code></pre></div>
-<pre><code>## 
-##   0   1 
-## 170  98</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="excerces.html#cb63-1"></a><span class="kw">table</span>(Prediction3)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="excerces.html#cb57-1"></a><span class="kw">table</span>(Prediction3)</span></code></pre></div>
 <pre><code>## Prediction3
 ##   0   1 
-## 179  89</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="excerces.html#cb65-1"></a>compare1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(validData<span class="op">$</span>PassengerId, <span class="dt">validData =</span> validData<span class="op">$</span>Survived , <span class="dt">predict =</span> Prediction2)</span>
-<span id="cb65-2"><a href="excerces.html#cb65-2"></a><span class="co"># Find differences</span></span>
-<span id="cb65-3"><a href="excerces.html#cb65-3"></a>dif1 &lt;-<span class="st"> </span>compare1[compare1[<span class="dv">2</span>] <span class="op">!=</span><span class="st"> </span>compare1[<span class="dv">3</span>], ]</span>
-<span id="cb65-4"><a href="excerces.html#cb65-4"></a><span class="co">#show dif</span></span>
-<span id="cb65-5"><a href="excerces.html#cb65-5"></a>dif1</span></code></pre></div>
+## 171  97</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="excerces.html#cb59-1"></a>compare1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(validData<span class="op">$</span>PassengerId, <span class="dt">validData =</span> validData<span class="op">$</span>Survived , <span class="dt">predict =</span> Prediction2)</span>
+<span id="cb59-2"><a href="excerces.html#cb59-2"></a><span class="co"># Find differences</span></span>
+<span id="cb59-3"><a href="excerces.html#cb59-3"></a>dif1 &lt;-<span class="st"> </span>compare1[compare1[<span class="dv">2</span>] <span class="op">!=</span><span class="st"> </span>compare1[<span class="dv">3</span>], ]</span>
+<span id="cb59-4"><a href="excerces.html#cb59-4"></a><span class="co">#show dif</span></span>
+<span id="cb59-5"><a href="excerces.html#cb59-5"></a>dif1</span></code></pre></div>
 <pre><code>##     validData.PassengerId validData predict
 ## 18                     18         1       0
 ## 24                     24         1       0
@@ -260,49 +260,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 858                   858         1       0
 ## 883                   883         0       1
 ## 889                   889         0       1</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="excerces.html#cb67-1"></a>compare2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(validData<span class="op">$</span>PassengerId, <span class="dt">validData =</span> validData<span class="op">$</span>Survived , <span class="dt">predict =</span> Prediction3)</span>
-<span id="cb67-2"><a href="excerces.html#cb67-2"></a><span class="co"># Find differences</span></span>
-<span id="cb67-3"><a href="excerces.html#cb67-3"></a>dif2 &lt;-<span class="st"> </span>compare2[compare2[<span class="dv">2</span>] <span class="op">!=</span><span class="st"> </span>compare2[<span class="dv">3</span>], ]</span>
-<span id="cb67-4"><a href="excerces.html#cb67-4"></a><span class="co">#show dif</span></span>
-<span id="cb67-5"><a href="excerces.html#cb67-5"></a>dif2</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="excerces.html#cb61-1"></a>compare2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(validData<span class="op">$</span>PassengerId, <span class="dt">validData =</span> validData<span class="op">$</span>Survived , <span class="dt">predict =</span> Prediction3)</span>
+<span id="cb61-2"><a href="excerces.html#cb61-2"></a><span class="co"># Find differences</span></span>
+<span id="cb61-3"><a href="excerces.html#cb61-3"></a>dif2 &lt;-<span class="st"> </span>compare2[compare2[<span class="dv">2</span>] <span class="op">!=</span><span class="st"> </span>compare2[<span class="dv">3</span>], ]</span>
+<span id="cb61-4"><a href="excerces.html#cb61-4"></a><span class="co">#show dif</span></span>
+<span id="cb61-5"><a href="excerces.html#cb61-5"></a>dif2</span></code></pre></div>
 <pre><code>##     validData.PassengerId validData predict
-## 7                       7         0       1
-## 18                     18         1       0
-## 24                     24         1       0
-## 26                     26         1       0
-## 37                     37         1       0
-## 56                     56         1       0
-## 69                     69         1       0
-## 82                     82         1       0
-## 89                     89         1       0
-## 115                   115         0       1
-## 200                   200         0       1
-## 236                   236         0       1
-## 247                   247         0       1
-## 268                   268         1       0
-## 287                   287         1       0
-## 312                   312         1       0
-## 391                   391         1       0
-## 392                   392         1       0
-## 435                   435         0       1
-## 438                   438         1       0
-## 445                   445         1       0
-## 502                   502         0       1
-## 503                   503         0       1
-## 560                   560         1       0
-## 571                   571         1       0
-## 579                   579         0       1
-## 580                   580         1       0
-## 594                   594         0       1
-## 644                   644         1       0
-## 648                   648         1       0
-## 680                   680         1       0
-## 703                   703         0       1
-## 730                   730         0       1
-## 738                   738         1       0
-## 775                   775         1       0
-## 783                   783         0       1
-## 889                   889         0       1</code></pre>
+## 644                   644         1       0</code></pre>
 </div>
 <!-- </div> -->
             </section>
