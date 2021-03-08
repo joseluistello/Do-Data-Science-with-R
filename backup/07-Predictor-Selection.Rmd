@@ -1,0 +1,164 @@
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Predictor Selection  
+
+>
+>
+>Variable selection is a means to an end and not an end itself.
+>
+>“Choose well. Your choice is brief, and yet endless.”
+>
+>— Johann Wolfgang von Goethe
+>
+
+In the previous Chapter we have established an idea that PDA is a model building. In its three steps process, the first step is predictor selection. This is because most prediction model does not use all the attributes of the data samples. Only small amount of the predictors are used in a model. Therefore before a model can be constructed it is necessary to select predictors. 
+
+## Predictor Selection Pricinples
+
+Selecting predictors needs to answer two questions: how many predictors and which on to be selected. It is a very complected issue that not only depends on the attributes but also the model to be constructed. The later can only be clear after the model construction. Let us focus on the first factor that is the the attributes themselves. 
+
+Predictor selection when considering the attributes, the principle are:
+
+1. Select as less as possible. Since the more predictors may increase the computation cost of a model and may reduce the model's performance by introducing noise and outliars. 
+2. Do not select attributes which does not have prediction power. the prediction power refers to the influence or impact a predictor on the dependent variable.
+3. Do not select attributes which does not provide extra information. Some attributes are strongly correlated or has Collinearity^[A phenomenon in which one predictor variable in a multiple regression model can be linearly predicted from the others with a substantial degree of accuracy.]. In this case only one predictor from them is enough.
+4. Always choose predictors follow the order of the prediction power. That is select the attribute has the most prediction power and then the second and the third, so on so forth. 
+
+## Attributes Analysis
+
+To obtain the attributes' prediction power and the correlation among them, the basic analytic tasks need to be performed. These analytic tasks include Correlation Analysis, Principal component analysis (PCA) and Possibly factor analysis (FA).
+
+- **Correlation Analysis**. Analysis the correlation among the attributes, and ordering them based the correlation of attributes with the dependent attribute. Select appropriate number of the attributes from the highest value towards the lowest value of correlation. 
+
+- **Principal component analysis (PCA)**. PCA is a dimension reduction method by projecting each data point onto only the first few principal components to obtain lower-dimensional data while preserving as much of the data's variation as possible. PCA only works on numerical variables.
+
+- **Possibly factor analysis (FA)**. Factor analysis is a statistical method used to describe variability among observed, correlated variables in terms of a potentially lower number of unobserved variables called factors. For example, it is possible that variations in six observed variables mainly reflect the variations in two unobserved (underlying) variables.
+
+There are other similar tasks such as **MCA**, **FAMD**, **CA**, and **MFA**. MCA stands for multiple correspondence analysis. It can only apply to categorical variables; FAMD stands for factor analysis of mixed data. It can apply to both numerical and categorical variables; CA is correspondence analysis, it can only works on two variables (contingency table); MFA is multiple factor analysis, it is needed only when you have variables set by group. These tasks are all specific of the PCA. 
+
+In this Chapter we will demonstrate the basic Correlation analysis and principal component analysis to understand the relationship among attributes and between predictor and the dependent variable. We will continue to use the Titanic example.  
+
+## Attributes Correlation Analysis
+
+We have re-engineered the Titanic dataset. So instead of using the original dataset, let us consider the correlation among attributes of our re-engineered dataset. 
+
+```{r RE_data, message=FALSE, warning = FALSE, echo = FALSE, fig.cap = 'A glimpse of Re-engineered Titanic Dataset.'}
+RE_data <- read.csv("RE_data.csv", header = TRUE)
+
+library(dplyr)# data manipulation
+library(tidyverse)
+# load data
+glimpse(RE_data)
+summary(RE_data)
+```
+A quick correlation plot of the numeric attributes to get an idea of how they might relate to one another. You can see that we have dropped two `chr` attributes: *Title* and *Deck*. We could include them if we convert the character value in to numbers. For example, title could be converted into 1-6 numbers as 1 represents `Mr`, 2 represents `Mrs` and so on. 
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Correlation among numerical attributes"}
+library(caret) # tuning & cross-validation
+library(gridExtra) # visualizations
+library(tictoc) # timing models
+
+RE_data$Survived <- as.numeric(RE_data$Survived)
+RE_data$Pclass <- as.numeric(RE_data$Pclass)
+RE_data$Title <- as.numeric(RE_data$Title)
+RE_data$Sex <- as.numeric(RE_data$Sex)
+RE_data$Age_group <- as.numeric(RE_data$Age_group)
+RE_data$Ticket_class <- as.numeric(RE_data$Ticket_class)
+RE_data$Deck <- as.numeric(RE_data$Deck)
+RE_data$HasCabinNum <- as.numeric(RE_data$HasCabinNum)
+RE_data$Embarked <- as.numeric(RE_data$Embarked)
+# cor<-RE_data %>%
+#    select(Survived, Pclass, Title, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Deck, HasCabinNum, Embarked) %>% cor(use="pairwise.complete.obs") %>%
+#    corrplot::corrplot.mixed(upper = "circle", tl.col = "black")
+# RE_data$Ticket
+cor<- RE_data %>% select(., -c(Ticket, PassengerId)) %>%
+  cor(use="pairwise.complete.obs") %>%
+  corrplot::corrplot.mixed(upper = "circle", tl.col = "black")
+```
+```{r}
+# show in table
+library(kableExtra) # markdown tables 
+lower <- round(cor,2)
+lower[lower.tri(cor, diag=TRUE)]<-""
+lower <- as.data.frame(lower)
+knitr::kable(lower, booktabs = TRUE,
+  caption = 'Coorelations among attributes') %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive", font_size = 8))
+```
+
+The plot shows not only the correlation between other attributes, which can potentially be used as predictors, with the dependent attribute *Survived*, but also the correction among potential predictors. In terms of correlation with *Survived*, *Sex* has the largest value but in negative -0.54, the next is *Pclass* with -0.34. So if we can only have two predictors for survive, the first two we should use are *Sex* and *Pclass*. If I want to choose five predictors for survive, I would choos *Sex*, *Pclass*, *HasCabinNum*, *Deck* and *Fare_PP*. 
+
+The largest correlation value is between *Age* and *Age_group* with 0.98. It makes sense because *Age_group* is a grouping of *Age*. 
+
+We can also observe that *Pclass* has a high correlation with *HasCabinNum* (71),   *Fare_pp* (-77) and *Deck* (73). It suggests that if we have *Pclass* in our model, we may not need to use *Fare_pp*, *HasCabinNum* or *Deck* since they are effectively tell us the same thing that we have suspected in the beginning that is the "social class" of a passenger. This social class can be interpreted as the richer people, who paid more money on a ticket, has a better cabin. 
+
+The similar concept can be read between attribute *Group_size* and other three attributes *Friend_Size*, *Family_size*, *SibSp* and *Parch*. *Family_size* also has a high correlation with both *SibSp* and *Parch*. But *Family_size* has very low correlation with *Friend_Size*.  
+
+The important point is that the correlation analysis is very useful. It provide the basic reasons for our predictor selection. The idea is that we should choose attributes that has a high correlation with response variable. For example, if only choose three predictors in a model to predict *Survived*, we should choose the *Sex*, *Pclass* and *HasCabinNum* because they have the three highest absolute correlation values with *Survived*. If in a model we have chosen *Pclass* we may not need to choose *Fare_pp* and *Deck* because these three have large correction values.   
+
+## PCA Analysis 
+
+PCA and Factor analysis are most commonly used methods in dimension reduction. In a general data science project, it is possible that a given dataset can has tens or hundreds of features (attributes). For example in the text analysis, if we count words appearance in a document, we could easily have hundreds even thousands of dimensions. If we want reduce the dimension into a manageable numbers, PCA can be very useful. Particularly in visualization, human are not good with anything over three dimensions. 
+
+PCA uses *Eigenvalues* and *Eigenvectors*^[In linear algebra, an Eigenvector or characteristic vector of a linear transformation is a nonzero vector that changes by a scalar factor when that linear transformation is applied to it.] to reserve the original data information and variation as much as possible. Therefore PCA is simple to calculate the given data's Eigenvectors. 
+
+PCA normally has the following steps:
+
+1. Calculate the Covariance Matrix^[Covariance matrix is a square matrix giving the covariance between each pair of elements of a given random vector.] of the given dataset.
+2. Calculate the Eigenvalues and Eigenvectors of the resulting Covariance Matrix.
+3. The resulting Eigenvector that correspond to the largest Eigenvalue can then be used to reconstruct a large fraction of the variance of the original dataset.
+
+In R, we have a function called `prcomp()`. It takes numerical values. So for demonstration we only use the same 8 attributes we have used in our correlation analysis. Let us take the first 
+
+```{r}
+# RE_data %>%
+#   select(Survived, Pclass, Sex, Age_group, Group_size, Ticket_class, Fare_pp, Embarked) %>%
+# RE_data[1:891, ]
+#summary(RE_data[1:891,c(2:3,5:9,12)])
+#summary(RE_data[1:891,c(-1, -8)])
+#data.pca <- prcomp(RE_data[1:891,c(2:3,5:9,12)], center = TRUE, scale = TRUE)
+data.pca <- prcomp(RE_data[1:891,c(-1, -8)], center = TRUE, scale = TRUE)
+summary(data.pca)
+```
+We have seen 16 principal components, which named as PC1 to PC16. Each of these explains a percentage of the total variation in the dataset. That is to say, PC1 explains 29% of the total variance, PC2 explains nearly 24% of the variance. Together over half of the information in the dataset can be encapsulated by just these two principal components. So, by knowing the position of a sample in relation to just PC1 and PC2, you can get a very accurate view on where it stands in relation to other samples, as just PC1 and PC2 can explain 53% of the variance.
+
+Let's call `str()` to have a look at the PCA object.
+
+```{r}
+str(data.pca)
+```
+The above results contain a lot of details, briefly:
+
+- The center point (`$center`), scaling (`$scale`), standard deviation(`sdev`) of each principal component
+- The relationship (correlation or anti-correlation, etc) between the initial variables and the principal components (`$rotation`)
+- The values of each sample in terms of the principal components (`$x`)
+
+Let us plot PCA, we need to use **biplot**, which includes both the position of each sample in terms of PC1 and PC2 and also will show how the initial variables map onto this. We need ggbiplot package, which offers a user-friendly and pretty function to plot biplots. A biplot is a type of plot that will allow you to visualize how the samples relate to one another in our PCA (which samples are similar and which are different) and will simultaneously reveal how each variable contributes to each principal component.
+```{r PCA, echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "The 1st and the 2nd PCs ploted with ggplot_pca"}
+
+library(AMR)
+#AMR::ggplot_pca(data.pca)
+ggplot_pca(data.pca)
+#biplot(data.pca)
+```
+The axes are seen as arrows originating from the center point. Here, you see that the variables *Fare_pp*, *Age_group* and *Survived* contribute to PC1, with higher values in those variables moving the records to the right on this plot. This lets you see how the data points relate to the axes. 
+
+We also have other principal components available although they may have less weights in comparison with the first two. Each of other components map differently to the original variables. We can also plot these other components, for example PC3 and PC4. If you look into the PC3 and PC4, they are *Sex* and *Age_group*. You may wondering what do they do with our prediction. Well, it can show at least the contribution between them with the dependent variable *Survived*, in addition, it can also show the covariance of the both with other variables.  
+```{r PCA2, echo = FALSE, message=FALSE, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "The 3rd and the 4th PC ploted with ggplot_pca"}
+ggplot_pca(data.pca, ellipse=TRUE, choices=c(3,4))
+```
+This Plot shows that original attributes *Ticket_class*, *Sex*, *Fare_PP* and *Group_size* contribute to PC3, which is *Sex*, in a negative way. It means that with lower values in those variables, the records will move to the left on this plot.
+
+The relationship between original attributes with the newly created Principle Components also indicates the relationship between original attributes and correlation among them.
+
+With these correlation and PCA analyses, We can have a pretty good idea about the attributes. Depending on the models we are constructing, we can be confident to select the number of the predictors and specific predictors to ensure our model has a good performance.   
+
+Attribute selection is a parsimonious process that aims to identify a minimal set of predictors for the maximum gain (predictive accuracy). This approach is the opposite of data pre-process where as many meaningful attributes as possible are considered for potential use. 
+
+It is also important to recognize that attribute selection cloud be an iterative process that occurs throughout the model building process. It finishes after no more improvement can be achieved in terms of model accuracy.
+
+## Summary
+
+Predictor selection is a complex issue. It has been studied in many fields like Statistics, Data analysis, Predictions and Machine learning. In data science, it is addressed at individual attribute level and at multiple attributes level. At the individual attribute level it is called single variant analysis, it is many study the relationship between individual attribute and the dependent variable like what we have done in the Chapter 4 and 5. Correlation analysis between individual attribute and the dependent variable can provide the prediction power of each individual attribute so the selection can take predictors as wished. At the multiple attribute analysis, called multivariant analysis, focused on and covariant among the multiple arrtibutes, so the strong correlation or collinearity can be identified, so only representive attribute can be selected as a predictor. Predictor selection is also influenced and affacted by the model constructed. this will become clear in later Chapters after the model construction is introduced. 

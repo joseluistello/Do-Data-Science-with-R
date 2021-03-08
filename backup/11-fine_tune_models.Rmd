@@ -1,0 +1,478 @@
+# Fine Tune Models
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE,warning = FALSE)
+```
+```{r prediction1， out.width = "60%", fig.align ="center", echo =FALSE}
+knitr::include_graphics(here::here("images", "fine_tune.jpg"))
+
+```
+In the previous Chapters we have obtained knowledge that many prediction models need fine tune to:
+
+1. better fit the training dataset, 
+2. produce a better performance for the test dataset (less overfit). 
+
+In most data science projects, fine tune a model is not only necessary but also desirable since it can increase the final outcomes of the projects. This chapter we will demonstrate the model fine tune technique.
+
+Fine tune a model is specific to the model. Different models may have different parameters and different measurement of the performance. In general, A model's overall performance is affected by the three factors:
+
+1. **The predictors.** The numbers of predictor used in a model and the specific predictors used in the model. 
+2. **The training sample.** The larger data sample the better change of model fit. However there are many methods for dealing with a small data sample. Mostly to enlarge the data sample or make efficient use of available data samples.
+3. **The parameter of the model.** The adjustable parameters in a model. Most of the model tuning refers to adjust the parameters of the model. 
+
+We can see that the search space defined by the three dimensions are fairly large. Sometimes it is computationally infeasible to search them in one go. In practice, we generally fix one or two dimensions and search another dimension. In other words, we can fine tune them one by one.  
+
+That is what we are going to do.
+
+## Tuning a model's Predictor
+
+From our decision tree and random forest model constructions, we've learnt that the predictors affect models performance. The way to select the best predictors is by correlation analysis and association analysis, to select predictors that has no correlation among the predictors and strong association with the dependent variable, in other words, the attributes has the prediction power. Some models can provide contributions of each predictor to the response variable. Such as in Random forest model, user can specify *importance* parameter to *true* (See Chapter 9), and let model to record the predictors' importance and this importance can be used for post model construction analysis. If we have the predictors importance, the tuning of the number of the predictors becomes simple. We can simply take "bottom-up" or "top-down" approaches to tune the number of predictors until we achieved the best model accuracy. 
+
+Let us use random forest model to demonstrate this process. Recall that we have built three random forest models (in Chapter 9), each has different predictors (see Table \@ref(tab:RF-model) and model's accuracy. Let us ignore the overfit issue in the moment and focus on the predictors impact on the model's accuracy. Among the three models, both model1 and model3 has lower accuracy then model2. Model2 has more predictors than model1 and less predictors than model3. It reveals a principle which we have mentioned earlier, that is more predictors not necessarily mean higher accuracy. 
+
+To fine tune the predictors, let us use the "top-down" approach. We start from use of all attributes and gradually reduce predictors by removing the least important attributes until the last attribute. We can compare the models' accuracy and select the highest model.
+
+```{r}
+library(randomForest)
+library(plyr)
+library(caret)
+# Build our first model. we only use Sex attribute, check help on rpart, This  model only takes Sex as predictor and Survived as the consequencer
+# load our re-engineered data set and separate train and test datasets
+RE_data <- read.csv("RE_data.csv", header = TRUE)
+train <- RE_data[1:891, ]
+test <- RE_data[892:1309, ]
+
+# Train a Random Forest with the default parameters using full attributes
+# Survived is our response variable and the rest can be predictors except pasengerID. 
+
+rf.train <- subset(train, select = -c(PassengerId, Survived))
+rf.label <- as.factor(train$Survived)
+
+#RandomForest cannot handle factors with over 53 levels
+rf.train$Ticket <- as.numeric(train$Ticket)
+
+set.seed(1234)
+rf.1 <- randomForest(x = rf.train, y = rf.label, importance = TRUE)
+rf.1
+#rf.1 model with full house predictors has error rate: 15.49% 
+# Check the order of the predictors prediction power.
+pre.or <- sort(rf.1$importance[,3], decreasing = TRUE)
+pre.or
+varImpPlot(rf.1)
+```
+We have obtained the "full-house" model's accuracy 84.51%, that is 1 - prediction error (15.49%). 
+We have also obtained the order of the predictor's prediction power, which is from the most to the least in the following order: "Sex, Title, Fare_pp, Ticket_class, Pclass, Ticket, Age, Friend_size, Deck, Age_group, Group_size, Family_size, HasCabinNum, SibSp, Embarked, Parch".
+
+We now can repeat the process by remove one attribute from the end of the long list above and train a Random forest model such as rf.2, rf.3, ... until rf.16. We can compare the models' OOB error or accuracy to find out which model has the highest accuracy. 
+
+We only use rf.2 as an example, 
+
+```{r}
+rf.train.2 <- subset(rf.train, select = -c(Parch))
+set.seed(1234)
+rf.2 <- randomForest(x = rf.train.2, y = rf.label, importance = TRUE)
+rf.2
+```
+We have obtained model *rf.2*, in which the attribute *"Parch"* has been removed since it is the last attributes in the attributes' prediction power list, which means it has the least prediction power. 
+
+The *rf.2*  model's accuracy 84.85%, that is 1 - prediction error (15.15%). 
+
+We can carry on the process until the last attribute *"Sex"*. We will then have a list of models and each has its estimated accuracy (We will not repeat the process in here and leave it to the exercise).
+
+```{r}
+# save(rf.8, file = "rf_model.rda")
+load("rf_model.rda")
+```
+Once we have completed the process, the results can be listed and compared as in the Table \@ref(tab:Comp_predictor).
+
+```{r Comp_predictor}
+library(tidyr)
+
+Model <- c("rf.1","rf.2","rf.3","rf.4","rf.5","rf.6","rf.7","rf.8","rf.9","rf.10","rf.11","rf.12","rf.13","rf.14","rf.15","rf.16")
+Pre <- c("Sex", "Title", "Fare_pp", "Ticket_class", "Pclass", "Ticket", "Age", "Friend_size", "Deck", "Age_group", "Group_size", "Family_size", "HasCabinNum", "SibSp", "Embarked", "Parch")
+#Produce models predictor list
+Pred <- rnorm(16)
+tem <- NULL
+for (i in 1:length(Pre)) {
+  tem  <- paste(tem, Pre[i], sep = " ")
+#Using environment variable setting    
+  ls  <- paste("Pred[",i,"]", sep="")
+  eq  <- paste(paste(ls, "tem", sep="<-"), collapse=";")  
+  eval(parse(text=eq)) 
+  }
+Pred <- sort(Pred, decreasing = TRUE)
+
+Error <- c(15.49, 15.15, 14.93, 15.26, 14.7, 14.7, 14.03, 13.58, 14.48, 15.6, 16.27, 16.95, 17.51, 20.31, 20.76, 21.32)
+Accuracy <- 100 - Error
+df <- data.frame(Model, Pred, Accuracy)
+
+knitr::kable(df, longtable = TRUE, booktabs = TRUE, digits = 2, col.names =c("Models", "Predictors", "Accuracy"), 
+  caption = 'Model Predictors Comparision'
+)
+```
+From the table we can see that the best model is **rf.8**. Its accuracy reaches 86.42 and the predictors are:
+
+Predictor <- c("*Sex*, *Title*, *Fare_pp*, *Ticket_class*, *Pclass*, *Ticket*, *Age*, *Friend_size*, *Deck*"). 
+
+Of course, you can try different combination of the predictors. The idea will be the same. 
+
+Some other models support predictor fine tune. For example, Logistic Regression model (glm) provides *Stepwise* attributes prediction power analyzing. One can use *"backward"* Step-wise search to compare models' AIC^[The Akaike information criterion (AIC) is an estimator of out-of-sample prediction error and thereby relative quality of models for a given dataset. Given a collection of models for the data, AIC estimates the quality of each model, relative to each of the other models. Thus, AIC provides a means for model selection.] to find the best model and its predictors.   
+
+## Tuning Training Data Samples
+
+Once we have selected predictors from available attributes of data samples. The second factor that affect model's performance is the data samples. We know that we should try to make most use of data samples for training a model. In practice, a lot of times we have a small-sized data sample. We have to use other techniques to enlarge the data sample. However, there is a drawback of over-use the data sample that the noise and outliers have been fitted into a model and decrease the model prediction accuracy when used in production. This section we use CV to demonstrate the process of setting right portion of a data sample. We will use CV techniques and show how to set CV parameter. 
+
+We will continue to use RF model as our example. We know that the RF model we have produced has an overfit issue. One possibility is we have used improper portion of the training dataset. To find the most proper use of training dataset that could eliminate overfit is to establish a methodology for estimating the model's prediction error rate as close as possible to the error rate on the unseen data (test).  
+
+Following our predictor selection we know that the best RF model is rf.8. We will use rf.8 to demonstrate how to find the best CV settings so that the model estimated accuracy will be the closet to the actual prediction accuracy (accuracy on the test dataset).
+
+### Set Prediction Accuracy Benchmark
+
+The benchmark is the model's prediction accuracy on the test dataset (unseen data).
+
+```{r}
+# Let's start with a submission of rf.8 to Kaggle 
+# to find teh difference between model's OOB and the accuracy
+
+# Subset our test records and features
+test.submit.df <- test[, c("Sex", "Title", "Fare_pp", "Ticket_class", "Pclass", "Ticket", "Age", "Friend_size", "Deck")]
+test.submit.df$Ticket <- as.numeric(test.submit.df$Ticket)
+
+# Make predictions
+rf.8.preds <- predict(rf.8, test.submit.df)
+table(rf.8.preds)
+
+# Write out a CSV file for submission to Kaggle
+submit.df <- data.frame(PassengerId = test$PassengerId, Survived = rf.8.preds)
+
+write.csv(submit.df, file = "RF8_SUB.csv", row.names = FALSE)
+```
+
+After our submission we have scores 0.75598 from Kaggle, but the OOB predicts that we should score 0.8642. WE can see there is big gap in between.
+
+### 10 Folds CV Repeat 10 Times
+
+Let's look into CV using the caret package to see if we can get more accurate estimates by adjusting CV's sampling parameters. Research has shown that 10-fold CV repeated 10 times is the best place to start. One of the important idea is that to ensure that the ratio of those values of the response variable (*Survived*) in each fold matches the overall training set. This is known as **stratified CV**.
+
+Firstly, We randomly create 10 folds and repeat 10 times with our train dataset by a caret function *createMultiFolds*. So will have effectively enlarge our train data sample 100 times. This can be seen the length of the list 'cv.10.folds'. We will used this sampling settigns to train our RF model rf.8. Before we do that, we can also verify the survived ratio in the samples created to see if they are the same or near the same. 
+
+```{r}
+library(caret)
+library(doSNOW)
+
+set.seed(2348)
+# rf.label is the Survived in the train dataset.
+# ? createMultiFolds to find out more. train (891)
+cv.10.folds <- createMultiFolds(rf.label, k = 10, times = 10)
+
+# Check stratification
+table(rf.label)
+342 / 549
+
+table(rf.label[cv.10.folds[[34]]])
+308 / 494
+```
+We can see that we have produced 100 sample sets and they are in a size of $length(train)*9/10$ and kept the stratification (both has a similar radio around 62.3%). Let us use "repeatedcv" to train our rf.8 model and see the impact of the sampling on the model's prediction accuracy. 
+
+```{r}
+# Set up caret's trainControl object using 10-folds repeated CV
+ctrl.1 <- trainControl(method = "repeatedcv", number = 10, repeats = 10, index = cv.10.folds)
+
+```
+10-folds repeated CV is a very computation expensive model construction. Thanks R has a package called **"doSNOW"**, that facilities the use of multi-core processor and permits parallel computing in a pseudo cluster mode.
+```{r}
+# # Set up doSNOW package for multi-core training. 
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+# # Set seed for reproducibility and train
+# set.seed(34324)
+# 
+# rf.8.cv.1 <- train(x = rf.train.8, y = rf.label, method = "rf", tuneLength = 3, ntree = 500, trControl = ctrl.1)
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+# save(rf.8.cv.1, file = "rf.8.cv.1.rda")
+# Check out results
+load("rf.8.cv.1.rda")
+# Check out results
+rf.8.cv.1
+```
+The RF model *rf.8.cv.1* trained using new data samples (10 sets with each has 802 data records) above is only slightly more pessimistic than the rf.8 OOB prediction since the accuracy reduced from 0.8642 to 0.8511, but not pessimistic enough the test accuracy is 0.75598. However it is clearly demonstrated the impact of the data sample on the model's accuracy. 
+
+### 5 Folds CV Repeat 10 Times
+
+Let's try new data samples with 5-fold CV repeated 10 times.
+```{r}
+set.seed(5983)
+# cv.5.folds <- createMultiFolds(rf.label, k = 5, times = 10)
+# 
+# ctrl.2 <- trainControl(method = "repeatedcv", number = 5, repeats = 10, index = cv.5.folds)
+# 
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+# 
+# set.seed(89472)
+# rf.8.cv.2 <- train(x = rf.train.8, y = rf.label, method = "rf", tuneLength = 3, ntree = 500, trControl = ctrl.2)
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+# save(rf.8.cv.2, file = "rf.8.cv.2.rda")
+# # Check out results
+load("rf.8.cv.2.rda")
+# Check out results
+rf.8.cv.2
+```
+We can see that 5-fold CV is a little better. The accuracy is moved under 85%. The model's training data set is moved from 9/10 to 4/5, which is 713 now. 
+
+### 3 Folds CV Repeat 10 Times
+
+Let us move further to 3-fold CV repeated 10 times. 
+
+```{r}
+set.seed(37596)
+# cv.3.folds <- createMultiFolds(rf.label, k = 3, times = 10)
+# 
+# ctrl.3 <- trainControl(method = "repeatedcv", number = 3, repeats = 10, index = cv.3.folds)
+# 
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+# 
+# set.seed(94622)
+# rf.8.cv.3 <- train(x = rf.train.8, y = rf.label, method = "rf", tuneLength = 3, ntree = 500, trControl = ctrl.3)
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+# 
+# save(rf.8.cv.3, file = "rf.8.cv.3.rda")
+# # # Check out results
+load("rf.8.cv.3.rda")
+# Check out results
+rf.8.cv.3
+
+```
+The accuracy has further decreased. Let us also reduced the number of times the samples are used in the training (repeat times).
+
+```{r}
+# set.seed(396)
+# cv.3.folds <- createMultiFolds(rf.label, k = 3, times = 3)
+# 
+# ctrl.4 <- trainControl(method = "repeatedcv", number = 3, repeats = 3, index = cv.3.folds)
+# 
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+# 
+# set.seed(9622)
+# rf.8.cv.4 <- train(x = rf.train.8, y = rf.label, method = "rf", tuneLength = 3, ntree = 50, trControl = ctrl.4)
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+#save(rf.8.cv.4, file = "rf.8.cv.4.rda")
+# # # Check out results
+load("rf.8.cv.4.rda")
+# Check out results
+rf.8.cv.4
+```
+
+We can see the impact of the training samples (numbers and repeated times) used on the RF model's accuracy. Among of our 4 trials, it appeared that the settings *ctrl.3*, which is 3-folds and repeated 10 times has the best accuracy. We could continue the trails until we are satisfied. But we will stop in here as we are showing the idea and the process. One of the conclusion we may draw in here from our trails is that the best sampling should mimic the proportion of the training dataset with the testing dataset. Our Titanic datasets have a proportion of (891:418), which is roughly 2:1 that is the 3-folds CV partition. So it is reasonable to believe the best data sampling is the 3-folds repeated 10 times.        
+Some of you may notice that we have set different *mtree* values. That is one of the parameters RF model used for generating the prediction. WE are going to discuss about them next. 
+
+## Tuning Model's Parameters  
+
+Adjust model's parameters is a parameter optimization problem.  Depending on the models, the adjustable parameters can be different completely. 
+
+For example, decision tree has two adjustable parameters: *complexity parameter (CP)* and *tune length (TL)*. CP tells the algorithm to stop when the measure (generally is accuracy) does not improve by this factor. TL tells how many instances to use for training. SVM models, as another example, also has two adjustable parameters *cost* and *gamma*. The *cost*, is a parameter that controls the tradeoff between classification of training points and a smooth decision boundary. It suggests the model to choose data points as a support vector. If the value of *cost* is large, then model choose more data points as a support vector and we get a higher variance and lower bias, which may lead to the problem of overfitting; If the value of *cost* is small, then model will choose fewer data points as a support vector and get a lower variance and high bias. *Gamma* defines how far the influence of single training example reaches. If the value of Gamma is high, then the decision boundary will depend on the points close to the decision boundary and the nearer points carry more weights than far away points due to which the decision boundary becomes more wiggly. If the value of *Gamma* is low, then the far away points carry more weights than the nearer points and thus the decision boundary becomes more like a straight line.
+
+We will use RF model as an example to demonstrate the parameter tuning process. RF has many parameters can be adjusted but the two main tuning parameters are **mtry** and **ntree**.
+
++ *mtry*: Number of variables randomly selected as testing conditions at each split of decision trees. default value is *sqr(col)*. 
+Increasing *mtry* generally improves the performance of the model as at each node have a higher number of options to be considered. However, this is not necessarily true as this decreases the diversity of individual tree. In the same time it will decrease the speed. Hence, it needs to strike the right balance.
+
++ *ntree*: Number of trees to grow. default value is 500. Higher number of trees give you better performance but makes your code slower. You should choose as high value as your processor can handle because this makes your predictions stronger and more stable.
+
+In the reast of the section we demonstrate the process of using CV to fine tune RF model's parameter **mtry** and **ntree**. In general, different optimization strategy can be used to find a model's optimal parameters. The two most commonly used methods for RF are **Random search** and **Grid search**.
+
+*Random Search*. Define a search space as a bounded domain of parameter values and randomly sample points in that domain.
+
+*Grid Search*. Define a search space as a grid of parameter values and evaluate every position in the grid.
+
+### Random Search
+
+Random search provided by the package *caret* with the method "rf" (random forest) in function *train* can only tune parameter *mtry*^[Not all machine learning algorithms are available in caret for tuning. The choice of parameters was decided by the developers of the package. Only those parameters that have a large effect are available for tuning in caret. For *RF* method, only *mtry* parameter is available in caret for tuning. The reason is its effect on the final accuracy and that it must be found empirically for a dataset]. 
+
+Let us continue use what we have found from the previous sections, that are：
+
+1. model *rf.8* with 9 predictors.
+2. *CV* with *3-folds* and *repeat 10 times*.
+
+Let us also fix "ntree = 500" and "tuneLength = 15", and use **random search** to find *mtry*. 
+
+```{r paged.print=TRUE}
+#library(caret)
+#library(doSNOW)
+# Random Search
+set.seed(2222)
+# #use teh best sampling results that is K=3 ant T=10
+# cv.3.folds <- createMultiFolds(rf.label, k = 3, times = 10)
+# 
+# # Set up caret's trainControl object.
+# ctrl.1 <- trainControl(method = "repeatedcv", number = 3, repeats = 10, index = cv.3.folds, search="random")
+# 
+# # set up cluster for parallel computing
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+# 
+# # Set seed for reproducibility and train
+# set.seed(34324)
+# 
+# #use rf.train.8 with 9 predictors 
+# 
+# #RF_Random <- train(x = rf.train.8, y = rf.label, method = "rf", tuneLength = 15, ntree = 500, trControl = ctrl.1)
+# #save(RF_Random, file = "RF_Random_search.rda")
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+
+# Check out results
+load("RF_Random_search.rda")
+print(RF_Random)
+plot(RF_Random)
+```
+We can see that the random search for *mtry* has found the best value is 3. When model uses parameter *mtry = 3* it can have an accuracy of 84.53%. 
+
+### Grid Search
+
+Grid search is generally search for more than one parameters. Each axis of the grid is an parameter, and points in the grid are specific combinations of parameters. Because caret train can only tune one parameter, the grid search is now a linear search through a vector of candidate values.
+
+```{r}
+# ctrl.2 <- trainControl(method="repeatedcv", number=3, repeats=10, index = cv.3.folds, search="grid")
+# 
+# set.seed(3333)
+# # set Grid search with a vector from 1 to 15.
+# 
+# tunegrid <- expand.grid(.mtry=c(1:15))
+# 
+# # set up cluster for parallel computing
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+# 
+# 
+# #RF_grid_search <- train(y = rf.label, x = rf.train.8,  method="rf", metric="Accuracy", trControl = ctrl.2, tuneGrid = tunegrid, tuneLength = 15, ntree = 500)
+# 
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+# #save(RF_grid_search, file = "RF_grid_search.rda")
+
+load("RF_grid_search.rda")
+print(RF_grid_search)
+plot(RF_grid_search)
+```
+The Grid search method identified the best parameter for *mtry* is also 3. When *mtry = 3*,  the model's estimated accuracy reaches 84.52%.
+
+We can see that both search method have the same *mtry* suggestions. 
+
+### Manual Search 
+
+Let us consider another parameter **ntree** in RF model. Since our *train* method from caret cannot tune *ntree*, we have to write our own function to search the best value of parameter *ntree*.  This method is also called **Manual Search**. The idea is to write a loop repeating the same model's fitting process a certain numbers of times. Each time Within a loop, a different value of the parameter to be tuned is used,  and the model's results are accumulated, Finally a manual comparison is made to figure out what is the best value of the tuned parameter.
+
+To tune the RF model's parameter *ntree*, we set *mtry=3* from the above section and use a list of 4 values (100 ,500, 1000, 1500) and find which produced the best result. 
+
+```{r }
+# Manual Search we use control 1 random search
+
+model_list <- list()
+
+tunegrid <- expand.grid(.mtry = 3)
+control <- trainControl(method="repeatedcv", number=3, repeats=10, search="grid")
+
+# # the following code have been commented out just for produce the markdown file. so it will not wait for ran a long time
+# # set up cluster for parallel computing
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+# 
+# 
+# #loop through different settings
+# 
+# for (n_tree in c(100, 500, 1000, 1500)) {
+#   
+#   set.seed(3333)
+#   fit <- train(y = rf.label, x = rf.train.8,  method="rf", metric="Accuracy",  tuneGrid=tunegrid, trControl= control, ntree=n_tree)
+# 
+#   key <- toString(n_tree)
+#   model_list[[key]] <- fit
+# }
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+# save(model_list, file = "RF_manual_search.rda")
+# # the above code comneted out for output book file
+
+load("RF_manual_search.rda")
+# compare results
+results <- resamples(model_list)
+summary(results)
+dotplot(results)
+```
+We can see with the default *mtry =3* setting, the best *ntree* value is 1500. The model can reach 84.31% accuracy. 
+
+## Summary
+
+This Chapter we have demonstrated the process of fine tune a prediction model's parameters so to achieve the best performance of the model to eliminate the possible model's overfit. We not only performed the fine tune of a model's parameters but also demonstrated the process of fine tune the other two factors that may cause the model's overfitting. They are the train data sampling and the predictors selection.
+
+We use RF model as an example, starting from the order of all attributes prediction power, we have figured out the best collection of predictors including the number of predictors and the actual predictors. We've concluded the best predictor list is,
+
+Predictor <- c("*Sex*, *Title*, *Fare_pp*, *Ticket_class*, *Pclass*, *Ticket*, *Age*, *Friend_size*, *Deck*").
+
+We also demonstrated the process of training dataset sampling. That is a basic technique used in the most small dataset. Data sampling has a great impact on the model's performance. We ahve demonstrated the technique using *k-folds CV*. We have conluded that the best training data sample is 3-folds with repeats 10 times. 
+
+And finally we demonstrated the methods used to fine tune a model's parameters. With RF, the only two parameters are: *mtry* and *ntree*. We have illustrated "Random search", "Grid search" and "Manual search" methods and find out the best parameters, based on the fixed predictors and the sampling, are  *mtry = 3* and *ntree = 1500*. 
+
+Let us use these parameters to produce a model on the train dataset and make a prediction on the test dataset. We can then submit the final result to Kaggle for evaluation. 
+
+
+```{r}
+set.seed(1234)
+
+tunegrid <- expand.grid(.mtry = 3)
+control <- trainControl(method="repeatedcv", number=3, repeats=10, search="grid")
+
+# # # the following code have been commented out just for produce the markdown file. so it will not wait for ran a long time
+# # # set up cluster for parallel computing
+# cl <- makeCluster(6, type = "SOCK")
+# registerDoSNOW(cl)
+#  
+# Final_model <- train(y = rf.label, x = rf.train.8,  method="rf", metric="Accuracy",  tuneGrid=tunegrid, trControl= control, ntree=1500)
+# 
+# #Shutdown cluster
+# stopCluster(cl)
+# 
+# save(Final_model, file = "Final_model.rda")
+# # # the above code comneted out for output book file
+
+load("Final_model.rda")
+
+# Make predictions
+Prediction_Final <- predict(Final_model, test.submit.df)
+#table(Prediction_Final)
+
+# Write out a CSV file for submission to Kaggle
+submit.df <- data.frame(PassengerId = test$PassengerId, Survived = Prediction_Final)
+
+write.csv(submit.df, file = "Prediction_Final.csv", row.names = FALSE)
+```
+
+We have got 0.76076 score. Recall that our base model without fine tune the Kaggle scores was 0.75598. It shows that our RF model has been increased 0.5 percent. 
+
+It seems not a lot but the technique and the process are far more important the the increase of the accuracy. 
+
+
+## Exercise
+
+1. Write a function to train Random forest models from a single predictor to full-house predictors to compare models' prediction accuracy and find the best number of predictors and the predictors.
+
+2. Train Random forest models using the number of predictors find from exercise one, and find out the best combinition of same number of predictors and the predciton accuracy. 
+
+## Reference
+1. Aleksandra Paluszyńska, "Understanding random forests with randomForestExplainer" https://htmlpreview.github.io/?https://github.com/geneticsMiNIng/BlackBoxOpener/blob/master/randomForestExplainer/inst/doc/randomForestExplainer.html
+
+2. Jason Brownlee. Tune Machine Learning Algorithms in R (random forest case study)
+https://machinelearningmastery.com/tune-machine-learning-algorithms-in-r/

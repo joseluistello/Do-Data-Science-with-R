@@ -1,0 +1,12 @@
+# R Markdown
+
+
+```{r rfresults, fig.cap = "The detials of RF_model2"}
+# model need to be loaded in to memory
+load("./data/RF_model2.rda")
+RF_model2
+```
+
+
+
+

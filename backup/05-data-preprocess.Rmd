@@ -1,0 +1,611 @@
+# Data Preparasion
+
+```{r sand, fig.align = 'center', out.width = "60%", message=FALSE,  warning=FALSE, echo=FALSE, fig.cap =""}
+# 
+library(dplyr)# data manipulation
+library(ggplot2)
+library(rattle)
+library(rpart.plot)
+library(RColorBrewer)
+library(rpart)
+library(caret) # tuning & cross-validation
+library(gridExtra) # visualizations
+library(tictoc) # timing models
+
+knitr::include_graphics(here::here("images", "preparation.jpg"))
+
+```
+
+>     “Before anything else, preparation is the key to success” 
+>    
+>                                        --- Alexander Graham Bell
+
+Previous chapter we have done **Data understanding** by examining the given data quantity and quality through access to individual attributes and record level assessment. After that we had a pretty good understanding of the raw data in terms of its suitability for analyses. The work of the Data assessment sets up some objectives for the data preparation or preprocess to accomplish, which are what we need to do in the chapter.
+
+First of all, let us briefly review the typical tasks need to be performed in the **Data preprocess**. 
+
+## General Data Prepartion Tasks
+
+[Section 1.3](process.html) has listed a number of tasks that needs to be performed to make data suitable for analyzing. Depends on the understanding of the problem, the tasks can be different. In our previous analyses at both records and attributes levels we have found some problems. These problems need to be solved first of all.
+
+1. There are inappropriate data types which needs conversion. For example, a lot of features need to be converted into numeric ones so that the machine learning algorithms can process them. 
+2. There are errors or missing values.
+3. There are attributes' values need normalization. There are some features have widely different value's range, so the value needs to be converted into roughly the same scale. 
+4. There are also attribute values needs to be grouped or transformed into more manageable meaningful groups. 
+
+This chapter we will carry on using Titanic problem to demonstrate the tasks to be performed and the methods can be used to achieve the ultimate goal of the data preprocess that is making dataset suitable for analyzing. 
+
+The analytical methods used in this chapter are mixture of **Descriptive data analysis** and **Exploratory analysis**. 
+
+
+## Dealt with Miss Values
+
+We had a pretty good understanding about the Titanic datasets. We knew there are missing values and some errors. they needs to be resolved first of all. The systematic way to find missing value is write a function to check missing values, like this one,
+
+Firstly, let us quick recap the datasets we have,
+
+```{r dataglimpse, fig.align = 'center', out.width = "95%", fig.cap = "Missing data summary" }
+# assume we had imported both train and test dataset and we have combined them into on data
+
+train <- read.csv("train.csv", header = TRUE)
+test <- read.csv("test.csv", header = TRUE)
+# integrate into one file for checking save to do the dame for both files.
+data <- bind_rows(train, test) # compare with data <- rbind(train, test)
+
+# Check our combined dataset details
+glimpse(data) # compare with str(data)
+```
+We can observe that there are 1309 data records with 12 attributes. We can also see the types and values of each attribute. 
+We understood the goal of the Titanic problem is to predict given passengers' survival. So, except the attributes **PassengerID** and the targeted variable **Survived**,  there are 10 attributes present in the combined data that are potentially useful. Among of them, two variables **Name** and **Ticket** are less useful intuitively and also confirmed from the previous chapter. 
+
+Let us focus on solve the data missing problem. 
+
+We can define a function missing_vars, which can get proportion of values are missing in each attribute. 
+
+```{r missfunction}
+# Define a function to check missing values
+missing_vars <- function(x) {
+  var <- 0
+  missing <- 0
+  missing_prop <- 0
+  for (i in 1:length(names(x))) {
+    var[i] <- names(x)[i]
+    missing[i] <- sum(is.na(x[, i])|x[, i] =="" )
+    missing_prop[i] <- missing[i] / nrow(x)
+  }
+  
+  (missing_data <- data.frame(var = var, missing = missing, missing_prop = missing_prop) %>% 
+  arrange(desc(missing_prop)))
+}
+```
+
+Apply our function to the combined dataset `data`. 
+
+```{r fig.align = 'center', out.width = "95%", fig.cap = "Missing data summary" }
+missing_vars(data)
+```
+*Survived* has 418 missing value that is the `test` dataset number. Our entire `test` dataset needs to be filled with that value. It is not an issue. 
+
+*Cabin* and *Age* have some significant proportion of missing values, whereas Embarked & Fare only has 2 and 1 missing values. 
+
+We will use Cabin and Age as examples to demonstrate the general methods used to deal with missing values.
+
+### Cabin Attribute
+
+Cabin has large number of missing value. Total of 1014 missing values and 687 missing value in the `train` dataset counts as 71 percent of total value. Its prediction power is in serious doubt since it only has very small number for each cabin. Facing a attribute that has a large percentage of missing values, in the most analysis, it will be simply dropped. However, if you think carefully, the missing value may have some reasons and that reasons could be a factor which affects passengers' lived or perished. Therefore, the first thought, which is normally apply to a large number of value missing, is to replace the attribute with another attribute rather than to fill the missing value themselves. In this case, we can create a new attribute called "*HasCabinNum*" which only records if *Cabin* values is "" (empty or missing value). It has two values "`has`" and "`hasnot`". This method is very general. It can be used in any attribute that has a large number of missing value. 
+
+Ideally we should replace the attribute *cabin* with the newly created attribute *HasCabinNum*. However, we find out that the data samples which has the cabin number, the cabin number may have some sueful information. So, we will keep it in the moment and for later use. 
+
+```{r} 
+
+# add newly created attribute and assign it with new values
+data$HasCabinNum <- ifelse((data$Cabin != ""), "Has", "HasNo")
+```
+We can examine the relation between our newly created cabin replacement's *HasCabinNum* with the attribute *Survival*.
+
+``````{r cabinPro, warning=FALSE, echo = TRUE, fig.align = 'center', out.width = "95%", fig.cap = "Distribution and survival percentage of the newly created HasCabinNum attribute"}
+# Make sure survived is in factor type 
+p1 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(HasCabinNum), fill = factor(Survived))) +
+   geom_bar(width = 0.5) +
+   xlab("HasCabinNum") +
+   ylab("Total Count") +
+   labs(fill = "Survived")+
+   ggtitle("Newly created HasCabinNum attribute on Survived")
+# show survive percentage on HasCabinNum 
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(HasCabinNum), fill = factor(Survived))) + 
+  geom_bar(position = "fill", width = 0.5) + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "HasCabinNum", y = "Percentage of Survived") + 
+  ggtitle("Newly created HasCabinNum attribute (Proportion Survived)")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+### Age Attribute
+
+Now we can tackle the issue of missing values with the age attribute. *Age* is a typical numerical value. There a number of options for fill the missing values:
+1. Take the mean value to replace missing value
+2. Take a random list of ages maintain the original statistical summary values.
+3. Use a model predict values based on the existing values.
+
+Let us looking into them one by one, Be aware of this if you have multiple options to deal with one attribute, you cannot simple manipulate on the original attribute. If you do, the value of the attribute will be altered, so the second option will be never executed since the missing value has been already eliminated.  
+
+1. Take the mean value to replace missing value. It is the simplest way to impurate the missing value.
+
+```{r agepro, fig.align = 'center', out.width = "95%", fig.cap = "Distribution and survival percentage on the Age with missing value filled"}
+# replace missing value in Age with its average
+ageEverage <- summarise(data, Average = mean(Age, na.rm = TRUE))
+# create a new attribute Age_RE1 and assign it with new values
+data$Age_RE1 <- ifelse(is.na(data$Age), as.numeric(ageEverage), as.numeric(data$Age))
+# plot newly altered age attribute 
+# Make sure survived is in factor type 
+p1 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Age_RE1), fill = factor(Survived))) +
+   geom_bar(width = 0.5) +
+   xlab("Age_RE1") +
+   ylab("Total Count") +
+   labs(fill = "Survived")+
+   ggtitle("Survived value on Age_RE1")
+# show survive percentage on HasCabinNum 
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Age_RE1), fill = factor(Survived))) + 
+  geom_bar(position = "fill", width = 0.5) + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Age_RE1", y = "Percentage of Survived") + 
+  ggtitle("Survived percentage on Age_RE1")
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+2. Take a random number range between `min` and `max` age, and keep the mean and standard deviation unchanged.
+
+```{r AgePro2, fig.align = 'center', out.width = "95%", fig.cap = "Distribution and survival percentage on the Age with missing value filled with distribution shape maintained"}
+# calculate the non-NA mean and std
+mean <- mean(data[["Age"]], na.rm = TRUE) # take train mean
+std <- sd(data[["Age"]], na.rm = TRUE) # take test std
+# replace NA with a list that maintian the mean and std
+temp_rnum <- rnorm(sum(is.na(data$Age)), mean=mean, sd=std)
+# add new attribute Age_RE2
+data$Age_RE2 <- ifelse(is.na(data$Age), as.numeric(temp_rnum), as.numeric(data$Age))
+summary(data$Age_RE2)
+# There are possible negative values too, replace them with positive values
+data$Age_RE2[(data$Age_RE2)<=0] <- sample(data$Age[data$Age>0], length(data$Age_RE2[(data$Age_RE2)<=0]), replace=F)
+# check
+summary(data$Age_RE2)
+# plot newly altered age attribute 
+# Make sure survived is in factor type 
+p1 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Age_RE2), fill = factor(Survived))) +
+   geom_bar(width = 0.5) +
+   xlab("Age_RE2") +
+   ylab("Total Count") +
+   labs(fill = "Survived")+
+   ggtitle("Survived value on Age_RE2 attribute")
+
+# show survive percentage on HasCabinNum 
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Age_RE2), fill = factor(Survived))) + 
+  geom_bar(position = "fill", width = 0.5) + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Age_RE2", y = "Percentage of Survived") + 
+  ggtitle("Survived percentage on Age_RE2 attribute")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+3. Using machine generate model to produce new values based on other exiting values.  
+Among many prediction models (next chapter), *decision tree* is the simplest. It can split data samples into sub sets based on many test conditions (called branches), until there is not test conditions to test or there is no sample left untested^[detailed decision tree and prediction model will be covered in the next chapter].  
+To demonstrate we can use a prediction model to fill the missing values, here we will only use a simple decision tree without any further calibration. Since  *Age* is a continuous variable we want to use the method="anova"^[ANOVA, stands for "Analysis of variance", is a statistical models used to analyze the differences among group means in a sample. Decision trees can take many different ways to partition data samples such as *Entropy*, *Gini Index*, *Classification error* and *ANOVA*. ] for our decision tree. So let us build a decision tree on the subset of the data with the age values available, and then replace those that are missing,
+
+```{r}
+# confirm Age missing values
+data$Age_RE3 <- data$Age
+summary(data$Age_RE3)
+# Construct a decision tree with selected attributes and ANOVA method
+Agefit <- rpart(Age_RE3 ~ Survived + Pclass + Sex + SibSp + Parch + Fare + Embarked,
+                  data=data[!is.na(data$Age_RE3),], 
+                  method="anova")
+#Fill AGE missing values with prediction made by decision tree prediction
+data$Age_RE3[is.na(data$Age_RE3)] <- predict(Agefit, data[is.na(data$Age_RE3),])
+#confirm the missing values have been filled
+summary(data$Age_RE3)
+
+p1 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Age_RE3), fill = factor(Survived))) +
+   geom_bar(width = 0.5) +
+   xlab("Age_RE3") +
+   ylab("Total Count") +
+   labs(fill = "Survived")+
+   ggtitle("Survived value on Age_RE3 attribute")
+
+# show survive percentage on HasCabinNum 
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Age_RE3), fill = factor(Survived))) + 
+  geom_bar(position = "fill", width = 0.5) + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Age_RE3", y = "Percentage of Survived") + 
+  ggtitle("Survived percentage on Age_RE3 attribute")
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+Above three methods can all fill the missing values. Each filled with different values. Depends on the applications you can choose to use any of them. For our prediction problem, I would use the machine predicted since we are doing predicting anyway. So I will tied data with replacing the original Age with Age_RE3 and removal of the other two extra age attributes.
+
+```{r}
+data$Age <- data$Age_RE3
+data <- subset(data, select = -c(Age_RE1, Age_RE2, Age_RE3))
+```
+
+### Fare Attribute
+
+Since there was one missing value in *Fare*, we can also see that this person traveled alone, so I can’t impute, The best solution is simply replacing it with the mean or median value, or even other values like median in the same class or median from the same embarked port, or age group etc. 
+
+```{r}
+data[is.na(data$Fare), ]
+data$Fare[is.na(data$Fare)] <- median(data$Fare, na.rm = T)
+```
+
+### Embarked Attribute {#Embarked}
+
+*Embark* has two missing values. There are two methods to make up these two values: take the mode value, which is the most value at present; or the most likelihood value. The mode value is `S` (Southampton), the fact that 70% of passengers embarked from ‘S’. 
+
+The most likelihood value needs some analysis. Generally, the embarked port reflects a passenger's journey. It is associated with the fare of the ticket. So we could compare the fare of the ticket to see it most likely fit which part of journey. However we have noticed that the fare is the original data may provide faulty information since it can be a shared ticket. The fare is also shared with some one. If that is the case we should consider the partner's Embarked port as its most appropriate value.
+
+So we take two steps: 
+1. find out the passenger has a shared ticket or not. If the ticket is shared than find the travel companion's embarked port and take that as the passenger's embarked port;
+2. If the ticket is not shared or shared partner's embarked port is also missing, find out the ticket price per person and compare with other ticket's price per person to allocate the embarked port. 
+
+```{r }
+# list info of the missing records to figure out the fare and the ticket?
+data[(data$Embarked==""), c("Embarked", "PassengerId",  "Fare", "Ticket")]
+# we want find out if the fare is a single ticket or a group ticket.
+
+```
+we can see the two miss records share the same ticket number and the fare.  The situation because extremely simple. We don't need to consider other possibilities. The two passenger must travel together. There i sno possibility of any other reference can be used to figure out the missing port. 
+
+For safety, let us check if there are other passenger share the same ticket number?
+
+```{r}
+# we need to find out is there other passenger share the ticket?
+data[(data$Ticket=="113572"), c("Ticket", "PassengerId", "Embarked", "Fare")]
+```
+
+The answer is "No". It tells us only the two missing records share the ticket number. So we only need to find out the price (per person) to compare with other price (per person) to allocate the missing embarked port. The logic is the same journey should bear the some ticket price. To calculate the ticket price (per person), we create an attribute *Fare_pp*. It is the ticket price divided by the number of the passenger who share the same ticket. That is the concept of the group ticket. It can also be useful to single out the "group travel" vs "travel alone". 
+
+As matter of fact the raw data sample already has this concept such as *Sibsp* and *Parch*. We don't know if the *Sibsp* and *Parch* are sharing the same tickets number since the attributes are only numbers. We can imagine the people travel in group may not be relatives and they could be simple friends or colleagues. Anyway, in case of the group travel it is useful to know the group size. So we created another new attributes *Friend_size* to record the number of passengers who share the same ticket number ie. "travel in group".  
+
+```{r embarkfarepp, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap ="Possible embarked port by value of Fare per person"}
+
+# calculate fare_PP per person
+fare_pp <- data %>%
+  group_by(Ticket, Fare) %>%
+  dplyr::summarize(Friend_size = n()) %>%
+  mutate(Fare_pp = Fare / Friend_size)
+data <- left_join(data, fare_pp, by = c("Ticket", "Fare"))
+data %>%
+  filter((Embarked != "")) %>%
+ggplot(aes(x = Embarked, y = Fare_pp)) + 
+  geom_boxplot() + 
+  geom_hline(yintercept = 40, col = "deepskyblue4")
+```
+From above plot, we can see that price 40 (per person) is an outlier in embarked group `S` and `Q`. However, if they embarked from ‘C’ the price is only just falls into the upper quartile. So, we can reasonably the pare are embarked from "C", so we want assign `C` to the embarked missing value. 
+
+```{r}
+data$Embarked[(data$Embarked)==""] <- "C"
+```
+
+
+Now we have dealt with all the missing values. WE could simple run the same code again to confirm the missing values have been fulfilled. 
+
+```{r}
+missing_vars(data)
+```
+
+In summary, we have dealt with the 4 discovered missing values. Different approaches and methods are adopted. some of them are simple value fulfillment like replacement with mean/median/mode values, others has more complicated process involved deeper dill-down analysis or even predictions. Depends the applications, appropriate methods may need multiple trails and exploration. 
+
+However we have discovered one interesting thing that the fare could be shared among multiple passengers (not only the same fare but also the same ticket numbers) see previous section. It appeared to be the price of a group ticket. It creates confused information on the fare. So it may be a good idea to re-engineer it into another more useful attribute like *fare_PP* (Fare per person), see next section \@ref(farepp).
+
+## Attribute Re-engineering 
+
+In the previous chapter when we do data understanding. Apart from the missing values, we also find some attributes does not make sense or has no prediction power when considering the relationship with survival. for example, we have find *name* has little prediction power. It is illogical to say some survived because he or she has a specific name. However there are title information buried inside the name, The title can potentially useful at least it shows the age addition to the gender. 
+
+We have also find other useful information hidden inside some variables. For example, the information about deck is possibly hidden inside *cabin*. Information about group travel is buried inside of *Ticket* and *Fare* that passengers share same tickets number and fare, must travel on a group. It seems that the ticket is a group ticket. Furthermore we have also found that the group that share ticket are mostly family members. This is further  confirmed by the none `0` values in the *SibSp* and *Parch* attributes. Those hidden information can be very important. We can surface them by attributes' re-engineering.   
+
+### Title from Name attribute
+
+Name is initially believed is useless for predict passenger's fate. But we have found in it there are information about titles even may be marriage relations. So our first task in attribute re-engineering is to create a new attribute called *Title*. It is abstracted from *Name*. It is the title of the passenger, which can be extracted from the *Name* attribute using a regular expression.
+
+```{r table}
+# Abstract Title out
+ data$Title <- gsub('(.*, )|(\\..*)', '', data$Name)
+ data %>%
+   group_by(Title) %>%
+   dplyr::count() %>%
+ arrange(desc(n))
+# group those less common title’s into an ‘Other’ category.
+data$Title <- ifelse(data$Title %in% c("Mr", "Miss", "Mrs", "Master"), data$Title, "Other")
+
+L<- table(data$Title, data$Sex)
+knitr::kable(L, digits = 2, booktabs = TRUE, caption = "Title and sex confirmation")
+```
+Checking the table of *Title* vs *Sex* shows nothing anomalous.
+A stacked bar graph of the newly created attribute suggests it could be quite useful that the difference in survival between 'Master' and 'Mr' will be something that hasn't been captured by the `Sex` attribute.
+
+```{r titlePro, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survivial percentage onver Title"}
+data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Title), fill = factor(Survived))) + 
+  geom_bar(position = "fill") + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Title", y = "Survival Percentage") + 
+  ggtitle("Title attribute (Proportion Survived)")
+```
+
+### Deck from Cabin attribute
+
+From our previous analyze, we have found out that the cabin numbers are all start with a letter. It could be a deck number or some sort. If we group cabin numbers with its initial letter, we can then treat the ordinal missing cabin's value records as a separate group. 
+
+So, we group all cabin number into groups according to its first letter. Create a new attribute with a name *Deck*. and assign records with no cabin number as *U* (no cabin number) for its *Deck* value. 
+
+```{r deckpro, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survivla vlaue and percentage over newly created Deck attribute"}
+data$Cabin <- as.character(data$Cabin)
+data$Deck <- ifelse((data$Cabin == ""), "U", substr(data$Cabin, 1, 1))
+# plot our newly created attribute relation with Survive
+p1 <- ggplot(data[1:891,], aes(x = Deck, fill = factor(Survived))) +
+  geom_bar(width = 0.5) +
+  labs(x = "Deck number", y = "Total account") + 
+  labs(fill = "Survived")
+
+# plot percentage of survive
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Deck), fill = factor(Survived))) + 
+  geom_bar(position = "fill") + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Deck number", y = "Percentage") + 
+  ggtitle("Newly created Deck number (Proportion Survived)")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### Extract ticket class from ticket number
+
+We knew that values of *Ticket* appears has two major kinds 'Letters Numbers' or just 'Numbers'. This could be worth extracting. However just two class is too rough. As suggested during understanding data, we can group ticket by its first letter or number. let us create a *Ticket_class* to replace *Ticket*.
+
+```{r ticketclass, warning=FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Ticket class"}
+data$Ticket <- as.character(data$Ticket)
+data$Ticket_class <- ifelse((data$Ticket != " "), substr(data$Ticket, 1, 1), "")
+data$Ticket_class <- as.factor(data$Ticket_class)
+
+# plot our newly created attribute relation with Survive
+p1 <- data %>%
+  filter(!is.na(Survived)) %>%
+  ggplot(aes(x = Ticket_class, fill = factor(Survived))) +
+  geom_bar(width = 0.5) +
+  labs(x = "Ticket_class", y = "Total account") + 
+  labs(fill = "Survived value over Ticket class")
+
+# plot percentage of survive
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Ticket_class), fill = factor(Survived))) + 
+  geom_bar(position = "fill") + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Ticket_class", y = "Percentage") + 
+  ggtitle("Survived percentage over Newly created Ticket_class")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+Although the plot appeared has a skewed bi-model shape, its prediction is clearly improved by ticket number.
+
+### Travel in Groups
+
+We have seen that passenger shared ticket numbers and fare. It is a clear indication of the passenger traveling in groups. Travel in group can be an important factor for survive in disasters. The Titanic movie impressed millions because of the love story about a couple, they want stay together for live and for death. Generally that is the spirit of grouping - stay together for worse or for better. Apart from two friends travel together, we have also seen the family travel together that is indicated by *SibSp* and *Parch* attributes. 
+
+Make it simple we can create a *Group_size*, it takes minimum value of 1 to represent the passenger travel alone. otherwise in groups. The group size is defined as:
+
+\begin{equation} 
+Group\_size = Max(Friend\_size, Family\_size).
+(\#eq:group)
+\end{equation} 
+
+where,
+\begin{equation} 
+Friend\_size = Sum(PassengerID),
+(\#eq:friend)
+\end{equation} 
+that share the some ticket number and fare, which we have already created in the section \@ref(fare_pp) when we create new data frame `Fare_pp`.
+\begin{equation} 
+Family\_size = SibSp + Parch + 1
+(\#eq:family)
+\end{equation} 
+
+So we do,
+
+```{r}
+data$Family_size <- data$SibSp + data$Parch + 1
+data$Group_size <- pmax(data$Family_size, data$Friend_size)
+```
+Now let us see our newly created attribute's prediction power,
+
+```{r message = FALSE, warning = FALSE, echo = FALSE, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Group Size"}
+p1 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = Group_size, fill = factor(Survived))) + 
+  geom_histogram() + 
+  scale_y_continuous(breaks = seq(0, 700, 100)) + 
+  scale_x_continuous(breaks = seq(0, 10)) +
+  scale_fill_discrete(name = "Survived") + 
+  labs(x = "Group Size: max(Family Size, Group Size)", y = "Count") + 
+  ggtitle("Survived count over groupsize")
+
+# plot percentage of survive
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = Group_size, fill = factor(Survived))) + 
+  geom_bar(position = "fill") + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Group_size", y = "Percentage") + 
+  ggtitle("Survived percentage over Newly created Group_size")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+The plot shows that most people traveled alone,  small and large groups have the least chance of survival while Medium-sized group (3 and 4) seemed to have the best chance of living.
+
+### Age in Groups
+
+We have seen the age has a strong correlation with the survival. However, it is too fine granted, it is better to create a demographical groups called *Age_group*. 
+
+```{r agegroup, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Age Group"}
+Age_labels <- c('0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79')
+
+data$Age_group <- cut(data$Age, c(0, 10, 20, 30, 40, 50, 60, 70, 80), include.highest=TRUE, labels= Age_labels)
+
+p1 <- data %>%
+  filter(!is.na(Survived)) %>%
+    ggplot(aes(x = Age_group, y = ..count.., fill = factor(Survived))) +
+  geom_bar() +
+  ggtitle("Survived value ove newly created Age_group")
+
+# plot percentage of survive
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = Age_group, fill = factor(Survived))) + 
+  geom_bar(position = "fill") + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Age group", y = "Percentage") + 
+  ggtitle("Survived percentage ove newly created Age_group")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+We can see here only age group "0-9" has a better change of survive. 
+
+### Fare per passenger {#farepp}
+
+We have used this concept when we fill the missing value of *Embarked* in Section \@ref(Embarked). We were comparing the records' fare with other passengers' fare because we believe the fare should reflects the journey that should indicate the embarked port.It is there we find out the passenger could share the fare and the ticket number. So it is a faulty information if you only considering *Fare* values between two passengers. After we introduce a new attribute *Fare_pp* that stands for fare per person, its value is the true value a passenger paid for the travel.  
+
+So we have,
+\begin{equation} 
+Fare\_PP = Fare / Friend\_size.
+(\#eq:farepp)
+\end{equation} 
+
+We do this,
+
+```{r}
+data$Fare_pp <- data$Fare/data$Friend_size
+
+```
+
+Let us examine our newly created attribute *Fare_PP*'s prediction power,
+
+```{r fareperperson, fig.align = 'center', out.width = "95%", fig.cap = "Survival value and percentage over newly created Fare per person"}
+# plot Fare_PP against Survived
+
+p1<- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = Fare_pp, fill = factor(Survived))) + 
+ geom_histogram(binwidth = 2) +
+  scale_y_continuous(breaks = seq(0, 500, 50)) + 
+  scale_fill_discrete(name = "Survived") + 
+  labs(x = "Fare (per person)", y = "Count") + 
+  ggtitle("Survived value over Fare_pp")
+p1
+# plot percentage of survive
+p2 <- data %>%
+  filter(!is.na(Survived)) %>%
+ggplot(aes(x = factor(Fare_pp), fill = factor(Survived))) + 
+  geom_bar(position = "fill") + 
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  scale_fill_discrete(name = "Survived") +
+  labs(x = "Fare per person", y = "Percentage") + 
+  ggtitle("Survived rate over newly created Fare_PP")
+p2
+```
+```{r fareperperson2, fig.align = 'center', out.width = "95%", fig.cap = "Survival value over newly created Fare per person by boxplot"}
+# plot in box plot
+data %>%
+  filter(!is.na(Survived)) %>%
+  filter(Fare > 0) %>%
+ggplot(aes(factor(Survived), Fare_pp)) +
+  geom_boxplot(alpha = 0.2) +
+  scale_y_continuous(trans = "log2") +
+  geom_point(show.legend = FALSE) + 
+  geom_jitter()
+
+# grid.arrange(p1, p2, ncol = 2)
+```
+The graph confirms the fare_PP associated with the passenger's survival. We can see that the perished passenger tend to pay less (around 8 pounds) and the average survived passenger appeared paid something around 14 pounds. 
+
+
+
+## Build Re-engineered Dataset
+
+We have done many things:
+
+- unified the test dataset with train dataset
+- transformed some data types 
+- make up and filled the missing values for some attributes
+- re-engineered some attributes, and
+- created some new attributes
+
+Let us look at our dataset attributes,
+
+```{r}
+glimpse(data)
+```
+We can see there are 21 attributes in total. Compare with the 12 attributes in the original raw dataset, there are 9 newly added contributes. They have enriched the original attributes but some re-engineered attributes are left over power such as *Name* and *Cabin* (too many missing values). *Name* has been transformed into *Title* and *Cabin* has been transformed into *HasCabinNum* and *Deck*. 
+
+Clearly, we need to clean up or remove redundant attributes. For some re-engineered attributes like *Deck* effectively is derived from *Cabin*. With the *Deck* in place, *Cabin* has no need to be exists. Effectively, lose *Cabin* will not lose any information. *Fare* provides misleading information because it only keeps the amount of money paid for ticket but does not specify the amount is for group fare or single fare. So *Fare_PP* is the accurate replacement of the *Fare*. *Family_size* is derived from *Sibsp* and *Parch*, they are containment relations, if you want fine grant analysis, you can keep all of them. *Friend_size* was introduced when we calculate the ticket price. That is a person who paid for the ticket. *Friend_size* is different with the *Family_size* because the Friend_size is simply the passenger who share the same ticket number. There is no way to know if they are a family member. In the same time, "Family_size" does not ensure the sharing of the ticket. *Ticket_class* is derived from the *Ticket* number. It is a kind of grouping of the ticket. Finally, the *Age_group* is the similar concept that groups the *Age* attribute. 
+
+Therefore, we could keep our re-engineered dataset as follows:
+
+```{r}
+RE_data <- subset(data, select = -c(Name, Cabin, Fare))
+```
+
+Our dataset now have the following attributes:
+```{r}
+glimpse(RE_data)
+```
+
+In order to preserve our re-engineered dataset, it is a good idea to save it back to hard drive. So it can be used later in the data analysis.
+
+```{r}
+write.csv(RE_data, file = "RE_Data.CSV", row.names = FALSE)
+```
+
+## Summary
+
+In this chapter, based on the previous chapter on **Data Understanding**, we have demonstrated some basic tasks needed to performed in the step of the data preprocess or data preparation. Those tasks are either resulted from the initial data quality assessment like discover of the missing values or demanded by the next step of data analyses like correlation analyses to order the potential predictors based on the prediction power. Attributes re-engineering is the task to make the maximum use of information contained in the give dataset or to transform give attribute in most appropriate form ro types. The ultimate goal is to make datasets ready for analyzing.  
+
+## Exercises 5 {-}
+
+1. Discuss the advantage and disadvantage of fill *Age* missing value with a sample that has the same `mean` and `std`. 
+2. When we make up missing values of *Embarked* attribute we want compare the price of the ticket the passenger paid with other tickets' price to allocate the possible embarked port. It all works well, however one of the factor we did not consider is the variation of the price on *Pclass*. We have knowledge that the higher class the more expensive the price will be. Can you analysis the price per ticket with the *Pclass* to see if it can produce a conflict results against allocation of the embarked por by price comparison.  
+
+
+
+
